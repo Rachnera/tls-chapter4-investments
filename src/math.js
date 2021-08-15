@@ -2,6 +2,7 @@
  * Assumptions:
  * - New Givini Trade bought
  * - Good enough save to achieve minimal price tag on succubus investments (Armor, Tower)
+ * - Tradesmasher met during chapter 3
  *
  * Extra New Givini points:
  * - +1 each phase from New Givini Trade

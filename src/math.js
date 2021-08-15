@@ -95,3 +95,20 @@ export const combine = (investments, context = {}) => {
     investments: computedInvestments,
   };
 };
+
+export const best = ({ money, investments, context = {} }) => {
+  return combinations(investments)
+    .map((inv) => combine(inv, context))
+    .filter((inv) => inv.price <= money)
+    .sort(
+      (
+        { price: priceA, profits: profitsA },
+        { price: priceB, profits: profitsB }
+      ) => {
+        if (profitsA === profitsB) {
+          return priceA - priceB;
+        }
+        return profitsB - profitsA;
+      }
+    )[0];
+};

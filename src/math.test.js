@@ -1,5 +1,8 @@
-import { combinations, combine } from './math';
+import { combinations, combine, best } from './math';
 import investments from './investments';
+
+const inv = (a) => investments.find(({ name }) => name === a);
+const invs = (...list) => list.map(inv);
 
 describe('combinations', () => {
   test('empty', () => {
@@ -303,6 +306,62 @@ describe('combine', () => {
           profits: 0,
         },
       ],
+    });
+  });
+});
+
+describe('best', () => {
+  test('best is buying nothing', () => {
+    expect(
+      best({
+        investments: invs('Imp Offices'),
+        money: 1000000,
+      })
+    ).toEqual({ price: 0, profits: 0, social: 0, givini: 0, investments: [] });
+  });
+
+  test('best is buying cheapest thing', () => {
+    expect(
+      best({
+        investments: invs('Succubus Armorer', 'Givini Smithing'),
+        money: 250000,
+      })
+    ).toEqual({
+      price: 100000,
+      profits: 10000,
+      social: 0,
+      givini: 0,
+      investments: invs('Succubus Armorer'),
+    });
+  });
+
+  test('best is buying thing that makes the most money', () => {
+    expect(
+      best({
+        investments: invs('Bank of Givini', 'Givini Smithing'),
+        money: 400000,
+      })
+    ).toEqual({
+      price: 350000,
+      profits: 300000,
+      social: 0,
+      givini: 5,
+      investments: invs('Bank of Givini'),
+    });
+  });
+
+  test('best is buying everything', () => {
+    expect(
+      best({
+        investments: invs('Givini Smithing', 'Bank of Givini'),
+        money: 600000,
+      })
+    ).toEqual({
+      price: 550000,
+      profits: 310000,
+      social: 0,
+      givini: 7,
+      investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
 });

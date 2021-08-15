@@ -57,3 +57,41 @@ export const combinations = (investments) => {
 
   return resultPerSize.flat(1);
 };
+
+const comp = (value, context) => {
+  if (typeof value === 'function') {
+    return value(context);
+  }
+  return value || 0;
+};
+
+const sum = (list, key) => list.reduce((acc, obj) => acc + (obj[key] || 0), 0);
+
+const compute = (investment, context) => {
+  const { price, profits } = investment;
+
+  return {
+    ...investment,
+    price: comp(price, context),
+    profits: comp(profits, context),
+  };
+};
+
+export const combine = (investments, context = {}) => {
+  const computedInvestments = investments.map((investment) =>
+    compute(investment, {
+      previousInvestments: context.previousInvestments,
+      baseStats: context.baseStats,
+      additionalStats: context.additionalStats,
+      investments,
+    })
+  );
+
+  return {
+    price: sum(computedInvestments, 'price'),
+    profits: sum(computedInvestments, 'profits'),
+    social: sum(computedInvestments, 'social'),
+    givini: sum(computedInvestments, 'givini'),
+    investments: computedInvestments,
+  };
+};

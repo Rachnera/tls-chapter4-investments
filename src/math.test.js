@@ -356,6 +356,60 @@ describe('best', () => {
   });
 
   describe('my personal use case', () => {
+    test('first round', () => {
+      const previous = [
+        'Denmiel Mushrooms',
+        'Eustrin Guild',
+        "Min's Trade Route",
+        'Yhilini Succubi Trade',
+
+        // Reduce total money by forcing some heavy-weight investments
+        "Tradesmasher's Guild",
+        'Bank of Stineford',
+      ];
+
+      const available = investments.filter(
+        ({ name }) => !previous.includes(name)
+      );
+      const previousInvestments = investments.filter(({ name }) =>
+        previous.includes(name)
+      );
+
+      const result = best({
+        investments: available,
+        // Remaining + Profits - fix
+        money: 7500 + 2435000 - 750000,
+        context: {
+          baseStats: { givini: 18 },
+          additionalStats: { givini: 6 },
+          previousInvestments,
+        },
+        social: 6,
+      });
+
+      expect(
+        result.investments
+          .map(({ name }) => name)
+          .sort((a, b) => a.localeCompare(b))
+      ).toEqual(
+        [
+          //'Bank of Stineford',
+          //"Tradesmasher's Guild",
+
+          'Bank of Givini',
+          'Stineford Weapons Store',
+          'Yhilini Brothel Reform',
+          'Givini Orc Merchant',
+          'Booze Shack',
+          'Lonely Sailor Services',
+          'Theltiar Flowhouse',
+          'Succubus Band Tour',
+          'Mercenary Offices',
+          'Imp Offices',
+        ].sort((a, b) => a.localeCompare(b))
+      );
+    });
+
     test('second round', () => {
       const previous = [
         'Denmiel Mushrooms',

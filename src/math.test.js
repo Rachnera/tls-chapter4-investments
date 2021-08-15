@@ -442,7 +442,7 @@ describe('best', () => {
       const result = best({
         investments: available,
         // Remaining + Profits - Cost of (unlisted) magic/military upgrades - Cost of bribing orc vote
-        money: 42500 + 3262000 - 455500 - 700000,
+        money: 42500 + 3262000 - 460000 - 700000,
         context: {
           baseStats: { givini: 35 },
           additionalStats: { givini: 1 },

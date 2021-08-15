@@ -35,6 +35,11 @@ export const combinations = (investments) => {
     a.localeCompare(b)
   );
 
+  let bigger = {};
+  for (let i = 0; i < sortedInvestments.length; i++) {
+    bigger[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
+  }
+
   let resultPerSize = [];
   resultPerSize[0] = [[]];
 
@@ -46,11 +51,8 @@ export const combinations = (investments) => {
     const previous = resultPerSize[s - 1];
     previous.forEach((partialList) => {
       const last = partialList[partialList.length - 1];
-      // FIXME Looping on full list then filtering is likely not the most optimized way
-      sortedInvestments.forEach((investment) => {
-        if (investment.name.localeCompare(last.name) > 0) {
-          resultPerSize[s].push([...partialList, investment]);
-        }
+      bigger[last.name].forEach((investment) => {
+        resultPerSize[s].push([...partialList, investment]);
       });
     });
   }

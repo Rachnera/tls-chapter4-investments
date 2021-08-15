@@ -142,18 +142,25 @@ export const combine = (investments, context = {}) => {
 };
 
 export const best = ({ money, investments, context = {}, social = 0 }) => {
-  return combinations(investments, money)
-    .map((inv) => combine(inv, context))
-    .filter((inv) => inv.price <= money && inv.social >= social)
-    .sort(
-      (
-        { price: priceA, profits: profitsA },
-        { price: priceB, profits: profitsB }
-      ) => {
-        if (profitsA === profitsB) {
-          return priceA - priceB;
-        }
-        return profitsB - profitsA;
+  let result = {
+    price: 0,
+    profits: 0,
+    social: 0,
+    givini: 0,
+    investments: [],
+  };
+
+  combinations(investments, money).forEach((comb) => {
+    const candidate = combine(comb, context);
+    if (candidate.price <= money && candidate.social >= social) {
+      if (
+        candidate.profits > result.profits ||
+        (candidate.profits === result.profits && candidate.price < result.price)
+      ) {
+        result = candidate;
       }
-    )[0];
+    }
+  });
+
+  return result;
 };

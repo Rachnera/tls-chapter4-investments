@@ -224,7 +224,6 @@ const investments = [
     name: 'War Monument',
     price: 1000000,
     country: 'New Givini',
-
     givini: 10,
     social: 3,
   },

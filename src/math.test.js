@@ -414,23 +414,19 @@ describe('best', () => {
         "Min's Trade Route",
         'Yhilini Succubi Trade',
 
-        'Bank of Stineford',
-        'Stineford Weapons Store',
-
-        'Yhilini Brothel Reform',
-
         'Givini Orc Merchant',
         'Bank of Givini',
 
+        'Bank of Stineford',
+        'Stineford Weapons Store',
+        'Yhilini Brothel Reform',
         'Booze Shack',
-        "Tradesmasher's Guild",
         'Lonely Sailor Services',
-
-        'Theltiar Flowhouse',
-
         'Succubus Band Tour',
         'Mercenary Offices',
         'Imp Offices',
+        'Trading Pillar Rights',
+        'Gasm Falls Trade',
 
         'Hall of Mental Strength',
         'Orc Pools Upgrade',
@@ -446,7 +442,7 @@ describe('best', () => {
       const result = best({
         investments: available,
         // Remaining + Profits - Cost of military upgrade (not automitcally handled yet) - Cost of bribing orc vote
-        money: 17500 + 3257000 - 455500 - 700000,
+        money: 42500 + 3262000 - 455500 - 700000,
         context: {
           baseStats: { givini: 35 },
           additionalStats: { givini: 1 },
@@ -461,11 +457,11 @@ describe('best', () => {
       ).toEqual(
         [
           "Cee'Kan Shipping",
-          'Trading Pillar Rights',
           'Givini Teahouse Chain',
           'Succubus Armorer',
           'Yhilini Bank Core Lender',
-          'Gasm Falls Trade',
+          "Tradesmasher's Guild",
+          'Theltiar Flowhouse',
         ].sort((a, b) => a.localeCompare(b))
       );
     });

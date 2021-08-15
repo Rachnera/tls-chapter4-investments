@@ -419,4 +419,65 @@ describe('best', () => {
       ],
     });
   });
+
+  describe('my personal use case', () => {
+    test('second round', () => {
+      const previous = [
+        'Denmiel Mushrooms',
+        'Eustrin Guild',
+        "Min's Trade Route",
+        'Yhilini Succubi Trade',
+
+        'Bank of Stineford',
+        'Stineford Weapons Store',
+
+        'Yhilini Brothel Reform',
+
+        'Givini Orc Merchant',
+        'Bank of Givini',
+
+        'Booze Shack',
+        "Tradesmasher's Guild",
+        'Lonely Sailor Services',
+
+        'Theltiar Flowhouse',
+
+        'Succubus Band Tour',
+        'Mercenary Offices',
+        'Imp Offices',
+
+        'Hall of Mental Strength',
+        'Orc Pools Upgrade',
+      ];
+
+      const available = investments.filter(
+        ({ name }) => !previous.includes(name)
+      );
+      const previousInvestments = investments.filter(({ name }) =>
+        previous.includes(name)
+      );
+
+      const result = best({
+        investments: available,
+        // Remaining + Profits - Cost of military upgrade (not automitcally handled yet) - Cost of bribing orc vote
+        money: 17500 + 3257000 - 455500 - 700000,
+        context: {
+          baseStats: { givini: 35 },
+          additionalStats: { givini: 1 },
+          previousInvestments,
+        },
+      });
+
+      expect(result.investments.map(({ name }) => name)).toEqual(
+        [
+          "Cee'Kan Shipping",
+          'Trading Pillar Rights',
+          'Givini Teahouse Chain',
+          'Succubus Armorer',
+          'Yhilini Bank Core Lender',
+          'Gasm Falls Trade',
+        ].sort((a, b) => a.localeCompare(b))
+      );
+    });
+  });
 });

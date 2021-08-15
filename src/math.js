@@ -26,6 +26,13 @@
  * c    cd
  * d
  */
+
+import allInvestments from './investments';
+
+const specialInvestments = allInvestments
+  .filter(({ profits }) => typeof profits === 'function')
+  .map(({ name }) => name);
+
 export const combinations = (investments, maxPrice) => {
   if (investments.length === 0) {
     return [[]];
@@ -107,15 +114,23 @@ export const combine = (investments, context = {}) => {
     compute(investment, updatedContext)
   );
 
-  let profits = sum(computedInvestments, 'profits');
-  const previousGiviniOrc = context?.previousInvestments?.find(
-    ({ name }) => name === 'Givini Orc Merchant'
-  );
-  if (previousGiviniOrc) {
-    profits +=
-      previousGiviniOrc.profits(updatedContext) -
-      previousGiviniOrc.profits({ ...updatedContext, investments: [] });
-  }
+  const profits =
+    sum(computedInvestments, 'profits') +
+    specialInvestments.reduce((acc, specialInvName) => {
+      const specialInv = context?.previousInvestments?.find(
+        ({ name }) => name === specialInvName
+      );
+
+      if (specialInv) {
+        return (
+          acc +
+          specialInv.profits(updatedContext) -
+          specialInv.profits({ ...updatedContext, investments: [] })
+        );
+      }
+
+      return acc;
+    }, 0);
 
   return {
     price: sum(computedInvestments, 'price'),

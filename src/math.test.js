@@ -333,6 +333,28 @@ describe('best', () => {
     });
   });
 
+  test('best is improving tradesmasher guild score', () => {
+    expect(
+      best({
+        investments: invs('Lonely Sailor Services', 'Gasm Falls Trade'),
+        money: 300000,
+        context: {
+          previousInvestments: invs(
+            "Tradesmasher's Guild",
+            'Orc Pools Upgrade',
+            'Orcish Democracy'
+          ),
+        },
+      })
+    ).toEqual({
+      price: 250000,
+      profits: 125000,
+      social: 1,
+      givini: 0,
+      investments: invs('Lonely Sailor Services'),
+    });
+  });
+
   describe('my personal use case', () => {
     test('second round', () => {
       const previous = [

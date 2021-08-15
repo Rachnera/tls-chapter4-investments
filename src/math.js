@@ -26,7 +26,7 @@
  * c    cd
  * d
  */
-export const combinations = (investments) => {
+export const combinations = (investments, maxPrice) => {
   if (investments.length === 0) {
     return [[]];
   }
@@ -52,6 +52,17 @@ export const combinations = (investments) => {
     previous.forEach((partialList) => {
       const last = partialList[partialList.length - 1];
       bigger[last.name].forEach((investment) => {
+        const candidate = [...partialList, investment];
+
+        if (
+          maxPrice &&
+          candidate.reduce((acc, { price = 0 }) => {
+            return acc + (Number.isInteger(price) ? price : 0);
+          }, 0) > maxPrice
+        ) {
+          return;
+        }
+
         resultPerSize[s].push([...partialList, investment]);
       });
     });
@@ -111,7 +122,7 @@ export const combine = (investments, context = {}) => {
 };
 
 export const best = ({ money, investments, context = {}, social = 0 }) => {
-  return combinations(investments)
+  return combinations(investments, money)
     .map((inv) => combine(inv, context))
     .filter((inv) => inv.price <= money && inv.social >= social)
     .sort(

@@ -80,18 +80,30 @@ const compute = (investment, context) => {
 };
 
 export const combine = (investments, context = {}) => {
+  const updatedContext = {
+    previousInvestments: context.previousInvestments,
+    baseStats: context.baseStats,
+    additionalStats: context.additionalStats,
+    investments,
+  };
+
   const computedInvestments = investments.map((investment) =>
-    compute(investment, {
-      previousInvestments: context.previousInvestments,
-      baseStats: context.baseStats,
-      additionalStats: context.additionalStats,
-      investments,
-    })
+    compute(investment, updatedContext)
   );
+
+  let profits = sum(computedInvestments, 'profits');
+  const previousGiviniOrc = context?.previousInvestments?.find(
+    ({ name }) => name === 'Givini Orc Merchant'
+  );
+  if (previousGiviniOrc) {
+    profits +=
+      previousGiviniOrc.profits(updatedContext) -
+      previousGiviniOrc.profits({ ...updatedContext, investments: [] });
+  }
 
   return {
     price: sum(computedInvestments, 'price'),
-    profits: sum(computedInvestments, 'profits'),
+    profits,
     social: sum(computedInvestments, 'social'),
     givini: sum(computedInvestments, 'givini'),
     investments: computedInvestments,

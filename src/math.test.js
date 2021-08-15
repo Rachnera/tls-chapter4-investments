@@ -380,4 +380,43 @@ describe('best', () => {
       investments: invs('Booze Shack'),
     });
   });
+
+  test('best is improving Givini score', () => {
+    expect(
+      best({
+        investments: invs(
+          'Givini Banners + Givini Dragon Statue',
+          'Booze Shack',
+          'Givini Smithing'
+        ),
+        money: 300000,
+        context: {
+          baseStats: { givini: 36 },
+          additionalStats: { givini: 1 },
+          previousInvestments: invs('Givini Orc Merchant'),
+        },
+      })
+    ).toEqual({
+      price: 203500,
+      profits: 60000,
+      social: 0,
+      givini: 3,
+      investments: [
+        {
+          name: 'Givini Banners + Givini Dragon Statue',
+          price: 1000 + 2500,
+          country: 'New Givini',
+          givini: 1,
+          profits: 0,
+        },
+        {
+          name: 'Givini Smithing',
+          price: 200000,
+          profits: 10000,
+          country: 'New Givini',
+          givini: 2,
+        },
+      ],
+    });
+  });
 });

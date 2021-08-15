@@ -31,8 +31,13 @@ export const combinations = (investments, maxPrice) => {
     return [[]];
   }
 
-  const sortedInvestments = [...investments].sort(({ name: a }, { name: b }) =>
-    a.localeCompare(b)
+  const sortedInvestments = [...investments].sort(
+    ({ price: a = 0 }, { price: b = 0 }) => {
+      if (!Number.isInteger(a) || !Number.isInteger(b)) {
+        return 0;
+      }
+      return b - a;
+    }
   );
 
   let bigger = {};

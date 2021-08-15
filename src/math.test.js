@@ -10,120 +10,33 @@ describe('combinations', () => {
   });
 
   test('one element', () => {
-    expect(
-      combinations([
-        {
-          name: 'Imp Offices',
-        },
-      ])
-    ).toEqual([
+    expect(combinations(invs('Imp Offices'))).toEqual([
       [],
-      [
-        {
-          name: 'Imp Offices',
-        },
-      ],
+      invs('Imp Offices'),
     ]);
   });
 
   test('two elements', () => {
-    expect(
-      combinations([
-        {
-          name: 'Imp Offices',
-        },
-        {
-          name: 'War Monument',
-        },
-      ])
-    ).toEqual([
+    expect(combinations(invs('Imp Offices', 'War Monument'))).toEqual([
       [],
-      [
-        {
-          name: 'Imp Offices',
-        },
-      ],
-      [
-        {
-          name: 'War Monument',
-        },
-      ],
-      [
-        {
-          name: 'Imp Offices',
-        },
-        {
-          name: 'War Monument',
-        },
-      ],
+      invs('War Monument'),
+      invs('Imp Offices'),
+      invs('War Monument', 'Imp Offices'),
     ]);
   });
 
   test('three elements', () => {
     expect(
-      combinations([
-        {
-          name: 'Imp Offices',
-        },
-        {
-          name: 'Denmiel Archives',
-        },
-        {
-          name: 'War Monument',
-        },
-      ])
+      combinations(invs('Imp Offices', 'Denmiel Archives', 'War Monument'))
     ).toEqual([
       [],
-      [
-        {
-          name: 'Denmiel Archives',
-        },
-      ],
-      [
-        {
-          name: 'Imp Offices',
-        },
-      ],
-      [
-        {
-          name: 'War Monument',
-        },
-      ],
-      [
-        {
-          name: 'Denmiel Archives',
-        },
-        {
-          name: 'Imp Offices',
-        },
-      ],
-      [
-        {
-          name: 'Denmiel Archives',
-        },
-        {
-          name: 'War Monument',
-        },
-      ],
-      [
-        {
-          name: 'Imp Offices',
-        },
-        {
-          name: 'War Monument',
-        },
-      ],
-      [
-        {
-          name: 'Denmiel Archives',
-        },
-        {
-          name: 'Imp Offices',
-        },
-        {
-          name: 'War Monument',
-        },
-      ],
+      invs('War Monument'),
+      invs('Denmiel Archives'),
+      invs('Imp Offices'),
+      invs('War Monument', 'Denmiel Archives'),
+      invs('War Monument', 'Imp Offices'),
+      invs('Denmiel Archives', 'Imp Offices'),
+      invs('War Monument', 'Denmiel Archives', 'Imp Offices'),
     ]);
   });
 });
@@ -403,18 +316,18 @@ describe('best', () => {
       givini: 3,
       investments: [
         {
-          name: 'Givini Banners + Givini Dragon Statue',
-          price: 1000 + 2500,
-          country: 'New Givini',
-          givini: 1,
-          profits: 0,
-        },
-        {
           name: 'Givini Smithing',
           price: 200000,
           profits: 10000,
           country: 'New Givini',
           givini: 2,
+        },
+        {
+          name: 'Givini Banners + Givini Dragon Statue',
+          price: 1000 + 2500,
+          country: 'New Givini',
+          givini: 1,
+          profits: 0,
         },
       ],
     });
@@ -468,7 +381,11 @@ describe('best', () => {
         },
       });
 
-      expect(result.investments.map(({ name }) => name)).toEqual(
+      expect(
+        result.investments
+          .map(({ name }) => name)
+          .sort((a, b) => a.localeCompare(b))
+      ).toEqual(
         [
           "Cee'Kan Shipping",
           'Trading Pillar Rights',

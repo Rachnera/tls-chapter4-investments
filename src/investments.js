@@ -29,9 +29,7 @@ const investments = [
     name: 'Stineford Succubus Tower',
     price: 800000,
     country: 'Stineford/Feroholm',
-    stats: {
-      social: 2,
-    },
+    social: 2,
   },
   {
     name: 'Yhilini Airship Fleet',
@@ -44,9 +42,7 @@ const investments = [
     price: 400000,
     profits: 185000,
     country: 'Ari-Yhilina',
-    stats: {
-      givini: 1,
-    },
+    givini: 1,
   },
   {
     name: 'Yhilini Succubi Trade',
@@ -71,18 +67,14 @@ const investments = [
     price: 150000,
     profits: 15000,
     country: 'Ari-Yhilina',
-    stats: {
-      social: 2,
-    },
+    social: 2,
   },
   {
     name: 'Theltiar Rentals',
     price: 425000,
     profits: 95000,
     country: 'Sylvan',
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Theltiar Flowhouse',
@@ -101,9 +93,7 @@ const investments = [
     price: 250000,
     profits: 20000,
     country: 'Sylvan',
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Eustrin Guild',
@@ -128,9 +118,7 @@ const investments = [
     price: 1500000,
     profits: 300000,
     country: 'Chalice States',
-    stats: {
-      givini: 3,
-    },
+    givini: 3,
   },
   {
     name: 'Lustlord Temples',
@@ -143,41 +131,33 @@ const investments = [
     price: 100000,
     profits: 2000,
     country: 'Chalice States',
-    stats: {
-      givini: 2,
-      social: 1,
-    },
+    givini: 2,
+    social: 1,
   },
   {
     name: 'Gasm Falls Water Cleanup',
     price: 250000,
     country: 'Chalice States',
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Orc Tunnels',
     price: 200000,
     country: 'Chalice States',
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Givini Smithing',
     price: 200000,
     profits: 10000,
     country: 'New Givini',
-    stats: {
-      givini: 2,
-    },
+    givini: 2,
   },
   {
     name: 'Givini Orc Merchant',
     country: 'New Givini',
     price: ({ baseStats }) => {
-      const newGiviniScore = baseStats.givini;
+      const newGiviniScore = baseStats?.givini || 0;
       if (newGiviniScore < 20) {
         return 100000;
       }
@@ -194,13 +174,13 @@ const investments = [
     },
     profits: ({ baseStats, additionalStats, investments }) => {
       const newGiviniScore =
-        baseStats.givini +
-        additionalStats.givini +
+        (baseStats?.givini || 0) +
+        (additionalStats?.givini || 0) +
         investments.reduce((investment, acc) => {
           if (investment.name === 'Givini Orc Merchant') {
             return acc;
           }
-          return acc + (investment?.stats?.givini || 0);
+          return acc + (investment?.givini || 0);
         }, 0);
       if (newGiviniScore < 20) {
         return 25000;
@@ -216,73 +196,58 @@ const investments = [
       }
       return 200000;
     },
-    stats: {
-      givini: 5,
-    },
+    givini: 5,
   },
   {
     name: 'Givini Teahouse Chain',
     price: 275000,
     profits: 30000,
     country: 'New Givini',
-    stats: {
-      givini: 2,
-      social: 1,
-    },
+    givini: 2,
+    social: 1,
   },
   {
     name: 'Bank of Givini',
     price: 350000,
     profits: 300000,
     country: 'New Givini',
-    stats: {
-      givini: 5,
-    },
+    givini: 5,
   },
   {
     name: 'Givini Mage Guild',
     price: 1000000,
     profits: 40000,
     country: 'New Givini',
-    stats: {
-      givini: 5,
-    },
+    givini: 5,
   },
   {
     name: 'War Monument',
     price: 1000000,
     country: 'New Givini',
-    stats: {
-      givini: 10,
-      social: 3,
-    },
+
+    givini: 10,
+    social: 3,
   },
   {
     name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
     price: 1000000 + 100000,
     profits: 50000 + 50000,
     country: "Tak'Kan",
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Hall of Mental Strength',
     price: 200000,
     profits: 25000,
     country: "Tak'Kan",
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Booze Shack',
     price: 150000,
     profits: 50000,
     country: "Tak'Kan",
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: "Tradesmasher's Guild",
@@ -324,9 +289,7 @@ const investments = [
     price: 250000,
     profits: 100000,
     country: "Tak'Kan",
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: "Cee'Kan Shipping",
@@ -338,33 +301,25 @@ const investments = [
     name: 'Orcish Democracy',
     price: 1000000,
     country: "Tak'Kan",
-    stats: {
-      social: 5,
-    },
+    social: 5,
   },
   {
     name: 'Imp Offices',
     price: 100000,
     country: "Tak'Kan",
-    stats: {
-      social: 1,
-    },
+    social: 1,
   },
   {
     name: 'Orc Pools Upgrade',
     price: 500000,
     country: "Tak'Kan",
-    stats: {
-      social: 2,
-    },
+    social: 2,
   },
   {
     name: 'Givini Banners + Givini Dragon Statue',
     price: 1000 + 2500,
     country: 'New Givini',
-    stats: {
-      givini: 1,
-    },
+    givini: 1,
   },
 ];
 

@@ -363,9 +363,9 @@ describe('best', () => {
         "Min's Trade Route",
         'Yhilini Succubi Trade',
 
-        // Reduce total money by forcing some heavy-weight investments
-        "Tradesmasher's Guild",
-        'Bank of Stineford',
+        // Reduce possible combinations by forcing some investments
+        'Givini Orc Merchant',
+        'Bank of Givini',
       ];
 
       const available = investments.filter(
@@ -377,10 +377,10 @@ describe('best', () => {
 
       const result = best({
         investments: available,
-        // Remaining + Profits - fix
-        money: 7500 + 2435000 - 750000,
+        // Remaining + Profits - Already invested
+        money: 7500 + 2435000 - 450000,
         context: {
-          baseStats: { givini: 18 },
+          baseStats: { givini: 18 + 10 },
           additionalStats: { givini: 6 },
           previousInvestments,
         },
@@ -393,19 +393,16 @@ describe('best', () => {
           .sort((a, b) => a.localeCompare(b))
       ).toEqual(
         [
-          //'Bank of Stineford',
-          //"Tradesmasher's Guild",
-
-          'Bank of Givini',
+          'Bank of Stineford',
           'Stineford Weapons Store',
           'Yhilini Brothel Reform',
-          'Givini Orc Merchant',
           'Booze Shack',
           'Lonely Sailor Services',
-          'Theltiar Flowhouse',
           'Succubus Band Tour',
           'Mercenary Offices',
           'Imp Offices',
+          'Trading Pillar Rights',
+          'Gasm Falls Trade',
         ].sort((a, b) => a.localeCompare(b))
       );
     });

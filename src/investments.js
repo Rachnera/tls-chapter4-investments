@@ -14,12 +14,6 @@ const investments = [
     country: 'Stineford/Feroholm',
   },
   {
-    name: 'Magic Shop',
-    price: 25000,
-    profits: 25000,
-    country: 'Stineford/Feroholm',
-  },
-  {
     name: 'Trading Pillar Rights',
     price: 300000,
     profits: 100000,

@@ -176,7 +176,7 @@ const investments = [
       const newGiviniScore =
         (baseStats?.givini || 0) +
         (additionalStats?.givini || 0) +
-        investments.reduce((investment, acc) => {
+        investments.reduce((acc, investment) => {
           if (investment.name === 'Givini Orc Merchant') {
             return acc;
           }

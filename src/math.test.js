@@ -364,4 +364,20 @@ describe('best', () => {
       investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
+
+  test('best is buying best social thingie', () => {
+    expect(
+      best({
+        investments: invs('Booze Shack', 'Bank of Givini', 'Imp Offices'),
+        money: 400000,
+        social: 1,
+      })
+    ).toEqual({
+      price: 150000,
+      profits: 50000,
+      social: 1,
+      givini: 0,
+      investments: invs('Booze Shack'),
+    });
+  });
 });

@@ -96,10 +96,10 @@ export const combine = (investments, context = {}) => {
   };
 };
 
-export const best = ({ money, investments, context = {} }) => {
+export const best = ({ money, investments, context = {}, social = 0 }) => {
   return combinations(investments)
     .map((inv) => combine(inv, context))
-    .filter((inv) => inv.price <= money)
+    .filter((inv) => inv.price <= money && inv.social >= social)
     .sort(
       (
         { price: priceA, profits: profitsA },

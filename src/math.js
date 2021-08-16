@@ -85,16 +85,6 @@ const comp = (value, context) => {
   return value || 0;
 };
 
-const compute = (investment, context) => {
-  const { price, profits } = investment;
-
-  return {
-    ...investment,
-    price: comp(price, context),
-    profits: comp(profits, context),
-  };
-};
-
 export const combine = (investments, context = {}) => {
   const updatedContext = {
     ...context,
@@ -107,11 +97,17 @@ export const combine = (investments, context = {}) => {
   let computedInvestments = [];
 
   investments.forEach((investment) => {
-    const inv = compute(investment, updatedContext);
-    price += inv.price || 0;
-    profits += inv.profits || 0;
-    social += inv.social || 0;
-    computedInvestments.push(inv);
+    const invPrice = comp(investment.price, updatedContext);
+    const invProfits = comp(investment.profits, updatedContext);
+
+    price += invPrice;
+    profits += invProfits;
+    social += investment.social || 0;
+    computedInvestments.push({
+      ...investment,
+      price: invPrice,
+      profits: invProfits,
+    });
   });
 
   specialInvestments.forEach((specialInv) => {

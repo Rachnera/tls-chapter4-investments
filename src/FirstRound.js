@@ -1,4 +1,4 @@
-import { Form, Select, InputNumber, Button } from 'antd';
+import { Form, Select, InputNumber, Button, Card, Checkbox } from 'antd';
 import { useState, useEffect } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 
@@ -33,7 +33,14 @@ const toSelectOptions = (list) => {
 };
 
 const onFinish = async (
-  { previous = [], social = 0, remainingPron, baseProfit },
+  {
+    previous = [],
+    social = 0,
+    remainingPron,
+    baseProfit,
+    chapter1Bank,
+    chapter1Steel,
+  },
   callback
 ) => {
   const params = {
@@ -42,7 +49,8 @@ const onFinish = async (
     social,
     giviniStart: 17 + previous.includes("Min's Trade Route"),
     giviniExtra: 6, // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
-    chapter1Bank: true,
+    chapter1Bank,
+    chapter1Steel,
   };
   const result = await workerInstance.optimalInvestments(params);
   callback(result);
@@ -60,6 +68,7 @@ const FirstRound = () => {
   }, []);
 
   const [loading, setLoading] = useState(false);
+  const [previous, setPrevious] = useState(defaultPrevious);
 
   const callback = (result) => {
     console.log(result);
@@ -72,31 +81,53 @@ const FirstRound = () => {
         previous: defaultPrevious,
         remainingPron: 5000,
         baseProfit: 2000000,
+        chapter1Bank: true,
+        chapter1Steel: false,
       }}
       onFinish={(values) => {
         setLoading(true);
         onFinish(values, callback);
       }}
+      onValuesChange={(_, allValues) => {
+        setPrevious(allValues.previous);
+      }}
     >
-      <Form.Item label={`I already own`} name="previous">
-        <Select options={toSelectOptions(possiblePrevious)} mode="multiple" />
-      </Form.Item>
-      <Form.Item
-        label={`ProN remaining at the end of chapter 3`}
-        name="remainingPron"
-        tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "ProN available".`}
-        rules={[{ required: true }]}
-      >
-        <InputNumber />
-      </Form.Item>
-      <Form.Item
-        label={`Total profit at the start of chapter 4`}
-        name="baseProfit"
-        tooltip={`In the Calculator, go to "First Tower Run and Investment and copy the value next to "Total ProN Return".`}
-        rules={[{ required: true }]}
-      >
-        <InputNumber />
-      </Form.Item>
+      <Card title={`The past`}>
+        <Form.Item
+          label={`ProN remaining at the end of chapter 3`}
+          name="remainingPron"
+          tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "ProN available".`}
+          rules={[{ required: true }]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          label={`Total profit at the start of chapter 4`}
+          name="baseProfit"
+          tooltip={`In the Calculator, go to "First Tower Run and Investment and copy the value next to "Total ProN Return".`}
+          rules={[{ required: true }]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          label={`Investments already bought during chapters 2/3`}
+          name="previous"
+        >
+          <Select options={toSelectOptions(possiblePrevious)} mode="multiple" />
+        </Form.Item>
+
+        {!previous.includes('Yhilini Bank Core Lender') && (
+          <Form.Item name="chapter1Bank" valuePropName="checked">
+            <Checkbox>{`You invested 25000 in Yhilin Bank during chapter 1.`}</Checkbox>
+          </Form.Item>
+        )}
+        {!previous.includes('Premium Steel Owner') && (
+          <Form.Item name="chapter1Steel" valuePropName="checked">
+            <Checkbox>{`You invested 20000 in Premium Steel during chapter 1.`}</Checkbox>
+          </Form.Item>
+        )}
+      </Card>
+
       <Form.Item
         label={`How many social points you wish to earn (at least) from investments`}
         name="social"

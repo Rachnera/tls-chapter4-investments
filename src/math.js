@@ -85,8 +85,6 @@ const comp = (value, context) => {
   return value || 0;
 };
 
-const sum = (list, key) => list.reduce((acc, obj) => acc + (obj[key] || 0), 0);
-
 const compute = (investment, context) => {
   const { price, profits } = investment;
 
@@ -103,28 +101,35 @@ export const combine = (investments, context = {}) => {
     investments,
   };
 
-  const computedInvestments = investments.map((investment) =>
-    compute(investment, updatedContext)
-  );
+  let price = 0;
+  let profits = 0;
+  let social = 0;
+  let computedInvestments = [];
 
-  const profits =
-    sum(computedInvestments, 'profits') +
-    specialInvestments.reduce((acc, specialInv) => {
-      if (context?.previousInvestments?.includes(specialInv.name)) {
-        return (
-          acc +
-          specialInv.profits(updatedContext) -
-          specialInv.profits({ ...updatedContext, investments: [] })
-        );
-      }
+  investments.forEach((investment) => {
+    const inv = compute(investment, updatedContext);
+    price += inv.price || 0;
+    profits += inv.profits || 0;
+    social += inv.social || 0;
+    computedInvestments.push(inv);
+  });
 
-      return acc;
-    }, 0);
+  profits += specialInvestments.reduce((acc, specialInv) => {
+    if (context?.previousInvestments?.includes(specialInv.name)) {
+      return (
+        acc +
+        specialInv.profits(updatedContext) -
+        specialInv.profits({ ...updatedContext, investments: [] })
+      );
+    }
+
+    return acc;
+  }, 0);
 
   return {
-    price: sum(computedInvestments, 'price'),
+    price,
     profits,
-    social: sum(computedInvestments, 'social'),
+    social,
     investments: computedInvestments,
   };
 };

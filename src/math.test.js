@@ -56,7 +56,6 @@ describe('combine', () => {
       price: 200000,
       profits: 25000,
       social: 1,
-      givini: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -88,7 +87,6 @@ describe('combine', () => {
       price: 350000,
       profits: 75000,
       social: 2,
-      givini: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -121,7 +119,6 @@ describe('combine', () => {
       price: 1350000,
       profits: 125000,
       social: 5,
-      givini: 0,
       investments: [
         {
           name: "Tradesmasher's Guild",
@@ -145,7 +142,6 @@ describe('combine', () => {
     ).toEqual({
       price: 100000,
       profits: 25000,
-      givini: 5,
       social: 0,
       investments: [
         {
@@ -165,7 +161,6 @@ describe('combine', () => {
     ).toEqual({
       price: 500000,
       profits: 200000,
-      givini: 5,
       social: 0,
       investments: [
         {
@@ -189,7 +184,6 @@ describe('combine', () => {
     ).toEqual({
       price: 1450000,
       profits: 400000,
-      givini: 20,
       social: 3,
       investments: [
         {
@@ -226,7 +220,7 @@ describe('best', () => {
         investments: invs('Imp Offices'),
         money: 1000000,
       })
-    ).toEqual({ price: 0, profits: 0, social: 0, givini: 0, investments: [] });
+    ).toEqual({ price: 0, profits: 0, social: 0, investments: [] });
   });
 
   test('best is buying cheapest thing', () => {
@@ -239,7 +233,6 @@ describe('best', () => {
       price: 100000,
       profits: 10000,
       social: 0,
-      givini: 0,
       investments: invs('Succubus Armorer'),
     });
   });
@@ -254,7 +247,6 @@ describe('best', () => {
       price: 350000,
       profits: 300000,
       social: 0,
-      givini: 5,
       investments: invs('Bank of Givini'),
     });
   });
@@ -269,7 +261,6 @@ describe('best', () => {
       price: 550000,
       profits: 310000,
       social: 0,
-      givini: 7,
       investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
@@ -285,7 +276,6 @@ describe('best', () => {
       price: 150000,
       profits: 50000,
       social: 1,
-      givini: 0,
       investments: invs('Booze Shack'),
     });
   });
@@ -309,7 +299,6 @@ describe('best', () => {
       price: 203500,
       profits: 60000,
       social: 0,
-      givini: 3,
       investments: [
         {
           name: 'Givini Smithing',
@@ -346,7 +335,6 @@ describe('best', () => {
       price: 250000,
       profits: 125000,
       social: 1,
-      givini: 0,
       investments: invs('Lonely Sailor Services'),
     });
   });
@@ -369,7 +357,6 @@ describe('best', () => {
       price: 450000,
       profits: 400000,
       social: 0,
-      givini: 10,
       investments: [
         {
           name: 'Givini Orc Merchant',

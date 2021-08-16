@@ -125,7 +125,6 @@ export const combine = (investments, context = {}) => {
     price: sum(computedInvestments, 'price'),
     profits,
     social: sum(computedInvestments, 'social'),
-    givini: sum(computedInvestments, 'givini'),
     investments: computedInvestments,
   };
 };
@@ -135,7 +134,6 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
     price: 0,
     profits: 0,
     social: 0,
-    givini: 0,
     investments: [],
   };
 

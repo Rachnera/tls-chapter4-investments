@@ -114,17 +114,13 @@ export const combine = (investments, context = {}) => {
     computedInvestments.push(inv);
   });
 
-  profits += specialInvestments.reduce((acc, specialInv) => {
+  specialInvestments.forEach((specialInv) => {
     if (context?.previousInvestments?.includes(specialInv.name)) {
-      return (
-        acc +
+      profits +=
         specialInv.profits(updatedContext) -
-        specialInv.profits({ ...updatedContext, investments: [] })
-      );
+        specialInv.profits({ ...updatedContext, investments: [] });
     }
-
-    return acc;
-  }, 0);
+  });
 
   return {
     price,

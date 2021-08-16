@@ -165,15 +165,22 @@ export const finest = ({
   social = 0,
   ...misc
 }) => {
+  const context = {
+    ...misc,
+    previousInvestments,
+  };
+
   return best({
     money,
     social,
-    investments: allInvestments.filter(
-      ({ name }) => !previousInvestments.includes(name)
-    ),
-    context: {
-      ...misc,
-      previousInvestments,
-    },
+    investments: allInvestments
+      .filter(({ name }) => !previousInvestments.includes(name))
+      .map((investment) => {
+        return {
+          ...investment,
+          price: comp(investment.price, context),
+        };
+      }),
+    context,
   });
 };

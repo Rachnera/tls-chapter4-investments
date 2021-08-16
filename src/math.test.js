@@ -4,6 +4,11 @@ import investments from './investments';
 const inv = (a) => investments.find(({ name }) => name === a);
 const invs = (...list) => list.map(inv);
 
+const giviniOrcMerchant = (context = {}) => {
+  const investment = inv('Givini Orc Merchant');
+  return { ...investment, price: investment.price(context) };
+};
+
 describe('combinations', () => {
   test('empty', () => {
     expect(combinations([])).toEqual([[]]);
@@ -137,9 +142,7 @@ describe('combine', () => {
     });
   });
   test('givini orc merchant', () => {
-    expect(
-      combine([investments.find(({ name }) => name === 'Givini Orc Merchant')])
-    ).toEqual({
+    expect(combine([giviniOrcMerchant()])).toEqual({
       price: 100000,
       profits: 25000,
       social: 0,
@@ -154,10 +157,7 @@ describe('combine', () => {
       ],
     });
     expect(
-      combine(
-        [investments.find(({ name }) => name === 'Givini Orc Merchant')],
-        { giviniStart: 50 }
-      )
+      combine([giviniOrcMerchant({ giviniStart: 50 })], { giviniStart: 50 })
     ).toEqual({
       price: 500000,
       profits: 200000,
@@ -175,9 +175,8 @@ describe('combine', () => {
     expect(
       combine(
         [
-          investments.find(({ name }) => name === 'Givini Orc Merchant'),
-          investments.find(({ name }) => name === 'Bank of Givini'),
-          investments.find(({ name }) => name === 'War Monument'),
+          giviniOrcMerchant({ giviniStart: 15 }),
+          ...invs('Bank of Givini', 'War Monument'),
         ],
         { giviniStart: 15 }
       )
@@ -342,11 +341,10 @@ describe('best', () => {
   test('it does not buy the statues if they are useless', () => {
     expect(
       best({
-        investments: invs(
-          'Givini Orc Merchant',
-          'Bank of Givini',
-          'Givini Banners + Givini Dragon Statue'
-        ),
+        investments: [
+          giviniOrcMerchant({ giviniStart: 18 }),
+          ...invs('Bank of Givini', 'Givini Banners + Givini Dragon Statue'),
+        ],
         money: 500000,
         context: {
           giviniStart: 18,
@@ -358,6 +356,7 @@ describe('best', () => {
       profits: 400000,
       social: 0,
       investments: [
+        inv('Bank of Givini'),
         {
           name: 'Givini Orc Merchant',
           price: 100000,
@@ -365,7 +364,6 @@ describe('best', () => {
           country: 'New Givini',
           givini: 5,
         },
-        inv('Bank of Givini'),
       ],
     });
   });

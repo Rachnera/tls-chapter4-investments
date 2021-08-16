@@ -97,15 +97,13 @@ export const combine = (investments, context = {}) => {
   let computedInvestments = [];
 
   investments.forEach((investment) => {
-    const invPrice = comp(investment.price, updatedContext);
     const invProfits = comp(investment.profits, updatedContext);
 
-    price += invPrice;
+    price += investment.price;
     profits += invProfits;
     social += investment.social || 0;
     computedInvestments.push({
       ...investment,
-      price: invPrice,
       profits: invProfits,
     });
   });

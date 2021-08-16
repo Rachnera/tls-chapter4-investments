@@ -1,10 +1,13 @@
 import './App.css';
 import DummyForm from './DummyForm';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 const App = () => {
   return (
     <div>
-      <h1>{`Economically optimal early chapter 4 investments`}</h1>
+      <Title>{`Economically optimal early chapter 4 investments`}</Title>
       <DummyForm />
     </div>
   );

@@ -1,6 +1,6 @@
 import './App.css';
-import DummyForm from './DummyForm';
 import { Typography } from 'antd';
+import FirstRound from './FirstRound';
 
 const { Title } = Typography;
 
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <Title>{`Economically optimal early chapter 4 investments`}</Title>
-      <DummyForm />
+      <FirstRound />
     </div>
   );
 };

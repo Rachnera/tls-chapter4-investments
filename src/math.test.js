@@ -354,6 +354,38 @@ describe('best', () => {
       investments: invs('Lonely Sailor Services'),
     });
   });
+
+  test('it does not buy the statues if they are useless', () => {
+    expect(
+      best({
+        investments: invs(
+          'Givini Orc Merchant',
+          'Bank of Givini',
+          'Givini Banners + Givini Dragon Statue'
+        ),
+        money: 500000,
+        context: {
+          baseStats: { givini: 18 },
+          additionalStats: { givini: 6 },
+        },
+      })
+    ).toEqual({
+      price: 450000,
+      profits: 400000,
+      social: 0,
+      givini: 10,
+      investments: [
+        {
+          name: 'Givini Orc Merchant',
+          price: 100000,
+          profits: 100000,
+          country: 'New Givini',
+          givini: 5,
+        },
+        inv('Bank of Givini'),
+      ],
+    });
+  });
 });
 
 describe('finest', () => {

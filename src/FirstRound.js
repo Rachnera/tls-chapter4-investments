@@ -1,4 +1,13 @@
-import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
+import {
+  Form,
+  Select,
+  InputNumber,
+  Button,
+  Card,
+  Checkbox,
+  Radio,
+  Alert,
+} from 'antd';
 import { useState, useEffect } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 
@@ -86,83 +95,107 @@ const FirstRound = () => {
   };
 
   return (
-    <Form
-      initialValues={initialValues}
-      onFinish={(values) => {
-        setLoading(true);
-        onFinish(values, callback);
-      }}
-      onValuesChange={(_, allValues) => {
-        setPrevious(allValues.previous);
-        setStrategy(allValues.strategy);
-      }}
-    >
-      <Card title={`The past`}>
-        <Form.Item
-          label={`ProN remaining at the end of chapter 3`}
-          name="remainingPron"
-          tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "ProN available".`}
-          rules={[{ required: true }]}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item
-          label={`Total profit at the start of chapter 4`}
-          name="baseProfit"
-          tooltip={`In the Calculator, go to "First Tower Run and Investment and copy the value next to "Total ProN Return".`}
-          rules={[{ required: true }]}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item
-          label={`Investments already bought during chapters 2/3`}
-          name="previous"
-        >
-          <Select options={toSelectOptions(possiblePrevious)} mode="multiple" />
-        </Form.Item>
-
-        {!previous.includes('Yhilini Bank Core Lender') && (
-          <Form.Item name="chapter1Bank" valuePropName="checked">
-            <Checkbox>{`You invested 25000 in Yhilin Bank during chapter 1.`}</Checkbox>
-          </Form.Item>
-        )}
-        {!previous.includes('Premium Steel Owner') && (
-          <Form.Item name="chapter1Steel" valuePropName="checked">
-            <Checkbox>{`You invested 20000 in Premium Steel during chapter 1.`}</Checkbox>
-          </Form.Item>
-        )}
-      </Card>
-
-      <Card title={`Strategy`}>
-        <Form.Item name="strategy" label={`Choose your strategy`}>
-          <Radio.Group
-            options={[
-              {
-                label: `Reach the threshold of 40 Social points in the most cost-effective way.`,
-                value: 'social',
-              },
-              { label: `Focus solely on maximizing profits.`, value: 'money' },
-            ]}
-          />
-        </Form.Item>
-        {strategy === 'social' && (
+    <>
+      <Alert
+        message={`Assumptions`}
+        description={
+          <>
+            <span>{`This tool takes for granted that:`}</span>
+            <ol>
+              <li>{`The Succubus Tower were visited during chapter 1.`}</li>
+              <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>
+              <li>{`New Givini Trade was bought at the end of chapter 3.`}</li>
+              <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>
+            </ol>
+          </>
+        }
+        type="info"
+        showIcon
+      />
+      <Form
+        initialValues={initialValues}
+        onFinish={(values) => {
+          setLoading(true);
+          onFinish(values, callback);
+        }}
+        onValuesChange={(_, allValues) => {
+          setPrevious(allValues.previous);
+          setStrategy(allValues.strategy);
+        }}
+      >
+        <Card title={`The past`}>
           <Form.Item
-            label={`Your social standing at the start of chapter 4`}
-            name="startingSocial"
-            tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
+            label={`ProN remaining at the end of chapter 3`}
+            name="remainingPron"
+            tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "ProN available".`}
             rules={[{ required: true }]}
           >
             <InputNumber />
           </Form.Item>
-        )}
-      </Card>
+          <Form.Item
+            label={`Total profit at the start of chapter 4`}
+            name="baseProfit"
+            tooltip={`In the Calculator, go to "First Tower Run and Investment and copy the value next to "Total ProN Return".`}
+            rules={[{ required: true }]}
+          >
+            <InputNumber />
+          </Form.Item>
+          <Form.Item
+            label={`Investments already bought during chapters 2/3`}
+            name="previous"
+          >
+            <Select
+              options={toSelectOptions(possiblePrevious)}
+              mode="multiple"
+            />
+          </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
-          {`Submit`}
-        </Button>
-      </Form.Item>
-    </Form>
+          {!previous.includes('Yhilini Bank Core Lender') && (
+            <Form.Item name="chapter1Bank" valuePropName="checked">
+              <Checkbox>{`You invested 25000 in Yhilin Bank during chapter 1.`}</Checkbox>
+            </Form.Item>
+          )}
+          {!previous.includes('Premium Steel Owner') && (
+            <Form.Item name="chapter1Steel" valuePropName="checked">
+              <Checkbox>{`You invested 20000 in Premium Steel during chapter 1.`}</Checkbox>
+            </Form.Item>
+          )}
+        </Card>
+
+        <Card title={`Strategy`}>
+          <Form.Item name="strategy" label={`Choose your strategy`}>
+            <Radio.Group
+              options={[
+                {
+                  label: `Reach the threshold of 40 Social points in the most cost-effective way.`,
+                  value: 'social',
+                },
+                {
+                  label: `Focus solely on maximizing profits.`,
+                  value: 'money',
+                },
+              ]}
+            />
+          </Form.Item>
+          {strategy === 'social' && (
+            <Form.Item
+              label={`Your social standing at the start of chapter 4`}
+              name="startingSocial"
+              tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
+              rules={[{ required: true }]}
+            >
+              <InputNumber />
+            </Form.Item>
+          )}
+        </Card>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            {`Submit`}
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
 };
 

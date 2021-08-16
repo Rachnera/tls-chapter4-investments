@@ -40,6 +40,7 @@ const onFinish = async (
     social,
     giviniStart: 17 + previous.includes("Min's Trade Route"),
     giviniExtra: 6, // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
+    chapter1Bank: true,
   };
   const result = await workerInstance.optimalInvestments(params);
   callback(result);

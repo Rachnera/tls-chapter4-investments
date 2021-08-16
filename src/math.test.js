@@ -405,6 +405,7 @@ describe('finest', () => {
         social: 6,
         giviniStart: 18 + 10,
         giviniExtra: 6,
+        chapter1Bank: true,
       });
 
       expect(
@@ -458,6 +459,7 @@ describe('finest', () => {
         money: 42500 + 3262000 - 460000 - 700000,
         giviniStart: 35,
         giviniExtra: 1,
+        chapter1Bank: true,
       });
 
       expect(

@@ -245,15 +245,17 @@ const investments = [
     profits: ({ investments, previousInvestments }) => {
       const guildScore =
         1 +
-        [...previousInvestments, ...investments].filter(({ name }) => {
-          return [
-            "Cee'Kan Shipping",
-            'Lonely Sailor Services',
-            'Givini Orc Merchant',
-            'Orcish Democracy',
-            'Orc Pools Upgrade',
-          ].includes(name);
-        }).length;
+        [...previousInvestments, ...investments.map(({ name }) => name)].filter(
+          (name) => {
+            return [
+              "Cee'Kan Shipping",
+              'Lonely Sailor Services',
+              'Givini Orc Merchant',
+              'Orcish Democracy',
+              'Orc Pools Upgrade',
+            ].includes(name);
+          }
+        ).length;
 
       if (guildScore < 2) {
         return 50000;

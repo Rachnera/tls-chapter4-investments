@@ -29,9 +29,9 @@
 
 import allInvestments from './investments';
 
-const specialInvestments = allInvestments
-  .filter(({ profits }) => typeof profits === 'function')
-  .map(({ name }) => name);
+const specialInvestments = allInvestments.filter(
+  ({ profits }) => typeof profits === 'function'
+);
 
 export const combinations = (investments, maxPrice) => {
   if (investments.length === 0) {
@@ -116,12 +116,8 @@ export const combine = (investments, context = {}) => {
 
   const profits =
     sum(computedInvestments, 'profits') +
-    specialInvestments.reduce((acc, specialInvName) => {
-      const specialInv = context?.previousInvestments?.find(
-        ({ name }) => name === specialInvName
-      );
-
-      if (specialInv) {
+    specialInvestments.reduce((acc, specialInv) => {
+      if (context?.previousInvestments?.includes(specialInv.name)) {
         return (
           acc +
           specialInv.profits(updatedContext) -
@@ -167,7 +163,7 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
 
 export const finest = ({
   money,
-  previousInvestments,
+  previousInvestments = [],
   social = 0,
   giviniStart = 0,
   giviniExtra = 0,
@@ -179,9 +175,7 @@ export const finest = ({
       ({ name }) => !previousInvestments.includes(name)
     ),
     context: {
-      previousInvestments: allInvestments.filter(({ name }) =>
-        (previousInvestments || []).includes(name)
-      ),
+      previousInvestments,
       baseStats: { givini: giviniStart },
       additionalStats: { givini: giviniExtra },
     },

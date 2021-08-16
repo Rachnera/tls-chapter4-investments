@@ -114,11 +114,7 @@ describe('combine', () => {
           investments.find(({ name }) => name === 'Orcish Democracy'),
         ],
         {
-          previousInvestments: [
-            {
-              name: 'Orc Pools Upgrade',
-            },
-          ],
+          previousInvestments: ['Orc Pools Upgrade'],
         }
       )
     ).toEqual({
@@ -306,7 +302,7 @@ describe('best', () => {
         context: {
           baseStats: { givini: 36 },
           additionalStats: { givini: 1 },
-          previousInvestments: invs('Givini Orc Merchant'),
+          previousInvestments: ['Givini Orc Merchant'],
         },
       })
     ).toEqual({
@@ -339,11 +335,11 @@ describe('best', () => {
         investments: invs('Lonely Sailor Services', 'Gasm Falls Trade'),
         money: 300000,
         context: {
-          previousInvestments: invs(
+          previousInvestments: [
             "Tradesmasher's Guild",
             'Orc Pools Upgrade',
-            'Orcish Democracy'
-          ),
+            'Orcish Democracy',
+          ],
         },
       })
     ).toEqual({

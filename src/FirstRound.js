@@ -13,9 +13,11 @@ const possiblePrevious = [
   'Denmiel Archives',
   'Eustrin Guild',
   'Gasm Falls Trade',
+  'Premium Steel Owner',
 ];
 
 const defaultPrevious = [
+  'Premium Steel Owner',
   "Min's Trade Route",
   'Yhilini Succubi Trade',
   'Eustrin Guild',

@@ -51,6 +51,12 @@ const investments = [
     country: 'Ari-Yhilina',
   },
   {
+    name: 'Premium Steel Owner',
+    price: ({ chapter1Steel }) => (!!chapter1Steel ? 75000 : 100000),
+    profits: 10000,
+    country: 'Ari-Yhilina',
+  },
+  {
     name: 'Yhilini Bank Core Lender',
     price: ({ chapter1Bank }) => (!!chapter1Bank ? 450000 : 500000),
     profits: 150000,

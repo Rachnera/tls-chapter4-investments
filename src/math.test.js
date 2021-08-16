@@ -388,6 +388,8 @@ describe('finest', () => {
   describe('my personal use case', () => {
     test('first round', () => {
       const previousInvestments = [
+        'Premium Steel Owner',
+
         'Denmiel Mushrooms',
         'Eustrin Guild',
         "Min's Trade Route",
@@ -430,6 +432,8 @@ describe('finest', () => {
 
     test('second round', () => {
       const previousInvestments = [
+        'Premium Steel Owner',
+
         'Denmiel Mushrooms',
         'Eustrin Guild',
         "Min's Trade Route",

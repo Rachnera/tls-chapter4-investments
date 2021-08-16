@@ -1,4 +1,4 @@
-import { Form, Select, InputNumber, Button, Card, Checkbox } from 'antd';
+import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
 import { useState, useEffect } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 
@@ -16,12 +16,20 @@ const possiblePrevious = [
   'Premium Steel Owner',
 ];
 
-const defaultPrevious = [
-  'Premium Steel Owner',
-  "Min's Trade Route",
-  'Yhilini Succubi Trade',
-  'Eustrin Guild',
-];
+const initialValues = {
+  previous: [
+    'Premium Steel Owner',
+    "Min's Trade Route",
+    'Yhilini Succubi Trade',
+    'Eustrin Guild',
+  ],
+  remainingPron: 5000,
+  baseProfit: 2000000,
+  chapter1Bank: true,
+  chapter1Steel: false,
+  strategy: 'social',
+  startingSocial: 34,
+};
 
 const toSelectOptions = (list) => {
   return [...list].sort().map((value) => {
@@ -35,18 +43,19 @@ const toSelectOptions = (list) => {
 const onFinish = async (
   {
     previous = [],
-    social = 0,
     remainingPron,
     baseProfit,
     chapter1Bank,
     chapter1Steel,
+    strategy,
+    startingSocial,
   },
   callback
 ) => {
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
-    social,
+    social: strategy === 'social' ? 40 - startingSocial : 0,
     giviniStart: 17 + previous.includes("Min's Trade Route"),
     giviniExtra: 6, // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
     chapter1Bank,
@@ -68,7 +77,8 @@ const FirstRound = () => {
   }, []);
 
   const [loading, setLoading] = useState(false);
-  const [previous, setPrevious] = useState(defaultPrevious);
+  const [previous, setPrevious] = useState(initialValues.previous);
+  const [strategy, setStrategy] = useState(initialValues.strategy);
 
   const callback = (result) => {
     console.log(result);
@@ -77,19 +87,14 @@ const FirstRound = () => {
 
   return (
     <Form
-      initialValues={{
-        previous: defaultPrevious,
-        remainingPron: 5000,
-        baseProfit: 2000000,
-        chapter1Bank: true,
-        chapter1Steel: false,
-      }}
+      initialValues={initialValues}
       onFinish={(values) => {
         setLoading(true);
         onFinish(values, callback);
       }}
       onValuesChange={(_, allValues) => {
         setPrevious(allValues.previous);
+        setStrategy(allValues.strategy);
       }}
     >
       <Card title={`The past`}>
@@ -128,12 +133,30 @@ const FirstRound = () => {
         )}
       </Card>
 
-      <Form.Item
-        label={`How many social points you wish to earn (at least) from investments`}
-        name="social"
-      >
-        <InputNumber />
-      </Form.Item>
+      <Card title={`Strategy`}>
+        <Form.Item name="strategy" label={`Choose your strategy`}>
+          <Radio.Group
+            options={[
+              {
+                label: `Reach the threshold of 40 Social points in the most cost-effective way.`,
+                value: 'social',
+              },
+              { label: `Focus solely on maximizing profits.`, value: 'money' },
+            ]}
+          />
+        </Form.Item>
+        {strategy === 'social' && (
+          <Form.Item
+            label={`Your social standing at the start of chapter 4`}
+            name="startingSocial"
+            tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
+            rules={[{ required: true }]}
+          >
+            <InputNumber />
+          </Form.Item>
+        )}
+      </Card>
+
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>
           {`Submit`}

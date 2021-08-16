@@ -164,3 +164,26 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
 
   return result;
 };
+
+export const finest = ({
+  money,
+  previousInvestments,
+  social = 0,
+  giviniStart = 0,
+  giviniExtra = 0,
+}) => {
+  return best({
+    money,
+    social,
+    investments: allInvestments.filter(
+      ({ name }) => !previousInvestments.includes(name)
+    ),
+    context: {
+      previousInvestments: allInvestments.filter(({ name }) =>
+        (previousInvestments || []).includes(name)
+      ),
+      baseStats: { givini: giviniStart },
+      additionalStats: { givini: giviniExtra },
+    },
+  });
+};

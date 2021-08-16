@@ -1,4 +1,4 @@
-import { combinations, combine, best } from './math';
+import { combinations, combine, best, finest } from './math';
 import investments from './investments';
 
 const inv = (a) => investments.find(({ name }) => name === a);
@@ -354,10 +354,12 @@ describe('best', () => {
       investments: invs('Lonely Sailor Services'),
     });
   });
+});
 
+describe('finest', () => {
   describe('my personal use case', () => {
     test('first round', () => {
-      const previous = [
+      const previousInvestments = [
         'Denmiel Mushrooms',
         'Eustrin Guild',
         "Min's Trade Route",
@@ -368,23 +370,13 @@ describe('best', () => {
         'Bank of Givini',
       ];
 
-      const available = investments.filter(
-        ({ name }) => !previous.includes(name)
-      );
-      const previousInvestments = investments.filter(({ name }) =>
-        previous.includes(name)
-      );
-
-      const result = best({
-        investments: available,
+      const result = finest({
+        previousInvestments,
         // Remaining + Profits - Already invested
         money: 7500 + 2435000 - 450000,
-        context: {
-          baseStats: { givini: 18 + 10 },
-          additionalStats: { givini: 6 },
-          previousInvestments,
-        },
         social: 6,
+        giviniStart: 18 + 10,
+        giviniExtra: 6,
       });
 
       expect(
@@ -408,7 +400,7 @@ describe('best', () => {
     });
 
     test('second round', () => {
-      const previous = [
+      const previousInvestments = [
         'Denmiel Mushrooms',
         'Eustrin Guild',
         "Min's Trade Route",
@@ -432,22 +424,12 @@ describe('best', () => {
         'Orc Pools Upgrade',
       ];
 
-      const available = investments.filter(
-        ({ name }) => !previous.includes(name)
-      );
-      const previousInvestments = investments.filter(({ name }) =>
-        previous.includes(name)
-      );
-
-      const result = best({
-        investments: available,
+      const result = finest({
+        previousInvestments,
         // Remaining + Profits - Cost of (unlisted) magic/military upgrades - Cost of bribing orc vote
         money: 42500 + 3262000 - 460000 - 700000,
-        context: {
-          baseStats: { givini: 35 },
-          additionalStats: { givini: 1 },
-          previousInvestments,
-        },
+        giviniStart: 35,
+        giviniExtra: 1,
       });
 
       expect(

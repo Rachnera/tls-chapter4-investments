@@ -104,9 +104,7 @@ const compute = (investment, context) => {
 
 export const combine = (investments, context = {}) => {
   const updatedContext = {
-    previousInvestments: context.previousInvestments,
-    baseStats: context.baseStats,
-    additionalStats: context.additionalStats,
+    ...context,
     investments,
   };
 
@@ -165,8 +163,7 @@ export const finest = ({
   money,
   previousInvestments = [],
   social = 0,
-  giviniStart = 0,
-  giviniExtra = 0,
+  ...misc
 }) => {
   return best({
     money,
@@ -175,9 +172,8 @@ export const finest = ({
       ({ name }) => !previousInvestments.includes(name)
     ),
     context: {
+      ...misc,
       previousInvestments,
-      baseStats: { givini: giviniStart },
-      additionalStats: { givini: giviniExtra },
     },
   });
 };

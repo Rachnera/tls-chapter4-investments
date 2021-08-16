@@ -160,7 +160,7 @@ describe('combine', () => {
     expect(
       combine(
         [investments.find(({ name }) => name === 'Givini Orc Merchant')],
-        { baseStats: { givini: 50 } }
+        { giviniStart: 50 }
       )
     ).toEqual({
       price: 500000,
@@ -184,7 +184,7 @@ describe('combine', () => {
           investments.find(({ name }) => name === 'Bank of Givini'),
           investments.find(({ name }) => name === 'War Monument'),
         ],
-        { baseStats: { givini: 15 } }
+        { giviniStart: 15 }
       )
     ).toEqual({
       price: 1450000,
@@ -300,8 +300,8 @@ describe('best', () => {
         ),
         money: 300000,
         context: {
-          baseStats: { givini: 36 },
-          additionalStats: { givini: 1 },
+          giviniStart: 36,
+          giviniExtra: 1,
           previousInvestments: ['Givini Orc Merchant'],
         },
       })
@@ -361,8 +361,8 @@ describe('best', () => {
         ),
         money: 500000,
         context: {
-          baseStats: { givini: 18 },
-          additionalStats: { givini: 6 },
+          giviniStart: 18,
+          giviniExtra: 6,
         },
       })
     ).toEqual({

@@ -150,8 +150,7 @@ const investments = [
   {
     name: 'Givini Orc Merchant',
     country: 'New Givini',
-    price: ({ baseStats }) => {
-      const newGiviniScore = baseStats?.givini || 0;
+    price: ({ giviniStart: newGiviniScore = 0 }) => {
       if (newGiviniScore < 20) {
         return 100000;
       }
@@ -166,10 +165,10 @@ const investments = [
       }
       return 500000;
     },
-    profits: ({ baseStats, additionalStats, investments }) => {
+    profits: ({ giviniStart = 0, giviniExtra = 0, investments }) => {
       const newGiviniScore =
-        (baseStats?.givini || 0) +
-        (additionalStats?.givini || 0) +
+        giviniStart +
+        giviniExtra +
         investments.reduce((acc, investment) => {
           return acc + (investment?.givini || 0);
         }, 0);

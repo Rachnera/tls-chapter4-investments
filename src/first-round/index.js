@@ -2,23 +2,27 @@ import { useState } from 'react';
 import Loading from './Loading';
 import Disclaimer from './Disclaimer';
 import Form from './Form';
+import Result from './Result';
 
 const onFinish = async ({
-  values: {
-    previous = [],
-    remainingPron,
-    baseProfit,
-    strategy,
-    startingSocial,
-    ...misc
-  },
+  values,
   workerInstance,
   setLoading,
   setCombinationsCount,
   setProgress,
   setInvestmentsCount,
   setPreprogress,
+  setResult,
 }) => {
+  const {
+    previous = [],
+    remainingPron,
+    baseProfit,
+    strategy,
+    startingSocial,
+    ...misc
+  } = values;
+
   setLoading(true);
 
   const params = {
@@ -51,7 +55,10 @@ const onFinish = async ({
 
   await workerInstance.clean();
 
-  console.log(result);
+  setResult({
+    input: values,
+    output: result,
+  });
 
   setLoading(false);
   setCombinationsCount(undefined);
@@ -66,6 +73,7 @@ const FirstRound = ({ workerInstance }) => {
   const [progress, setProgress] = useState(0);
   const [investmentsCount, setInvestmentsCount] = useState();
   const [preprogress, setPreprogress] = useState(0);
+  const [result, setResult] = useState();
 
   if (!workerInstance) {
     return null;
@@ -84,6 +92,7 @@ const FirstRound = ({ workerInstance }) => {
             workerInstance,
             setPreprogress,
             setInvestmentsCount,
+            setResult,
           });
         }}
         loading={loading}
@@ -96,6 +105,7 @@ const FirstRound = ({ workerInstance }) => {
           investmentsCount={investmentsCount}
         />
       )}
+      {result && <Result input={result.input} output={result.output} />}
     </>
   );
 };

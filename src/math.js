@@ -45,11 +45,10 @@ const buildCheaperThan = (investments) => {
 
 const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   if (!combsNMinusOne) {
-    return [[[[], 0]], [[]]];
+    return [[[], 0]];
   }
 
   let withPrice = [];
-  let withoutPrice = [];
 
   for (let i = 0; i < combsNMinusOne.length; i++) {
     const [invs, cost] = combsNMinusOne[i];
@@ -64,13 +63,11 @@ const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
         continue;
       }
 
-      const candidate = [...invs, inv];
-      withPrice.push([candidate, totalCost]);
-      withoutPrice.push(candidate);
+      withPrice.push([[...invs, inv], totalCost]);
     }
   }
 
-  return [withPrice, withoutPrice];
+  return withPrice;
 };
 
 export const combinations = (investments, maxPrice = Infinity) => {
@@ -79,16 +76,14 @@ export const combinations = (investments, maxPrice = Infinity) => {
   let combsNMinusOne;
   let results = [];
   for (let s = 0; s <= investments.length; s++) {
-    const [withPrice, withoutPrice] = combsN({
+    combsNMinusOne = combsN({
       combsNMinusOne,
       maxPrice,
       cheaperThan,
     });
-
-    for (let j = 0; j < withoutPrice.length; j++) {
-      results.push(withoutPrice[j]);
+    for (let j = 0; j < combsNMinusOne.length; j++) {
+      results.push(combsNMinusOne[j][0]);
     }
-    combsNMinusOne = withPrice;
   }
 
   return results;

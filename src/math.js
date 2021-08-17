@@ -124,6 +124,17 @@ export const combine = (investments, context = {}) => {
   };
 };
 
+export const isBetter = ({ current, candidate, money, social }) => {
+  if (candidate.price > money || candidate.social < social) {
+    return false;
+  }
+
+  return (
+    candidate.profits > current.profits ||
+    (candidate.profits === current.profits && candidate.price < current.price)
+  );
+};
+
 export const best = ({ money, investments, context = {}, social = 0 }) => {
   let result = {
     price: 0,
@@ -134,20 +145,15 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
 
   combinations(investments, money).forEach((comb) => {
     const candidate = combine(comb, context);
-    if (candidate.price <= money && candidate.social >= social) {
-      if (
-        candidate.profits > result.profits ||
-        (candidate.profits === result.profits && candidate.price < result.price)
-      ) {
-        result = candidate;
-      }
+    if (isBetter({ current: result, candidate, money, social })) {
+      result = candidate;
     }
   });
 
   return result;
 };
 
-export const finest = ({
+export const buildParams = ({
   money,
   previousInvestments = [],
   social = 0,
@@ -158,7 +164,7 @@ export const finest = ({
     previousInvestments,
   };
 
-  return best({
+  return {
     money,
     social,
     investments: allInvestments
@@ -170,5 +176,9 @@ export const finest = ({
         };
       }),
     context,
-  });
+  };
+};
+
+export const finest = (params) => {
+  return best(buildParams(params));
 };

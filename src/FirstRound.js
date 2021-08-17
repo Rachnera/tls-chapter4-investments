@@ -7,6 +7,8 @@ import {
   Checkbox,
   Radio,
   Alert,
+  Spin,
+  Progress,
 } from 'antd';
 import { useState, useEffect } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
@@ -49,29 +51,46 @@ const toSelectOptions = (list) => {
   });
 };
 
-const onFinish = async (
-  {
+const onFinish = async ({
+  values: {
     previous = [],
     remainingPron,
     baseProfit,
-    chapter1Bank,
-    chapter1Steel,
     strategy,
     startingSocial,
+    ...misc
   },
-  callback
-) => {
+  setLoading,
+  setCombinationsCount,
+  setProgress,
+}) => {
+  setLoading(true);
+
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
     social: strategy === 'social' ? 40 - startingSocial : 0,
     giviniStart: 17 + previous.includes("Min's Trade Route"),
     giviniExtra: 6, // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
-    chapter1Bank,
-    chapter1Steel,
+    ...misc,
   };
-  const result = await workerInstance.optimalInvestments(params);
-  callback(result);
+
+  const combinationsCount = await workerInstance.prepare(params);
+  setCombinationsCount(combinationsCount);
+  setProgress(0);
+  const batchSize = 10000;
+  let result;
+  for (let i = 0; i < Math.ceil(combinationsCount / batchSize); i++) {
+    const end = Math.min((i + 1) * batchSize, combinationsCount);
+    result = await workerInstance.process(i * batchSize, end);
+    setProgress(end / combinationsCount);
+  }
+
+  console.log(result);
+
+  setLoading(false);
+  setCombinationsCount(undefined);
+  setProgress(undefined);
 };
 
 let workerInstance;
@@ -88,11 +107,8 @@ const FirstRound = () => {
   const [loading, setLoading] = useState(false);
   const [previous, setPrevious] = useState(initialValues.previous);
   const [strategy, setStrategy] = useState(initialValues.strategy);
-
-  const callback = (result) => {
-    console.log(result);
-    setLoading(false);
-  };
+  const [combinationsCount, setCombinationsCount] = useState();
+  const [progress, setProgress] = useState();
 
   return (
     <>
@@ -115,8 +131,7 @@ const FirstRound = () => {
       <Form
         initialValues={initialValues}
         onFinish={(values) => {
-          setLoading(true);
-          onFinish(values, callback);
+          onFinish({ values, setLoading, setCombinationsCount, setProgress });
         }}
         onValuesChange={(_, allValues) => {
           setPrevious(allValues.previous);
@@ -195,6 +210,25 @@ const FirstRound = () => {
           </Button>
         </Form.Item>
       </Form>
+      {loading && (
+        <Card>
+          {!!combinationsCount ? (
+            <>
+              <p>{`Processing ${combinationsCount.toLocaleString(
+                'en-US'
+              )} possibilities…`}</p>
+              {progress !== undefined && (
+                <Progress percent={Math.round(progress * 10000) / 100} />
+              )}
+            </>
+          ) : (
+            <>
+              <p>{`Loading the loading bar…`}</p>
+              <Spin />
+            </>
+          )}
+        </Card>
+      )}
     </>
   );
 };

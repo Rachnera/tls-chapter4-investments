@@ -1,4 +1,4 @@
-import { Card, Progress, Divider } from 'antd';
+import { Progress, Divider, Modal } from 'antd';
 
 const Loading = ({
   combinationsCount,
@@ -11,11 +11,13 @@ const Loading = ({
   }
 
   return (
-    <Card>
+    <Modal visible={true} centered={true} closable={false} footer={null}>
       <div>
-        <p>{`Prefiltering 2^${investmentsCount}: ${(
-          2 ** investmentsCount
-        ).toLocaleString('en-US')} possibilities…`}</p>
+        <p>
+          {`Prefiltering ${(2 ** investmentsCount).toLocaleString('en-US')} (2`}
+          <sup>{investmentsCount}</sup>
+          {`) possibilities…`}
+        </p>
         <Progress percent={Math.round(preprogress * 100)} />
       </div>
       {!!combinationsCount && (
@@ -29,7 +31,7 @@ const Loading = ({
           </div>
         </>
       )}
-    </Card>
+    </Modal>
   );
 };
 

@@ -48,14 +48,14 @@ export const combinations = (investments, maxPrice = Infinity) => {
   let results = [[]];
 
   let resultPerSize = [];
-  resultPerSize[0] = [{ invs: [], cost: 0 }];
+  resultPerSize[0] = [[[], 0]];
 
   for (let s = 1; s <= investments.length; s++) {
     resultPerSize[s] = [];
 
     const prefixes = resultPerSize[s - 1];
     for (let i = 0; i < prefixes.length; i++) {
-      const { invs, cost } = prefixes[i];
+      const [invs, cost] = prefixes[i];
 
       const lastName = invs[invs.length - 1]?.name;
       const suffixes = cheaperThan[lastName];
@@ -68,7 +68,7 @@ export const combinations = (investments, maxPrice = Infinity) => {
         }
 
         const candidate = [...invs, inv];
-        resultPerSize[s].push({ invs: candidate, cost: totalCost });
+        resultPerSize[s].push([candidate, totalCost]);
         results.push(candidate);
       }
     }

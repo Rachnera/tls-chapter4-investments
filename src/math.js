@@ -29,10 +29,6 @@ const specialInvestments = allInvestments.filter(
 );
 
 export const combinations = (investments, maxPrice = Infinity) => {
-  if (investments.length === 0) {
-    return [[]];
-  }
-
   const sortedInvestments = [...investments].sort(
     ({ price: a = 0 }, { price: b = 0 }) => {
       return b - a;

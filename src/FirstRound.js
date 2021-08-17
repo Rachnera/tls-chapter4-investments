@@ -10,8 +10,7 @@ import {
   Spin,
   Progress,
 } from 'antd';
-import { useState, useEffect } from 'react';
-import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
+import { useState } from 'react';
 
 const possiblePrevious = [
   "Min's Trade Route",
@@ -60,6 +59,7 @@ const onFinish = async ({
     startingSocial,
     ...misc
   },
+  workerInstance,
   setLoading,
   setCombinationsCount,
   setProgress,
@@ -93,22 +93,16 @@ const onFinish = async ({
   setProgress(undefined);
 };
 
-let workerInstance;
-
-const FirstRound = () => {
-  useEffect(() => {
-    workerInstance = worker();
-
-    return () => {
-      workerInstance.terminate();
-    };
-  }, []);
-
+const FirstRound = ({ workerInstance }) => {
   const [loading, setLoading] = useState(false);
   const [previous, setPrevious] = useState(initialValues.previous);
   const [strategy, setStrategy] = useState(initialValues.strategy);
   const [combinationsCount, setCombinationsCount] = useState();
   const [progress, setProgress] = useState();
+
+  if (!workerInstance) {
+    return null;
+  }
 
   return (
     <>
@@ -131,7 +125,13 @@ const FirstRound = () => {
       <Form
         initialValues={initialValues}
         onFinish={(values) => {
-          onFinish({ values, setLoading, setCombinationsCount, setProgress });
+          onFinish({
+            values,
+            setLoading,
+            setCombinationsCount,
+            setProgress,
+            workerInstance,
+          });
         }}
         onValuesChange={(_, allValues) => {
           setPrevious(allValues.previous);

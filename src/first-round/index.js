@@ -49,19 +49,23 @@ const onFinish = async ({
     setProgress(end / combinationsCount);
   }
 
+  await workerInstance.clean();
+
   console.log(result);
 
   setLoading(false);
   setCombinationsCount(undefined);
-  setProgress(undefined);
+  setInvestmentsCount(undefined);
+  setProgress(0);
+  setPreprogress(0);
 };
 
 const FirstRound = ({ workerInstance }) => {
   const [loading, setLoading] = useState(false);
   const [combinationsCount, setCombinationsCount] = useState();
-  const [progress, setProgress] = useState();
+  const [progress, setProgress] = useState(0);
   const [investmentsCount, setInvestmentsCount] = useState();
-  const [preprogress, setPreprogress] = useState();
+  const [preprogress, setPreprogress] = useState(0);
 
   if (!workerInstance) {
     return null;

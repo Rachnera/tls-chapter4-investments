@@ -18,18 +18,12 @@ To work around that issue, the following algorithm is used to build up a more ma
 
 Example with 4 investments:
 
-Bank of Givini -> 350,000
-Denmiel Mushrooms -> 105,000
-Imp Offices -> 100,000
-War Monument -> 1,000,000
+Bank of Givini -> 350,000; Denmiel Mushrooms -> 105,000; Imp Offices -> 100,000; War Monument -> 1,000,000
 
 Budget: 500,000
 
 Sorted:
-War Monument
-Bank of Givini
-Denmiel Mushrooms
-Imp Offices
+War Monument > Bank of Givini > Denmiel Mushrooms > Imp Offices
 
 size = 0
 

@@ -45,9 +45,11 @@ export const combinations = (investments, maxPrice) => {
   }
 
   let resultPerSize = [];
-  resultPerSize[0] = [[]];
 
+  resultPerSize[0] = [[]];
   resultPerSize[1] = sortedInvestments.map((investment) => [investment]);
+
+  let results = [...resultPerSize[0], ...resultPerSize[1]];
 
   for (let s = 2; s <= investments.length; s++) {
     resultPerSize[s] = [];
@@ -67,12 +69,13 @@ export const combinations = (investments, maxPrice) => {
           return;
         }
 
-        resultPerSize[s].push([...partialList, investment]);
+        resultPerSize[s].push(candidate);
+        results.push(candidate);
       });
     });
   }
 
-  return resultPerSize.flat(1);
+  return results;
 };
 
 const comp = (value, context) => {

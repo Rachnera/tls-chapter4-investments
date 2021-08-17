@@ -84,7 +84,10 @@ export const combinations = (investments, maxPrice = Infinity) => {
       maxPrice,
       cheaperThan,
     });
-    results = [...results, ...withoutPrice];
+
+    for (let j = 0; j < withoutPrice.length; j++) {
+      results.push(withoutPrice[j]);
+    }
     combsNMinusOne = withPrice;
   }
 

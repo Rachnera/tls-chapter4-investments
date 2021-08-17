@@ -28,6 +28,7 @@ const initialValues = {
   chapter1Steel: false,
   strategy: 'social',
   startingSocial: 34,
+  chapter3Infrastructure: true,
 };
 
 const toSelectOptions = (list) => {
@@ -84,6 +85,14 @@ const CustomForm = ({ onFinish, loading }) => {
         {!previous.includes('Premium Steel Owner') && (
           <Form.Item name="chapter1Steel" valuePropName="checked">
             <Checkbox>{`You invested 20000 in Premium Steel during chapter 1.`}</Checkbox>
+          </Form.Item>
+        )}
+        {!(
+          previous.includes('Yhilini Succubi Trade') &&
+          previous.includes('Mercenary Offices')
+        ) && (
+          <Form.Item name="chapter3Infrastructure" valuePropName="checked">
+            <Checkbox>{`You funded Yhilin Infrastructure during chapter 3.`}</Checkbox>
           </Form.Item>
         )}
       </Card>

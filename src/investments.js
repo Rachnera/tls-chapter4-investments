@@ -40,7 +40,8 @@ const investments = [
   },
   {
     name: 'Yhilini Succubi Trade',
-    price: 400000,
+    price: ({ chapter3Infrastructure }) =>
+      chapter3Infrastructure ? 400000 : 550000,
     profits: 200000,
     country: 'Ari-Yhilina',
   },
@@ -64,7 +65,8 @@ const investments = [
   },
   {
     name: 'Mercenary Offices',
-    price: 150000,
+    price: ({ chapter3Infrastructure }) =>
+      chapter3Infrastructure ? 150000 : 250000,
     profits: 15000,
     country: 'Ari-Yhilina',
     social: 2,

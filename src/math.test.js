@@ -393,6 +393,7 @@ describe('finest', () => {
         giviniStart: 18 + 10,
         giviniExtra: 6,
         chapter1Bank: true,
+        chapter3Infrastructure: true,
       });
 
       expect(

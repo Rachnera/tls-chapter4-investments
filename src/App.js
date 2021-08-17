@@ -1,5 +1,5 @@
 import './App.css';
-import FirstRound from './FirstRound';
+import FirstRound from './first-round';
 import { useEffect, useState } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 

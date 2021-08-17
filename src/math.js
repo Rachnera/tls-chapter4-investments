@@ -39,9 +39,9 @@ export const combinations = (investments, maxPrice) => {
     }
   );
 
-  let bigger = {};
+  let cheaperThan = {};
   for (let i = 0; i < sortedInvestments.length; i++) {
-    bigger[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
+    cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
 
   let resultPerSize = [];
@@ -54,11 +54,14 @@ export const combinations = (investments, maxPrice) => {
   for (let s = 2; s <= investments.length; s++) {
     resultPerSize[s] = [];
 
-    const previous = resultPerSize[s - 1];
-    previous.forEach((partialList) => {
-      const last = partialList[partialList.length - 1];
-      bigger[last.name].forEach((investment) => {
-        const candidate = [...partialList, investment];
+    const prefixes = resultPerSize[s - 1];
+    for (let i = 0; i < prefixes.length; i++) {
+      const partialList = prefixes[i];
+
+      const lastName = partialList[partialList.length - 1]['name'];
+      const suffixes = cheaperThan[lastName];
+      for (let j = 0; j < suffixes.length; j++) {
+        const candidate = [...partialList, suffixes[j]];
 
         if (
           maxPrice &&
@@ -66,13 +69,13 @@ export const combinations = (investments, maxPrice) => {
             return acc + price;
           }, 0) > maxPrice
         ) {
-          return;
+          continue;
         }
 
         resultPerSize[s].push(candidate);
         results.push(candidate);
-      });
-    });
+      }
+    }
   }
 
   return results;

@@ -35,9 +35,6 @@ export const combinations = (investments, maxPrice) => {
 
   const sortedInvestments = [...investments].sort(
     ({ price: a = 0 }, { price: b = 0 }) => {
-      if (!Number.isInteger(a) || !Number.isInteger(b)) {
-        return 0;
-      }
       return b - a;
     }
   );
@@ -64,7 +61,7 @@ export const combinations = (investments, maxPrice) => {
         if (
           maxPrice &&
           candidate.reduce((acc, { price = 0 }) => {
-            return acc + (Number.isInteger(price) ? price : 0);
+            return acc + price;
           }, 0) > maxPrice
         ) {
           return;

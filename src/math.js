@@ -28,7 +28,7 @@ const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
-export const combinations = (investments, maxPrice) => {
+export const combinations = (investments, maxPrice = Infinity) => {
   if (investments.length === 0) {
     return [[]];
   }
@@ -44,35 +44,34 @@ export const combinations = (investments, maxPrice) => {
     cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
 
+  let results = [[], ...sortedInvestments.map((investment) => [investment])];
+
   let resultPerSize = [];
 
-  resultPerSize[0] = [[]];
-  resultPerSize[1] = sortedInvestments.map((investment) => [investment]);
-
-  let results = [...resultPerSize[0], ...resultPerSize[1]];
+  resultPerSize[0] = [{ invs: [], cost: 0 }];
+  resultPerSize[1] = sortedInvestments.map((investment) => {
+    return { invs: [investment], cost: investment.price };
+  });
 
   for (let s = 2; s <= investments.length; s++) {
     resultPerSize[s] = [];
 
     const prefixes = resultPerSize[s - 1];
     for (let i = 0; i < prefixes.length; i++) {
-      const partialList = prefixes[i];
+      const { invs, cost } = prefixes[i];
 
-      const lastName = partialList[partialList.length - 1]['name'];
+      const lastName = invs[invs.length - 1]['name'];
       const suffixes = cheaperThan[lastName];
       for (let j = 0; j < suffixes.length; j++) {
-        const candidate = [...partialList, suffixes[j]];
+        const inv = suffixes[j];
+        const totalCost = cost + inv.price;
 
-        if (
-          maxPrice &&
-          candidate.reduce((acc, { price = 0 }) => {
-            return acc + price;
-          }, 0) > maxPrice
-        ) {
+        if (totalCost > maxPrice) {
           continue;
         }
 
-        resultPerSize[s].push(candidate);
+        const candidate = [...invs, inv];
+        resultPerSize[s].push({ invs: candidate, cost: totalCost });
         results.push(candidate);
       }
     }

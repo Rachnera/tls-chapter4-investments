@@ -28,7 +28,7 @@ const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
-const buildCheaperThan = (investments) => {
+export const buildCheaperThan = (investments) => {
   const sortedInvestments = [...investments].sort(
     ({ price: a = 0 }, { price: b = 0 }) => {
       return b - a;
@@ -43,7 +43,7 @@ const buildCheaperThan = (investments) => {
   return cheaperThan;
 };
 
-const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
+export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   if (!combsNMinusOne) {
     return [[[], 0]];
   }

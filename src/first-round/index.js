@@ -16,6 +16,8 @@ const onFinish = async ({
   setLoading,
   setCombinationsCount,
   setProgress,
+  setInvestmentsCount,
+  setPreprogress,
 }) => {
   setLoading(true);
 
@@ -28,7 +30,15 @@ const onFinish = async ({
     ...misc,
   };
 
-  const combinationsCount = await workerInstance.prepare(params);
+  const investmentsCount = await workerInstance.prepare(params);
+  setInvestmentsCount(investmentsCount);
+  setPreprogress(0);
+  let combinationsCount = 0;
+  for (let i = 0; i <= investmentsCount; i++) {
+    combinationsCount += await workerInstance.preprocess();
+    setPreprogress(i / investmentsCount);
+  }
+
   setCombinationsCount(combinationsCount);
   setProgress(0);
   const batchSize = 10000;
@@ -50,6 +60,8 @@ const FirstRound = ({ workerInstance }) => {
   const [loading, setLoading] = useState(false);
   const [combinationsCount, setCombinationsCount] = useState();
   const [progress, setProgress] = useState();
+  const [investmentsCount, setInvestmentsCount] = useState();
+  const [preprogress, setPreprogress] = useState();
 
   if (!workerInstance) {
     return null;
@@ -66,12 +78,19 @@ const FirstRound = ({ workerInstance }) => {
             setCombinationsCount,
             setProgress,
             workerInstance,
+            setPreprogress,
+            setInvestmentsCount,
           });
         }}
         loading={loading}
       />
       {loading && (
-        <Loading combinationsCount={combinationsCount} progress={progress} />
+        <Loading
+          combinationsCount={combinationsCount}
+          progress={progress}
+          preprogress={preprogress}
+          investmentsCount={investmentsCount}
+        />
       )}
     </>
   );

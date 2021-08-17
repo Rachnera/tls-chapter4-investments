@@ -40,27 +40,24 @@ export const combinations = (investments, maxPrice = Infinity) => {
   );
 
   let cheaperThan = {};
+  cheaperThan[undefined] = sortedInvestments.slice(0);
   for (let i = 0; i < sortedInvestments.length; i++) {
     cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
 
-  let results = [[], ...sortedInvestments.map((investment) => [investment])];
+  let results = [[]];
 
   let resultPerSize = [];
-
   resultPerSize[0] = [{ invs: [], cost: 0 }];
-  resultPerSize[1] = sortedInvestments.map((investment) => {
-    return { invs: [investment], cost: investment.price };
-  });
 
-  for (let s = 2; s <= investments.length; s++) {
+  for (let s = 1; s <= investments.length; s++) {
     resultPerSize[s] = [];
 
     const prefixes = resultPerSize[s - 1];
     for (let i = 0; i < prefixes.length; i++) {
       const { invs, cost } = prefixes[i];
 
-      const lastName = invs[invs.length - 1]['name'];
+      const lastName = invs[invs.length - 1]?.name;
       const suffixes = cheaperThan[lastName];
       for (let j = 0; j < suffixes.length; j++) {
         const inv = suffixes[j];

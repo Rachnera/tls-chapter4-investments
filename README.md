@@ -1,5 +1,3 @@
-TODO
-
 ## Algorithm
 
 Math time.
@@ -66,3 +64,27 @@ Automatically empty since the previous level was itself empty.
 **∅**
 
 In the end, the algorithm returned only 7 combinations requiring further analysis instead of the theoretical 2<sup>4</sup>=16.
+
+## Technobabble
+
+### Dev
+
+This is a standard [Create React App](https://github.com/facebook/create-react-app) project.
+
+To play with it, install [yarn](https://yarnpkg.com/), checkout the repository, and run:
+
+```
+yarn start
+```
+
+Tests can (unsurprisingly) be launched with:
+
+```
+yarn test
+```
+
+Only the main algorithm is covered however.
+
+### Build
+
+TODO

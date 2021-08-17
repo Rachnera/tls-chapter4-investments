@@ -28,7 +28,7 @@ const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
-export const combinations = (investments, maxPrice = Infinity) => {
+const buildCheaperThan = (investments) => {
   const sortedInvestments = [...investments].sort(
     ({ price: a = 0 }, { price: b = 0 }) => {
       return b - a;
@@ -40,34 +40,52 @@ export const combinations = (investments, maxPrice = Infinity) => {
   for (let i = 0; i < sortedInvestments.length; i++) {
     cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
+  return cheaperThan;
+};
 
-  let results = [[]];
+const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
+  if (!combsNMinusOne) {
+    return [[[[], 0]], [[]]];
+  }
 
-  let resultPerSize = [];
-  resultPerSize[0] = [[[], 0]];
+  let withPrice = [];
+  let withoutPrice = [];
 
-  for (let s = 1; s <= investments.length; s++) {
-    resultPerSize[s] = [];
+  for (let i = 0; i < combsNMinusOne.length; i++) {
+    const [invs, cost] = combsNMinusOne[i];
 
-    const prefixes = resultPerSize[s - 1];
-    for (let i = 0; i < prefixes.length; i++) {
-      const [invs, cost] = prefixes[i];
+    const lastName = invs[invs.length - 1]?.name;
+    const suffixes = cheaperThan[lastName];
+    for (let j = 0; j < suffixes.length; j++) {
+      const inv = suffixes[j];
+      const totalCost = cost + inv.price;
 
-      const lastName = invs[invs.length - 1]?.name;
-      const suffixes = cheaperThan[lastName];
-      for (let j = 0; j < suffixes.length; j++) {
-        const inv = suffixes[j];
-        const totalCost = cost + inv.price;
-
-        if (totalCost > maxPrice) {
-          continue;
-        }
-
-        const candidate = [...invs, inv];
-        resultPerSize[s].push([candidate, totalCost]);
-        results.push(candidate);
+      if (totalCost > maxPrice) {
+        continue;
       }
+
+      const candidate = [...invs, inv];
+      withPrice.push([candidate, totalCost]);
+      withoutPrice.push(candidate);
     }
+  }
+
+  return [withPrice, withoutPrice];
+};
+
+export const combinations = (investments, maxPrice = Infinity) => {
+  const cheaperThan = buildCheaperThan(investments);
+
+  let combsNMinusOne;
+  let results = [];
+  for (let s = 0; s <= investments.length; s++) {
+    const [withPrice, withoutPrice] = combsN({
+      combsNMinusOne,
+      maxPrice,
+      cheaperThan,
+    });
+    results = [...results, ...withoutPrice];
+    combsNMinusOne = withPrice;
   }
 
   return results;

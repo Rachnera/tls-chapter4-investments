@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import Form from './Form';
-import Result from './Result';
-import Countries from './Countries';
+import Result from '../results';
+import Failure from '../Failure';
 
-const onFinish = async ({ values, setResult, runInWoker }) => {
+const onFinish = async ({ values, setResult, runInWoker, setError }) => {
+  setError(undefined);
+
   const {
     previous = [],
     remainingPron,
@@ -42,6 +44,14 @@ const onFinish = async ({ values, setResult, runInWoker }) => {
 
   const result = await runInWoker(params);
 
+  if (!result) {
+    setResult(undefined);
+    setError(
+      `Couldn't find a working combination of investments for that strategy with these starting values, sorry.`
+    );
+    return;
+  }
+
   setResult({
     initialStandings,
     nonInvestmentChanges,
@@ -57,24 +67,18 @@ const onFinish = async ({ values, setResult, runInWoker }) => {
 
 const FirstRound = ({ runInWoker, loading }) => {
   const [result, setResult] = useState();
+  const [error, setError] = useState();
 
   return (
     <>
       <Form
         onFinish={(values) => {
-          onFinish({ values, setResult, runInWoker });
+          onFinish({ values, setResult, runInWoker, setError });
         }}
         loading={loading}
       />
-      {result && (
-        <>
-          <Result {...result} />
-          <Countries
-            previousInvestments={result.initialStandings.previousInvestments}
-            investments={result.investmentChanges.investments}
-          />
-        </>
-      )}
+      {error && <Failure message={error} />}
+      {result && <Result {...result} />}
     </>
   );
 };

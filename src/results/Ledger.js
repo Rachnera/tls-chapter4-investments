@@ -1,4 +1,4 @@
-import { Table, Result as AntdResult, Card } from 'antd';
+import { Table } from 'antd';
 
 const nF = (number) => number.toLocaleString('en-US');
 
@@ -125,27 +125,14 @@ const Total = ({
   return <Table dataSource={dataSource} columns={columns} pagination={false} />;
 };
 
-const Result = ({
+const Ledger = ({
   initialStandings,
   nonInvestmentChanges,
   investmentChanges,
 }) => {
-  const { investments } = investmentChanges;
-
-  if (!investments?.length) {
-    return (
-      <Card>
-        <AntdResult
-          status="warning"
-          title={`Couldn't find a working combination of investments for that strategy with these starting values, sorry.`}
-        />
-      </Card>
-    );
-  }
-
   return (
     <>
-      <Investments investments={investments} />
+      <Investments investments={investmentChanges.investments} />
       <Total
         initialStandings={initialStandings}
         nonInvestmentChanges={nonInvestmentChanges}
@@ -155,4 +142,4 @@ const Result = ({
   );
 };
 
-export default Result;
+export default Ledger;

@@ -140,6 +140,10 @@ export const isBetter = ({ current, candidate, money, social }) => {
     return false;
   }
 
+  if (!current) {
+    return true;
+  }
+
   return (
     candidate.profits > current.profits ||
     (candidate.profits === current.profits && candidate.price < current.price)

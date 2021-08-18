@@ -18,12 +18,7 @@ export const prepare = (params) => {
   cheaperThan = buildCheaperThan(cleanParams.investments);
   combs = [];
 
-  best = {
-    price: 0,
-    profits: 0,
-    social: 0,
-    investments: [],
-  };
+  best = null;
 
   return cleanParams.investments.length;
 };

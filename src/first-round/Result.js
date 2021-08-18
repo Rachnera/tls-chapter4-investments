@@ -12,8 +12,16 @@ const Stat = ({ value }) => {
   return <Text>{`+${value}`}</Text>;
 };
 
-const Result = ({ input, output }) => {
-  const { investments } = output;
+const PlusCell = ({ children }) => {
+  return <Table.Summary.Cell>{`+ ${children}`}</Table.Summary.Cell>;
+};
+
+const Result = ({
+  initialStandings,
+  nonInvestmentChanges,
+  investmentChanges,
+}) => {
+  const { investments } = investmentChanges;
 
   if (!investments?.length) {
     return <strong>{`TODO`}</strong>;
@@ -67,43 +75,55 @@ const Result = ({ input, output }) => {
       columns={columns}
       pagination={false}
       summary={() => {
-        const totalGivini = investments.reduce(
-          (acc, { givini = 0 }) => acc + givini,
-          0
-        );
-
-        const { startingSocial } = input;
+        const sum = (key) =>
+          initialStandings[key] +
+          nonInvestmentChanges[key] +
+          investmentChanges[key];
 
         return (
           <>
             <Table.Summary.Row>
               <Table.Summary.Cell>{`Base`}</Table.Summary.Cell>
               <Table.Summary.Cell>
-                {nF(input.baseProfit + input.remainingPron)}
+                {nF(initialStandings.money)}
               </Table.Summary.Cell>
-              <Table.Summary.Cell>{nF(input.baseProfit)}</Table.Summary.Cell>
-              <Table.Summary.Cell>{startingSocial || `???`}</Table.Summary.Cell>
+              <Table.Summary.Cell>
+                {nF(initialStandings.profits)}
+              </Table.Summary.Cell>
+              <Table.Summary.Cell>{initialStandings.social}</Table.Summary.Cell>
+              <Table.Summary.Cell>{initialStandings.givini}</Table.Summary.Cell>
             </Table.Summary.Row>
+
             <Table.Summary.Row>
-              <Table.Summary.Cell>{`New`}</Table.Summary.Cell>
-              <Table.Summary.Cell>{`- ${nF(output.price)}`}</Table.Summary.Cell>
-              <Table.Summary.Cell>{`+ ${nF(
-                output.profits
+              <Table.Summary.Cell>{`New investments`}</Table.Summary.Cell>
+              <Table.Summary.Cell>{`- ${nF(
+                investmentChanges.price
               )}`}</Table.Summary.Cell>
-              <Table.Summary.Cell>{`+${output.social}`}</Table.Summary.Cell>
-              <Table.Summary.Cell>{`+${totalGivini}`}</Table.Summary.Cell>
+              <PlusCell>{nF(investmentChanges.profits)}</PlusCell>
+              <PlusCell>{investmentChanges.social}</PlusCell>
+              <PlusCell>{investmentChanges.givini}</PlusCell>
             </Table.Summary.Row>
+
+            <Table.Summary.Row>
+              <Table.Summary.Cell>{`Other changes`}</Table.Summary.Cell>
+              <PlusCell>{nF(nonInvestmentChanges.money)}</PlusCell>
+              <PlusCell>{nF(nonInvestmentChanges.profits)}</PlusCell>
+              <PlusCell>{nonInvestmentChanges.social}</PlusCell>
+              <PlusCell>{nonInvestmentChanges.givini}</PlusCell>
+            </Table.Summary.Row>
+
             <Table.Summary.Row>
               <Table.Summary.Cell>{`Total`}</Table.Summary.Cell>
               <Table.Summary.Cell>
-                {nF(input.baseProfit + input.remainingPron - output.price)}
+                {nF(
+                  initialStandings.money +
+                    nonInvestmentChanges.money -
+                    investmentChanges.price
+                )}
               </Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {nF(input.baseProfit + output.profits)}
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {startingSocial ? startingSocial + output.social : `???`}
-              </Table.Summary.Cell>
+              <Table.Summary.Cell>{nF(sum('profits'))}</Table.Summary.Cell>
+              <Table.Summary.Cell>{sum('social')}</Table.Summary.Cell>
+              <Table.Summary.Cell>{sum('givini')}</Table.Summary.Cell>
             </Table.Summary.Row>
           </>
         );

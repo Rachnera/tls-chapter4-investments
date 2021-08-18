@@ -4,16 +4,19 @@ import Disclaimer from './Disclaimer';
 import Form from './Form';
 import Result from './Result';
 
-const onFinish = async ({
-  values,
-  workerInstance,
-  setLoading,
-  setCombinationsCount,
-  setProgress,
-  setInvestmentsCount,
-  setPreprogress,
-  setResult,
-}) => {
+const onFinish = async (
+  { values, setResult },
+  {
+    workerInstance,
+    setLoading,
+    setCombinationsCount,
+    setProgress,
+    setInvestmentsCount,
+    setPreprogress,
+  }
+) => {
+  setLoading(true);
+
   const {
     previous = [],
     remainingPron,
@@ -23,14 +26,29 @@ const onFinish = async ({
     ...misc
   } = values;
 
-  setLoading(true);
+  const giviniStart = 17 + previous.includes("Min's Trade Route");
+  const giviniExtra = 6; // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
+
+  const initialStandings = {
+    givini: giviniStart,
+    social: startingSocial,
+    money: remainingPron + baseProfit,
+    profits: baseProfit,
+  };
+
+  const nonInvestmentChanges = {
+    givini: giviniExtra,
+    social: 0,
+    money: 0,
+    profits: 0,
+  };
 
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
     social: strategy === 'social' ? 40 - startingSocial : 0,
-    giviniStart: 17 + previous.includes("Min's Trade Route"),
-    giviniExtra: 6, // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
+    giviniStart,
+    giviniExtra,
     ...misc,
   };
 
@@ -56,8 +74,15 @@ const onFinish = async ({
   await workerInstance.clean();
 
   setResult({
-    input: values,
-    output: result,
+    initialStandings,
+    nonInvestmentChanges,
+    investmentChanges: {
+      givini: result.investments.reduce(
+        (acc, { givini = 0 }) => acc + givini,
+        0
+      ),
+      ...result,
+    },
   });
 
   setLoading(false);
@@ -84,16 +109,20 @@ const FirstRound = ({ workerInstance }) => {
       <Disclaimer />
       <Form
         onFinish={(values) => {
-          onFinish({
-            values,
-            setLoading,
-            setCombinationsCount,
-            setProgress,
-            workerInstance,
-            setPreprogress,
-            setInvestmentsCount,
-            setResult,
-          });
+          onFinish(
+            {
+              values,
+              setResult,
+            },
+            {
+              setLoading,
+              setCombinationsCount,
+              setProgress,
+              workerInstance,
+              setPreprogress,
+              setInvestmentsCount,
+            }
+          );
         }}
         loading={loading}
       />
@@ -105,7 +134,7 @@ const FirstRound = ({ workerInstance }) => {
           investmentsCount={investmentsCount}
         />
       )}
-      {result && <Result input={result.input} output={result.output} />}
+      {result && <Result {...result} />}
     </>
   );
 };

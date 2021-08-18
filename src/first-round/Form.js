@@ -42,7 +42,6 @@ const toSelectOptions = (list) => {
 
 const CustomForm = ({ onFinish, loading }) => {
   const [previous, setPrevious] = useState(initialValues.previous);
-  const [strategy, setStrategy] = useState(initialValues.strategy);
 
   return (
     <Form
@@ -50,7 +49,6 @@ const CustomForm = ({ onFinish, loading }) => {
       onFinish={onFinish}
       onValuesChange={(_, allValues) => {
         setPrevious(allValues.previous);
-        setStrategy(allValues.strategy);
       }}
     >
       <Card title={`The past`}>
@@ -95,6 +93,14 @@ const CustomForm = ({ onFinish, loading }) => {
             <Checkbox>{`You funded Yhilin Infrastructure during chapter 3.`}</Checkbox>
           </Form.Item>
         )}
+        <Form.Item
+          label={`Your social standing at the start of chapter 4`}
+          name="startingSocial"
+          tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
+          rules={[{ required: true }]}
+        >
+          <InputNumber />
+        </Form.Item>
       </Card>
 
       <Card title={`Strategy`}>
@@ -112,16 +118,6 @@ const CustomForm = ({ onFinish, loading }) => {
             ]}
           />
         </Form.Item>
-        {strategy === 'social' && (
-          <Form.Item
-            label={`Your social standing at the start of chapter 4`}
-            name="startingSocial"
-            tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
-            rules={[{ required: true }]}
-          >
-            <InputNumber />
-          </Form.Item>
-        )}
       </Card>
 
       <Form.Item>

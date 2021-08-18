@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table, Result as AntdResult, Card } from 'antd';
 
 const nF = (number) => number.toLocaleString('en-US');
 
@@ -133,7 +133,14 @@ const Result = ({
   const { investments } = investmentChanges;
 
   if (!investments?.length) {
-    return <strong>{`TODO`}</strong>;
+    return (
+      <Card>
+        <AntdResult
+          status="warning"
+          title={`Couldn't find a working combination of investments for that strategy with these starting values, sorry.`}
+        />
+      </Card>
+    );
   }
 
   return (

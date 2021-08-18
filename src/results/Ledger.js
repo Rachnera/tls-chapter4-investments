@@ -41,11 +41,6 @@ const Investments = ({ investments }) => {
       dataIndex: 'social',
       render: (social = 0) => <NumberCell>{social}</NumberCell>,
     },
-    {
-      title: `New Givini`,
-      dataIndex: 'givini',
-      render: (givini = 0) => <NumberCell>{givini}</NumberCell>,
-    },
   ];
 
   return <Table dataSource={dataSource} columns={columns} pagination={false} />;
@@ -82,11 +77,6 @@ const Total = ({
       dataIndex: 'social',
       render,
     },
-    {
-      title: `New Givini`,
-      dataIndex: 'givini',
-      render,
-    },
   ];
 
   const sum = (key) =>
@@ -118,7 +108,6 @@ const Total = ({
         investmentChanges.price,
       profits: sum('profits'),
       social: sum('social'),
-      givini: sum('givini'),
     },
   ];
 

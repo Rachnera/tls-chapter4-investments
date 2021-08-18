@@ -55,13 +55,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   setResult({
     initialStandings,
     nonInvestmentChanges,
-    investmentChanges: {
-      givini: result.investments.reduce(
-        (acc, { givini = 0 }) => acc + givini,
-        0
-      ),
-      ...result,
-    },
+    investmentChanges: result,
   });
 };
 

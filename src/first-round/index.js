@@ -1,21 +1,8 @@
 import { useState } from 'react';
-import Loading from './Loading';
 import Form from './Form';
 import Result from './Result';
 
-const onFinish = async (
-  { values, setResult },
-  {
-    workerInstance,
-    setLoading,
-    setCombinationsCount,
-    setProgress,
-    setInvestmentsCount,
-    setPreprogress,
-  }
-) => {
-  setLoading(true);
-
+const onFinish = async ({ values, setResult, runInWoker }) => {
   const {
     previous = [],
     remainingPron,
@@ -51,26 +38,7 @@ const onFinish = async (
     ...misc,
   };
 
-  const investmentsCount = await workerInstance.prepare(params);
-  setInvestmentsCount(investmentsCount);
-  setPreprogress(0);
-  let combinationsCount = 0;
-  for (let i = 0; i <= investmentsCount; i++) {
-    combinationsCount += await workerInstance.preprocess();
-    setPreprogress(i / investmentsCount);
-  }
-
-  setCombinationsCount(combinationsCount);
-  setProgress(0);
-  const batchSize = 10000;
-  let result;
-  for (let i = 0; i < Math.ceil(combinationsCount / batchSize); i++) {
-    const end = Math.min((i + 1) * batchSize, combinationsCount);
-    result = await workerInstance.process(i * batchSize, end);
-    setProgress(end / combinationsCount);
-  }
-
-  await workerInstance.clean();
+  const result = await runInWoker(params);
 
   setResult({
     initialStandings,
@@ -83,55 +51,19 @@ const onFinish = async (
       ...result,
     },
   });
-
-  setLoading(false);
-  setCombinationsCount(undefined);
-  setInvestmentsCount(undefined);
-  setProgress(0);
-  setPreprogress(0);
 };
 
-const FirstRound = ({ workerInstance }) => {
-  const [loading, setLoading] = useState(false);
-  const [combinationsCount, setCombinationsCount] = useState();
-  const [progress, setProgress] = useState(0);
-  const [investmentsCount, setInvestmentsCount] = useState();
-  const [preprogress, setPreprogress] = useState(0);
+const FirstRound = ({ runInWoker, loading }) => {
   const [result, setResult] = useState();
-
-  if (!workerInstance) {
-    return null;
-  }
 
   return (
     <>
       <Form
         onFinish={(values) => {
-          onFinish(
-            {
-              values,
-              setResult,
-            },
-            {
-              setLoading,
-              setCombinationsCount,
-              setProgress,
-              workerInstance,
-              setPreprogress,
-              setInvestmentsCount,
-            }
-          );
+          onFinish({ values, setResult, runInWoker });
         }}
         loading={loading}
       />
-      {loading && (
-        <Loading
-          combinationsCount={combinationsCount}
-          progress={progress}
-          preprogress={preprogress}
-          investmentsCount={investmentsCount}
-        />
-      )}
       {result && <Result {...result} />}
     </>
   );

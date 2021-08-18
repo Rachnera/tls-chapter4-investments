@@ -2,6 +2,7 @@ import './App.css';
 import FirstRound from './first-round';
 import { useEffect, useState } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
+import Disclaimer from './Disclaimer';
 
 const App = () => {
   const [workerInstance, setWorkerInstance] = useState();
@@ -17,6 +18,7 @@ const App = () => {
 
   return (
     <div>
+      <Disclaimer />
       <FirstRound workerInstance={workerInstance} />
     </div>
   );

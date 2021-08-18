@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Loading from './Loading';
-import Disclaimer from './Disclaimer';
 import Form from './Form';
 import Result from './Result';
 
@@ -106,7 +105,6 @@ const FirstRound = ({ workerInstance }) => {
 
   return (
     <>
-      <Disclaimer />
       <Form
         onFinish={(values) => {
           onFinish(

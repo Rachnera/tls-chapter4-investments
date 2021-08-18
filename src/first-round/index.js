@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Form from './Form';
 import Result from './Result';
+import Countries from './Countries';
 
 const onFinish = async ({ values, setResult, runInWoker }) => {
   const {
@@ -20,6 +21,7 @@ const onFinish = async ({ values, setResult, runInWoker }) => {
     social: startingSocial,
     money: remainingPron + baseProfit,
     profits: baseProfit,
+    previousInvestments: previous,
   };
 
   const nonInvestmentChanges = {
@@ -64,7 +66,15 @@ const FirstRound = ({ runInWoker, loading }) => {
         }}
         loading={loading}
       />
-      {result && <Result {...result} />}
+      {result && (
+        <>
+          <Result {...result} />
+          <Countries
+            previousInvestments={result.initialStandings.previousInvestments}
+            investments={result.investmentChanges.investments}
+          />
+        </>
+      )}
     </>
   );
 };

@@ -4,3 +4,21 @@ body {
   background-color: #f5f5f5;
   min-height: 100vh;
 }
+
+table.addition tbody {
+  border-bottom: 1px solid lightgray;
+}
+
+table.addition th {
+  text-align: left;
+}
+
+table.addition th + td,
+table.addition td:first-child + td {
+  text-align: right;
+  padding: 0 24px;
+}
+
+table.addition td:nth-child(3) {
+  font-style: italic;
+}

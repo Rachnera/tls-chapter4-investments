@@ -1,32 +1,15 @@
-import { Table, Typography } from 'antd';
-
-const { Text } = Typography;
+import { Table } from 'antd';
 
 const nF = (number) => number.toLocaleString('en-US');
 
-const Stat = ({ value }) => {
-  if (!value) {
-    return <Text type="secondary">{`/`}</Text>;
-  }
+const NumberCell = ({ children, format }) => {
+  const number = children;
+  const formattedNumber = !!format ? nF(Math.abs(number)) : Math.abs(number);
 
-  return <Text>{`+${value}`}</Text>;
+  return `${number < 0 ? `-` : `+`} ${formattedNumber}`;
 };
 
-const PlusCell = ({ children }) => {
-  return <Table.Summary.Cell>{`+ ${children}`}</Table.Summary.Cell>;
-};
-
-const Result = ({
-  initialStandings,
-  nonInvestmentChanges,
-  investmentChanges,
-}) => {
-  const { investments } = investmentChanges;
-
-  if (!investments?.length) {
-    return <strong>{`TODO`}</strong>;
-  }
-
+const Investments = ({ investments }) => {
   const dataSource = investments.map(({ name, ...data }) => {
     return {
       key: name,
@@ -56,79 +39,112 @@ const Result = ({
     {
       title: `Social`,
       dataIndex: 'social',
-      render: (social) => {
-        return <Stat value={social} />;
-      },
+      render: (social = 0) => <NumberCell>{social}</NumberCell>,
     },
     {
-      title: `New Givini Score`,
+      title: `New Givini`,
       dataIndex: 'givini',
-      render: (givini) => {
-        return <Stat value={givini} />;
-      },
+      render: (givini = 0) => <NumberCell>{givini}</NumberCell>,
     },
   ];
 
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+};
+
+const Total = ({
+  initialStandings,
+  nonInvestmentChanges,
+  investmentChanges,
+}) => {
+  const render = (value, { key }) => {
+    if (['base', 'total'].includes(key)) {
+      return nF(value);
+    }
+    return <NumberCell format={true}>{value}</NumberCell>;
+  };
+
+  const columns = [
+    {
+      dataIndex: 'category',
+    },
+    {
+      title: `ProN`,
+      dataIndex: 'money',
+      render,
+    },
+    {
+      title: `Profits`,
+      dataIndex: 'profits',
+      render,
+    },
+    {
+      title: `Social`,
+      dataIndex: 'social',
+      render,
+    },
+    {
+      title: `New Givini`,
+      dataIndex: 'givini',
+      render,
+    },
+  ];
+
+  const sum = (key) =>
+    initialStandings[key] + nonInvestmentChanges[key] + investmentChanges[key];
+
+  const dataSource = [
+    {
+      ...initialStandings,
+      key: 'base',
+      category: `Base`,
+    },
+    {
+      ...investmentChanges,
+      key: 'investments',
+      category: `Investments`,
+      money: -investmentChanges.price,
+    },
+    {
+      ...nonInvestmentChanges,
+      key: 'other',
+      category: `Other changes`,
+    },
+    {
+      key: 'total',
+      category: `Total`,
+      money:
+        initialStandings.money +
+        nonInvestmentChanges.money -
+        investmentChanges.price,
+      profits: sum('profits'),
+      social: sum('social'),
+      givini: sum('givini'),
+    },
+  ];
+
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+};
+
+const Result = ({
+  initialStandings,
+  nonInvestmentChanges,
+  investmentChanges,
+}) => {
+  const { investments } = investmentChanges;
+
+  if (!investments?.length) {
+    return <strong>{`TODO`}</strong>;
+  }
+
   return (
-    <Table
-      dataSource={dataSource}
-      columns={columns}
-      pagination={false}
-      summary={() => {
-        const sum = (key) =>
-          initialStandings[key] +
-          nonInvestmentChanges[key] +
-          investmentChanges[key];
-
-        return (
-          <>
-            <Table.Summary.Row>
-              <Table.Summary.Cell>{`Base`}</Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {nF(initialStandings.money)}
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {nF(initialStandings.profits)}
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>{initialStandings.social}</Table.Summary.Cell>
-              <Table.Summary.Cell>{initialStandings.givini}</Table.Summary.Cell>
-            </Table.Summary.Row>
-
-            <Table.Summary.Row>
-              <Table.Summary.Cell>{`New investments`}</Table.Summary.Cell>
-              <Table.Summary.Cell>{`- ${nF(
-                investmentChanges.price
-              )}`}</Table.Summary.Cell>
-              <PlusCell>{nF(investmentChanges.profits)}</PlusCell>
-              <PlusCell>{investmentChanges.social}</PlusCell>
-              <PlusCell>{investmentChanges.givini}</PlusCell>
-            </Table.Summary.Row>
-
-            <Table.Summary.Row>
-              <Table.Summary.Cell>{`Other changes`}</Table.Summary.Cell>
-              <PlusCell>{nF(nonInvestmentChanges.money)}</PlusCell>
-              <PlusCell>{nF(nonInvestmentChanges.profits)}</PlusCell>
-              <PlusCell>{nonInvestmentChanges.social}</PlusCell>
-              <PlusCell>{nonInvestmentChanges.givini}</PlusCell>
-            </Table.Summary.Row>
-
-            <Table.Summary.Row>
-              <Table.Summary.Cell>{`Total`}</Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {nF(
-                  initialStandings.money +
-                    nonInvestmentChanges.money -
-                    investmentChanges.price
-                )}
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>{nF(sum('profits'))}</Table.Summary.Cell>
-              <Table.Summary.Cell>{sum('social')}</Table.Summary.Cell>
-              <Table.Summary.Cell>{sum('givini')}</Table.Summary.Cell>
-            </Table.Summary.Row>
-          </>
-        );
-      }}
-    />
+    <>
+      <Investments investments={investments} />
+      <Total
+        initialStandings={initialStandings}
+        nonInvestmentChanges={nonInvestmentChanges}
+        investmentChanges={investmentChanges}
+      />
+    </>
   );
 };
 

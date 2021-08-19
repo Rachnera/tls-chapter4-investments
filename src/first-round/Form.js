@@ -31,6 +31,7 @@ const initialValues = {
   chapter3Infrastructure: true,
   merchantSolution: 'neutral',
   jhenno: 'religion',
+  magicalItems: 'givini',
 };
 
 const toSelectOptions = (list) => {
@@ -162,6 +163,20 @@ const CustomForm = ({ onFinish, loading }) => {
                 {
                   value: 'religion',
                   label: `Religion`,
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label={`Rose's house magical items`} name="magicalItems">
+            <Select
+              options={[
+                {
+                  value: 'givini',
+                  label: `Givini`,
+                },
+                {
+                  value: 'takkan',
+                  label: `Tak'Kan`,
                 },
               ]}
             />

@@ -35,10 +35,11 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     startingSocial,
     merchantSolution,
     jhenno,
+    magicalItems,
     ...misc
   } = values;
 
-  const decisions = { strategy, merchantSolution };
+  const decisions = { strategy, merchantSolution, magicalItems };
 
   const giviniStart = giviniBaseValue({ chapter3Investments: previous });
   const giviniExtra = giviniRoundOneValue(decisions);
@@ -79,6 +80,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     ),
     list: nonInvestmentChangesList,
   };
+
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,

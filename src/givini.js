@@ -24,9 +24,12 @@ export const preliminaryChanges = ({ investments }) => {
 export const baseValue = ({ chapter3Investments }) =>
   startingValue + sum(preliminaryChanges({ investments: chapter3Investments }));
 
-export const roundOneChanges = ({ merchantSolution }) => {
+export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
   return [
-    { label: `Magical items`, values: [2] },
+    magicalItems === 'givini' && {
+      label: `House Rose's magical items: Givini`,
+      values: [2],
+    },
     merchantSolution === 'neutral' && {
       label: `Merchant dispute: Neutral compromise`,
       values: [1],

@@ -6,7 +6,7 @@ const NumberCell = ({ children, format }) => {
   const number = children;
   const formattedNumber = !!format ? nF(Math.abs(number)) : Math.abs(number);
 
-  return `${number < 0 ? `-` : `+`} ${formattedNumber}`;
+  return `${number < 0 ? `-` : `+`}${formattedNumber}`;
 };
 
 const Investments = ({ investments }) => {

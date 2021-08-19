@@ -30,6 +30,7 @@ const initialValues = {
   startingSocial: 34,
   chapter3Infrastructure: true,
   merchantSolution: 'neutral',
+  jhenno: 'religion',
 };
 
 const toSelectOptions = (list) => {
@@ -147,6 +148,20 @@ const CustomForm = ({ onFinish, loading }) => {
                 {
                   value: 'wait',
                   label: `Wait`,
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label={`Jhenno's cooperation`} name="jhenno">
+            <Select
+              options={[
+                {
+                  value: 'politics',
+                  label: `Politics`,
+                },
+                {
+                  value: 'religion',
+                  label: `Religion`,
                 },
               ]}
             />

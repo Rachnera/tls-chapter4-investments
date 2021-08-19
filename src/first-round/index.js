@@ -7,9 +7,12 @@ import {
   roundOneValue as giviniRoundOneValue,
 } from '../givini';
 
-const socialRequirement = ({ strategy, startingSocial }) => {
+const socialRequirement = ({ strategy, startingSocial, jhenno }) => {
   if (strategy === 'money') {
     return 0;
+  }
+  if (jhenno === 'politics') {
+    return 39 - startingSocial;
   }
   return 40 - startingSocial;
 };
@@ -31,6 +34,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     strategy,
     startingSocial,
     merchantSolution,
+    jhenno,
     ...misc
   } = values;
 
@@ -47,27 +51,39 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     previousInvestments: previous,
   };
 
+  const nonInvestmentChangesList = [
+    jhenno === 'politics' && {
+      name: `Jhenno's political cooperation`,
+      social: 1,
+    },
+    {
+      name: `Succession crisis' reward (best result)`,
+      social: 3,
+    },
+    {
+      name: `The Three Trades become less profitable`,
+      profits: -300000,
+    },
+  ].filter(Boolean);
+
   const nonInvestmentChanges = {
     givini: giviniExtra,
-    social: 3,
     money: 0,
-    profits: -300000,
-    list: [
-      {
-        name: `Succession crisis' reward (best result)`,
-        social: 3,
-      },
-      {
-        name: `The Three Trades become less profitable`,
-        profits: -300000,
-      },
-    ],
+    profits: nonInvestmentChangesList.reduce(
+      (acc, { profits = 0 }) => acc + profits,
+      0
+    ),
+    social: nonInvestmentChangesList.reduce(
+      (acc, { social = 0 }) => acc + social,
+      0
+    ),
+    list: nonInvestmentChangesList,
   };
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
     otherRequirements: {
-      social: socialRequirement({ startingSocial, strategy }),
+      social: socialRequirement({ startingSocial, strategy, jhenno }),
       givini: giviniRequirement({ giviniStart, giviniExtra }),
       donovanKick: strategy === 'succession',
     },

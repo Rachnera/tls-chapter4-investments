@@ -2,6 +2,10 @@ import { useState } from 'react';
 import Form from './Form';
 import Result from '../results';
 import Failure from '../Failure';
+import {
+  baseValue as giviniBaseValue,
+  roundOneChanges as givinieRoundOneChanges,
+} from '../givini';
 
 const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   setError(undefined);
@@ -15,8 +19,8 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     ...misc
   } = values;
 
-  const giviniStart = 17 + previous.includes("Min's Trade Route");
-  const giviniExtra = 6; // FIXME Approximate for now for simplicity's sake, but this value is interconnected with social
+  const giviniStart = giviniBaseValue({ chapter3Investments: previous });
+  const giviniExtra = givinieRoundOneChanges();
 
   const initialStandings = {
     givini: giviniStart,

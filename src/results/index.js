@@ -14,8 +14,8 @@ const Result = ({
         investmentChanges={investmentChanges}
       />
       <Countries
-        previousInvestments={initialStandings.previousInvestments}
-        investments={investmentChanges.investments}
+        chapter3Investments={initialStandings.previousInvestments}
+        roundOneInvestments={investmentChanges.investments}
       />
     </>
   );

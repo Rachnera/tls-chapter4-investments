@@ -22,3 +22,22 @@ table.addition td:first-child + td {
 table.addition td:nth-child(3) {
   font-style: italic;
 }
+
+form.first-round-form .ant-card-type-inner {
+  margin-bottom: 24px;
+}
+
+form.first-round-form .numbers,
+form.first-round-form .checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+form.first-round-form > .ant-row {
+  margin-bottom: 0;
+}
+
+form.first-round-form button[type='submit'] {
+  float: right;
+}

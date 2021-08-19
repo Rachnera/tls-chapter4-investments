@@ -14,6 +14,13 @@ const socialRequirement = ({ strategy, startingSocial }) => {
   return 0;
 };
 
+const giviniRequirement = ({ giviniStart, giviniExtra }) => {
+  const absoluteRequirement = 25;
+  const offset = 3; // Points earned after the requirement matters
+
+  return absoluteRequirement - giviniStart - giviniExtra + offset;
+};
+
 const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   setError(undefined);
 
@@ -49,6 +56,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     money: remainingPron + baseProfit,
     otherRequirements: {
       social: socialRequirement({ startingSocial, strategy }),
+      givini: giviniRequirement({ giviniStart, giviniExtra }),
     },
     giviniStart,
     giviniExtra,

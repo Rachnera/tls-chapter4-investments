@@ -118,12 +118,12 @@ const CustomForm = ({ onFinish, loading }) => {
             <Radio.Group
               options={[
                 {
-                  label: `Reach the threshold of 40 Social points in the most cost-effective way.`,
-                  value: 'social',
+                  label: `Focus on profits; do only the bare minimum (New Givini ≥ 25) for the Ardan succession crisis.`,
+                  value: 'money',
                 },
                 {
-                  label: `Focus solely on maximizing profits.`,
-                  value: 'money',
+                  label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
+                  value: 'social',
                 },
               ]}
             />

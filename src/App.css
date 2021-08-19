@@ -42,14 +42,16 @@ form.first-round-form button[type='submit'] {
   float: right;
 }
 
-.ledger {
+.results > .ant-card-body {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 
-.ledger > .ant-table-wrapper {
+.results > .ant-card-body > .ant-card-type-inner {
   flex: 1;
-  max-width: 600px;
-  margin: 24px;
+  margin: 0 24px;
+}
+
+.results .ledger .ant-card-body {
+  padding: 0;
 }

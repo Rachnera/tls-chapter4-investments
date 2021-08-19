@@ -43,18 +43,10 @@ const Investments = ({ investments }) => {
     },
   ];
 
-  return (
-    <Table
-      dataSource={dataSource}
-      columns={columns}
-      pagination={false}
-      title={() => `New investments`}
-      bordered={true}
-    />
-  );
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
 };
 
-const Total = ({
+const Ledger = ({
   initialStandings,
   nonInvestmentChanges,
   investmentChanges,
@@ -124,26 +116,15 @@ const Total = ({
       dataSource={dataSource}
       columns={columns}
       pagination={false}
-      title={() => `Summary`}
       bordered={true}
+      expandable={{
+        expandedRowRender: () => (
+          <Investments investments={investmentChanges.investments} />
+        ),
+        rowExpandable: ({ key }) => key === 'investments',
+        defaultExpandAllRows: true,
+      }}
     />
-  );
-};
-
-const Ledger = ({
-  initialStandings,
-  nonInvestmentChanges,
-  investmentChanges,
-}) => {
-  return (
-    <div className="ledger">
-      <Investments investments={investmentChanges.investments} />
-      <Total
-        initialStandings={initialStandings}
-        nonInvestmentChanges={nonInvestmentChanges}
-        investmentChanges={investmentChanges}
-      />
-    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 import Ledger from './Ledger';
-import Countries from './Countries';
+import { Card } from 'antd';
+import Givini from './Givini';
 
 const Result = ({
   initialStandings,
@@ -7,17 +8,23 @@ const Result = ({
   investmentChanges,
 }) => {
   return (
-    <>
-      <Ledger
-        initialStandings={initialStandings}
-        nonInvestmentChanges={nonInvestmentChanges}
-        investmentChanges={investmentChanges}
-      />
-      <Countries
-        chapter3Investments={initialStandings.previousInvestments}
-        roundOneInvestments={investmentChanges.investments}
-      />
-    </>
+    <Card title={`Changes`} className="results">
+      <Card title={`Ledger`} type="inner" className="ledger">
+        <Ledger
+          initialStandings={initialStandings}
+          nonInvestmentChanges={nonInvestmentChanges}
+          investmentChanges={investmentChanges}
+        />
+      </Card>
+      <Card title={`Countries`} type="inner">
+        <Card title={`New Givini`} type="inner">
+          <Givini
+            chapter3Investments={initialStandings.previousInvestments}
+            roundOneInvestments={investmentChanges.investments}
+          />
+        </Card>
+      </Card>
+    </Card>
   );
 };
 

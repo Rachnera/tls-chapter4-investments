@@ -41,7 +41,9 @@ export const process = (start, end) => {
   for (let i = start; i < end; i++) {
     const comb = combs[i];
     const candidate = combine(comb, context);
-    if (isBetter({ current: best, candidate, money, otherRequirements })) {
+    if (
+      isBetter({ current: best, candidate, money, otherRequirements, context })
+    ) {
       best = candidate;
     }
   }

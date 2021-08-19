@@ -409,6 +409,24 @@ describe('best', () => {
         investments: invs('War Monument'),
       });
     });
+    test('ignores if investment already bought', () => {
+      expect(
+        best({
+          investments: invs('War Monument', 'Bank of Givini'),
+          money: 1000000,
+          otherRequirements: {
+            donovanKick: true,
+          },
+          context: {
+            previousInvestments: ['Givini Mage Guild'],
+          },
+        })
+      ).toMatchObject({
+        price: 350000,
+        profits: 300000,
+        investments: invs('Bank of Givini'),
+      });
+    });
   });
 });
 

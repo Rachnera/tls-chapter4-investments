@@ -144,6 +144,7 @@ export const isBetter = ({
   candidate,
   money,
   otherRequirements = {},
+  context = {},
 }) => {
   const { social = 0, givini = 0 } = otherRequirements;
 
@@ -160,7 +161,14 @@ export const isBetter = ({
   }
 
   if (otherRequirements.donovanKick) {
-    if (!donovanHindered({ investments: candidate.investments })) {
+    if (
+      !donovanHindered({
+        investments: [
+          ...(context.previousInvestments || []),
+          ...candidate.investments.map(({ name }) => name),
+        ],
+      })
+    ) {
       return false;
     }
   }
@@ -185,7 +193,15 @@ export const best = ({
 
   combinations(investments, money).forEach((comb) => {
     const candidate = combine(comb, context);
-    if (isBetter({ current: result, candidate, money, otherRequirements })) {
+    if (
+      isBetter({
+        current: result,
+        candidate,
+        money,
+        otherRequirements,
+        context,
+      })
+    ) {
       result = candidate;
     }
   });

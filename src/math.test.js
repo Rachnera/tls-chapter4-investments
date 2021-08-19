@@ -269,7 +269,9 @@ describe('best', () => {
       best({
         investments: invs('Booze Shack', 'Bank of Givini', 'Imp Offices'),
         money: 400000,
-        social: 1,
+        otherRequirements: {
+          social: 1,
+        },
       })
     ).toEqual({
       price: 150000,
@@ -389,7 +391,9 @@ describe('finest', () => {
         previousInvestments,
         // Remaining + Profits - Already invested
         money: 7500 + 2435000 - 450000,
-        social: 6,
+        otherRequirements: {
+          social: 6,
+        },
         giviniStart: 18 + 10,
         giviniExtra: 6,
         chapter1Bank: true,

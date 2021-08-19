@@ -7,6 +7,13 @@ import {
   roundOneValue as giviniRoundOneValue,
 } from '../givini';
 
+const socialRequirement = ({ strategy, startingSocial }) => {
+  if (strategy === 'social') {
+    return 40 - startingSocial;
+  }
+  return 0;
+};
+
 const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   setError(undefined);
 
@@ -40,7 +47,9 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
-    social: strategy === 'social' ? 40 - startingSocial : 0,
+    otherRequirements: {
+      social: socialRequirement({ startingSocial, strategy }),
+    },
     giviniStart,
     giviniExtra,
     ...misc,

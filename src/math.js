@@ -135,7 +135,14 @@ export const combine = (investments, context = {}) => {
   };
 };
 
-export const isBetter = ({ current, candidate, money, social }) => {
+export const isBetter = ({
+  current,
+  candidate,
+  money,
+  otherRequirements = {},
+}) => {
+  const { social = 0 } = otherRequirements;
+
   if (candidate.price > money || candidate.social < social) {
     return false;
   }
@@ -150,7 +157,12 @@ export const isBetter = ({ current, candidate, money, social }) => {
   );
 };
 
-export const best = ({ money, investments, context = {}, social = 0 }) => {
+export const best = ({
+  money,
+  otherRequirements = {},
+  investments,
+  context = {},
+}) => {
   let result = {
     price: 0,
     profits: 0,
@@ -160,7 +172,7 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
 
   combinations(investments, money).forEach((comb) => {
     const candidate = combine(comb, context);
-    if (isBetter({ current: result, candidate, money, social })) {
+    if (isBetter({ current: result, candidate, money, otherRequirements })) {
       result = candidate;
     }
   });
@@ -168,20 +180,12 @@ export const best = ({ money, investments, context = {}, social = 0 }) => {
   return result;
 };
 
-export const buildParams = ({
-  money,
-  previousInvestments = [],
-  social = 0,
-  ...misc
-}) => {
-  const context = {
-    ...misc,
-    previousInvestments,
-  };
+export const buildParams = ({ money, otherRequirements = {}, ...context }) => {
+  const { previousInvestments = [] } = context;
 
   return {
     money,
-    social,
+    otherRequirements,
     investments: allInvestments
       .filter(({ name }) => !previousInvestments.includes(name))
       .map((investment) => {

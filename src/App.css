@@ -41,3 +41,15 @@ form.first-round-form > .ant-row {
 form.first-round-form button[type='submit'] {
   float: right;
 }
+
+.ledger {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.ledger > .ant-table-wrapper {
+  flex: 1;
+  max-width: 600px;
+  margin: 24px;
+}

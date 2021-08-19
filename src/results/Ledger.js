@@ -43,7 +43,15 @@ const Investments = ({ investments }) => {
     },
   ];
 
-  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+  return (
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      pagination={false}
+      title={() => `New investments`}
+      bordered={true}
+    />
+  );
 };
 
 const Total = ({
@@ -86,12 +94,12 @@ const Total = ({
     {
       ...initialStandings,
       key: 'base',
-      category: `Base`,
+      category: `Previously`,
     },
     {
       ...investmentChanges,
       key: 'investments',
-      category: `Investments`,
+      category: `Changes from investments`,
       money: -investmentChanges.price,
     },
     {
@@ -101,7 +109,7 @@ const Total = ({
     },
     {
       key: 'total',
-      category: `Total`,
+      category: `Result`,
       money:
         initialStandings.money +
         nonInvestmentChanges.money -
@@ -111,7 +119,15 @@ const Total = ({
     },
   ];
 
-  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+  return (
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      pagination={false}
+      title={() => `Summary`}
+      bordered={true}
+    />
+  );
 };
 
 const Ledger = ({
@@ -120,14 +136,14 @@ const Ledger = ({
   investmentChanges,
 }) => {
   return (
-    <>
+    <div className="ledger">
       <Investments investments={investmentChanges.investments} />
       <Total
         initialStandings={initialStandings}
         nonInvestmentChanges={nonInvestmentChanges}
         investmentChanges={investmentChanges}
       />
-    </>
+    </div>
   );
 };
 

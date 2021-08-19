@@ -35,12 +35,8 @@ export const roundOneChanges = ({ merchantSolution }) => {
       label: `Merchant dispute: Favor New Givini`,
       values: [2],
     },
-    {
-      label: `Givino Vinai equipment shop girl`,
-      values: [1],
-      explanation: `Score already ≥ 25`,
-    },
-    { label: `Givini king`, values: [1], explanation: `Score already ≥ 25` },
+    { label: `Givino Vinai equipment shop girl`, values: [1] },
+    { label: `Givini king`, values: [1] },
     {
       label: `New Givini Trade`,
       values: [1],

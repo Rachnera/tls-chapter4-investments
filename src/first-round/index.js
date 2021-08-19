@@ -4,7 +4,7 @@ import Result from '../results';
 import Failure from '../Failure';
 import {
   baseValue as giviniBaseValue,
-  roundOneChanges as givinieRoundOneChanges,
+  roundOneValue as giviniRoundOneValue,
 } from '../givini';
 
 const onFinish = async ({ values, setResult, runInWoker, setError }) => {
@@ -20,7 +20,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   } = values;
 
   const giviniStart = giviniBaseValue({ chapter3Investments: previous });
-  const giviniExtra = givinieRoundOneChanges();
+  const giviniExtra = giviniRoundOneValue();
 
   const initialStandings = {
     givini: giviniStart,

@@ -41,3 +41,5 @@ export const roundOneChanges = () => {
     },
   ];
 };
+
+export const roundOneValue = (...params) => sum(roundOneChanges(...params));

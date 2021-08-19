@@ -23,6 +23,7 @@
  */
 
 import allInvestments from './investments';
+import { donovanHindered } from './misc';
 
 const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
@@ -159,10 +160,7 @@ export const isBetter = ({
   }
 
   if (otherRequirements.donovanKick) {
-    const requireAnyOf = ['War Monument', 'Givini Mage Guild'];
-    if (
-      !candidate.investments.some(({ name }) => requireAnyOf.includes(name))
-    ) {
+    if (!donovanHindered({ investments: candidate.investments })) {
       return false;
     }
   }

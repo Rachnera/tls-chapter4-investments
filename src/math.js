@@ -105,6 +105,7 @@ export const combine = (investments, context = {}) => {
   let price = 0;
   let profits = 0;
   let social = 0;
+  let givini = 0;
   let computedInvestments = [];
 
   investments.forEach((investment) => {
@@ -113,6 +114,7 @@ export const combine = (investments, context = {}) => {
     price += investment.price;
     profits += invProfits;
     social += investment.social || 0;
+    givini += investment.givini || 0;
     computedInvestments.push({
       ...investment,
       profits: invProfits,
@@ -131,6 +133,7 @@ export const combine = (investments, context = {}) => {
     price,
     profits,
     social,
+    givini,
     investments: computedInvestments,
   };
 };
@@ -141,9 +144,17 @@ export const isBetter = ({
   money,
   otherRequirements = {},
 }) => {
-  const { social = 0 } = otherRequirements;
+  const { social = 0, givini = 0 } = otherRequirements;
 
-  if (candidate.price > money || candidate.social < social) {
+  if (candidate.price > money) {
+    return false;
+  }
+
+  if (candidate.social < social) {
+    return false;
+  }
+
+  if (candidate.givini < givini) {
     return false;
   }
 

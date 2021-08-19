@@ -61,6 +61,7 @@ describe('combine', () => {
       price: 200000,
       profits: 25000,
       social: 1,
+      givini: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -92,6 +93,7 @@ describe('combine', () => {
       price: 350000,
       profits: 75000,
       social: 2,
+      givini: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -124,6 +126,7 @@ describe('combine', () => {
       price: 1350000,
       profits: 125000,
       social: 5,
+      givini: 0,
       investments: [
         {
           name: "Tradesmasher's Guild",
@@ -146,6 +149,7 @@ describe('combine', () => {
       price: 100000,
       profits: 25000,
       social: 0,
+      givini: 5,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -162,6 +166,7 @@ describe('combine', () => {
       price: 500000,
       profits: 200000,
       social: 0,
+      givini: 5,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -184,6 +189,7 @@ describe('combine', () => {
       price: 1450000,
       profits: 400000,
       social: 3,
+      givini: 20,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -219,7 +225,7 @@ describe('best', () => {
         investments: invs('Imp Offices'),
         money: 1000000,
       })
-    ).toEqual({ price: 0, profits: 0, social: 0, investments: [] });
+    ).toMatchObject({ price: 0, profits: 0, investments: [] });
   });
 
   test('best is buying cheapest thing', () => {
@@ -228,10 +234,9 @@ describe('best', () => {
         investments: invs('Succubus Armorer', 'Givini Smithing'),
         money: 250000,
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 100000,
       profits: 10000,
-      social: 0,
       investments: invs('Succubus Armorer'),
     });
   });
@@ -242,10 +247,9 @@ describe('best', () => {
         investments: invs('Bank of Givini', 'Givini Smithing'),
         money: 400000,
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 350000,
       profits: 300000,
-      social: 0,
       investments: invs('Bank of Givini'),
     });
   });
@@ -256,10 +260,9 @@ describe('best', () => {
         investments: invs('Givini Smithing', 'Bank of Givini'),
         money: 600000,
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 550000,
       profits: 310000,
-      social: 0,
       investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
@@ -273,7 +276,7 @@ describe('best', () => {
           social: 1,
         },
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 150000,
       profits: 50000,
       social: 1,
@@ -296,10 +299,9 @@ describe('best', () => {
           previousInvestments: ['Givini Orc Merchant'],
         },
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 203500,
       profits: 60000,
-      social: 0,
       investments: [
         {
           name: 'Givini Smithing',
@@ -332,7 +334,7 @@ describe('best', () => {
           ],
         },
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 250000,
       profits: 125000,
       social: 1,
@@ -353,10 +355,9 @@ describe('best', () => {
           giviniExtra: 6,
         },
       })
-    ).toEqual({
+    ).toMatchObject({
       price: 450000,
       profits: 400000,
-      social: 0,
       investments: [
         inv('Bank of Givini'),
         {
@@ -367,6 +368,28 @@ describe('best', () => {
           givini: 5,
         },
       ],
+    });
+  });
+
+  test('buys as much givini points as required', () => {
+    expect(
+      best({
+        investments: invs(
+          'Bank of Givini',
+          'Givini Smithing',
+          'Hall of Mental Strength'
+        ),
+        money: 600000,
+        otherRequirements: {
+          givini: 7,
+        },
+      })
+    ).toMatchObject({
+      price: 550000,
+      profits: 310000,
+      social: 0,
+      givini: 7,
+      investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
 });

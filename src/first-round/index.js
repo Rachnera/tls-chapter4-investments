@@ -49,10 +49,14 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 
   const nonInvestmentChanges = {
     givini: giviniExtra,
-    social: 0,
+    social: 3,
     money: 0,
     profits: -300000,
     list: [
+      {
+        name: `Succession crisis' reward (best result)`,
+        social: 3,
+      },
       {
         name: `The Three Trades become less profitable`,
         profits: -300000,

@@ -24,10 +24,17 @@ export const preliminaryChanges = ({ investments }) => {
 export const baseValue = ({ chapter3Investments }) =>
   startingValue + sum(preliminaryChanges({ investments: chapter3Investments }));
 
-export const roundOneChanges = () => {
+export const roundOneChanges = ({ merchantSolution }) => {
   return [
     { label: `Magical items`, values: [2] },
-    { label: `Merchant dispute`, values: [1] },
+    merchantSolution === 'neutral' && {
+      label: `Merchant dispute: Neutral compromise`,
+      values: [1],
+    },
+    merchantSolution === 'givini' && {
+      label: `Merchant dispute: Favor New Givini`,
+      values: [2],
+    },
     {
       label: `Givino Vinai equipment shop girl`,
       values: [1],
@@ -39,7 +46,7 @@ export const roundOneChanges = () => {
       values: [1],
       explanation: `+1 at the end of the round (before profits from the Givini Orc Merchant are computed)`,
     },
-  ];
+  ].filter(Boolean);
 };
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));

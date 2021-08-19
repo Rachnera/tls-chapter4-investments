@@ -6,6 +6,7 @@ const Result = ({
   initialStandings,
   nonInvestmentChanges,
   investmentChanges,
+  decisions,
 }) => {
   return (
     <Card title={`Changes`} className="results">
@@ -21,6 +22,7 @@ const Result = ({
           <Givini
             chapter3Investments={initialStandings.previousInvestments}
             roundOneInvestments={investmentChanges.investments}
+            decisions={decisions}
           />
         </Card>
       </Card>

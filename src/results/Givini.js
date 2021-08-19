@@ -1,7 +1,11 @@
 import Addition from './Addition';
 import { startingValue, preliminaryChanges, roundOneChanges } from '../givini';
 
-const Givini = ({ chapter3Investments = [], roundOneInvestments = [] }) => {
+const Givini = ({
+  chapter3Investments = [],
+  roundOneInvestments = [],
+  decisions = {},
+}) => {
   return (
     <Addition
       startingValue={startingValue}
@@ -21,7 +25,7 @@ const Givini = ({ chapter3Investments = [], roundOneInvestments = [] }) => {
         },
         {
           title: `Other changes`,
-          dataSource: roundOneChanges(),
+          dataSource: roundOneChanges(decisions),
         },
       ]}
     />

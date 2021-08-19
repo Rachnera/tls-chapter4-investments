@@ -30,11 +30,14 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     baseProfit,
     strategy,
     startingSocial,
+    merchantSolution,
     ...misc
   } = values;
 
+  const decisions = { strategy, merchantSolution };
+
   const giviniStart = giviniBaseValue({ chapter3Investments: previous });
-  const giviniExtra = giviniRoundOneValue();
+  const giviniExtra = giviniRoundOneValue(decisions);
 
   const initialStandings = {
     givini: giviniStart,
@@ -78,6 +81,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     initialStandings,
     nonInvestmentChanges,
     investmentChanges: result,
+    decisions,
   });
 };
 

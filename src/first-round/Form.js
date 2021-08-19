@@ -29,6 +29,7 @@ const initialValues = {
   strategy: 'social',
   startingSocial: 34,
   chapter3Infrastructure: true,
+  merchantSolution: 'neutral',
 };
 
 const toSelectOptions = (list) => {
@@ -114,7 +115,7 @@ const CustomForm = ({ onFinish, loading }) => {
         </Card>
 
         <Card title={`Strategy`} type="inner">
-          <Form.Item name="strategy" label={`Choose your strategy`}>
+          <Form.Item name="strategy" label={`Main strategy`}>
             <Radio.Group
               options={[
                 {
@@ -128,6 +129,24 @@ const CustomForm = ({ onFinish, loading }) => {
                 {
                   label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, dedicated investments).`,
                   value: 'succession',
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label={`Merchant dispute`} name="merchantSolution">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+                {
+                  value: 'wait',
+                  label: `Wait`,
                 },
               ]}
             />

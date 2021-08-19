@@ -46,6 +46,42 @@ const Investments = ({ investments }) => {
   return <Table dataSource={dataSource} columns={columns} pagination={false} />;
 };
 
+const Others = ({ list = [] }) => {
+  const dataSource = list.map(({ name, ...data }) => {
+    return {
+      key: name,
+      name,
+      ...data,
+    };
+  });
+
+  const render = (value = 0) => <NumberCell>{value}</NumberCell>;
+
+  const columns = [
+    {
+      title: `Name`,
+      dataIndex: 'name',
+    },
+    {
+      title: `Price`,
+      dataIndex: 'price',
+      render,
+    },
+    {
+      title: `Profits`,
+      dataIndex: 'profits',
+      render,
+    },
+    {
+      title: `Social`,
+      dataIndex: 'social',
+      render,
+    },
+  ];
+
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
+};
+
 const Ledger = ({
   initialStandings,
   nonInvestmentChanges,
@@ -118,10 +154,16 @@ const Ledger = ({
       pagination={false}
       bordered={true}
       expandable={{
-        expandedRowRender: () => (
-          <Investments investments={investmentChanges.investments} />
-        ),
-        rowExpandable: ({ key }) => key === 'investments',
+        expandedRowRender: ({ key }) => {
+          if (key === 'investments') {
+            return <Investments investments={investmentChanges.investments} />;
+          }
+          if (key === 'other') {
+            return <Others list={nonInvestmentChanges.list} />;
+          }
+          return null;
+        },
+        rowExpandable: ({ key }) => ['investments', 'other'].includes(key),
         defaultExpandAllRows: true,
       }}
     />

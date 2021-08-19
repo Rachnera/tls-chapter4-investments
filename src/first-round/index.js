@@ -51,9 +51,14 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     givini: giviniExtra,
     social: 0,
     money: 0,
-    profits: 0,
+    profits: -300000,
+    list: [
+      {
+        name: `The Three Trades become less profitable`,
+        profits: -300000,
+      },
+    ],
   };
-
   const params = {
     previousInvestments: previous,
     money: remainingPron + baseProfit,

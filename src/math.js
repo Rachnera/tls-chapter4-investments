@@ -158,6 +158,15 @@ export const isBetter = ({
     return false;
   }
 
+  if (otherRequirements.donovanKick) {
+    const requireAnyOf = ['War Monument', 'Givini Mage Guild'];
+    if (
+      !candidate.investments.some(({ name }) => requireAnyOf.includes(name))
+    ) {
+      return false;
+    }
+  }
+
   if (!current) {
     return true;
   }
@@ -174,12 +183,7 @@ export const best = ({
   investments,
   context = {},
 }) => {
-  let result = {
-    price: 0,
-    profits: 0,
-    social: 0,
-    investments: [],
-  };
+  let result = null;
 
   combinations(investments, money).forEach((comb) => {
     const candidate = combine(comb, context);

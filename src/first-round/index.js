@@ -8,10 +8,10 @@ import {
 } from '../givini';
 
 const socialRequirement = ({ strategy, startingSocial }) => {
-  if (strategy === 'social') {
-    return 40 - startingSocial;
+  if (strategy === 'money') {
+    return 0;
   }
-  return 0;
+  return 40 - startingSocial;
 };
 
 const giviniRequirement = ({ giviniStart, giviniExtra }) => {
@@ -57,6 +57,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     otherRequirements: {
       social: socialRequirement({ startingSocial, strategy }),
       givini: giviniRequirement({ giviniStart, giviniExtra }),
+      donovanKick: strategy === 'succession',
     },
     giviniStart,
     giviniExtra,

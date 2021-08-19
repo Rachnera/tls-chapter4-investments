@@ -118,12 +118,16 @@ const CustomForm = ({ onFinish, loading }) => {
             <Radio.Group
               options={[
                 {
-                  label: `Focus on profits; do only the bare minimum (New Givini ≥ 25) for the Ardan succession crisis.`,
+                  label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
                   value: 'money',
                 },
                 {
                   label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
                   value: 'social',
+                },
+                {
+                  label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, dedicated investments).`,
+                  value: 'succession',
                 },
               ]}
             />

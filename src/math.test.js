@@ -392,6 +392,24 @@ describe('best', () => {
       investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
+
+  describe('succession crisis', () => {
+    test('buys the required investments', () => {
+      expect(
+        best({
+          investments: invs('War Monument', 'Bank of Givini'),
+          money: 1000000,
+          otherRequirements: {
+            donovanKick: true,
+          },
+        })
+      ).toMatchObject({
+        price: 1000000,
+        profits: 0,
+        investments: invs('War Monument'),
+      });
+    });
+  });
 });
 
 describe('finest', () => {

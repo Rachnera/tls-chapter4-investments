@@ -146,16 +146,6 @@ const Ledger = ({
       key: 'other',
       category: `Other changes`,
     },
-    {
-      key: 'total',
-      category: `Result`,
-      money:
-        initialStandings.money +
-        nonInvestmentChanges.money -
-        investmentChanges.price,
-      profits: sum('profits'),
-      social: sum('social'),
-    },
   ];
 
   return (
@@ -176,6 +166,22 @@ const Ledger = ({
         },
         rowExpandable: ({ key }) => ['investments', 'other'].includes(key),
         defaultExpandAllRows: true,
+      }}
+      summary={() => {
+        return (
+          <Table.Summary.Row>
+            <Table.Summary.Cell colSpan={2}>{`Result`}</Table.Summary.Cell>
+            <Table.Summary.Cell>
+              {nF(
+                initialStandings.money +
+                  nonInvestmentChanges.money -
+                  investmentChanges.price
+              )}
+            </Table.Summary.Cell>
+            <Table.Summary.Cell>{nF(sum('profits'))}</Table.Summary.Cell>
+            <Table.Summary.Cell>{sum('social')}</Table.Summary.Cell>
+          </Table.Summary.Row>
+        );
       }}
     />
   );

@@ -28,7 +28,8 @@ form.first-round-form .ant-card-type-inner {
 }
 
 form.first-round-form .numbers,
-form.first-round-form .checkboxes {
+form.first-round-form .checkboxes,
+form.first-round-form .selects {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

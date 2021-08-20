@@ -141,52 +141,54 @@ const CustomForm = ({ onFinish, loading }) => {
               ]}
             />
           </Form.Item>
-          <Form.Item label={`Merchant dispute`} name="merchantSolution">
-            <Select
-              options={[
-                {
-                  value: 'neutral',
-                  label: `Neutral compromise`,
-                },
-                {
-                  value: 'givini',
-                  label: `Favor New Givini`,
-                },
-                {
-                  value: 'wait',
-                  label: `Wait`,
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label={`Jhenno's cooperation`} name="jhenno">
-            <Select
-              options={[
-                {
-                  value: 'politics',
-                  label: `Politics`,
-                },
-                {
-                  value: 'religion',
-                  label: `Religion`,
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label={`Rose's house magical items`} name="magicalItems">
-            <Select
-              options={[
-                {
-                  value: 'givini',
-                  label: `Givini`,
-                },
-                {
-                  value: 'takkan',
-                  label: `Tak'Kan`,
-                },
-              ]}
-            />
-          </Form.Item>
+          <div className="selects">
+            <Form.Item label={`Merchant dispute`} name="merchantSolution">
+              <Select
+                options={[
+                  {
+                    value: 'neutral',
+                    label: `Neutral compromise`,
+                  },
+                  {
+                    value: 'givini',
+                    label: `Favor New Givini`,
+                  },
+                  {
+                    value: 'wait',
+                    label: `Wait`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Jhenno's cooperation`} name="jhenno">
+              <Select
+                options={[
+                  {
+                    value: 'politics',
+                    label: `Politics`,
+                  },
+                  {
+                    value: 'religion',
+                    label: `Religion`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Rose's house magical items`} name="magicalItems">
+              <Select
+                options={[
+                  {
+                    value: 'givini',
+                    label: `Givini`,
+                  },
+                  {
+                    value: 'takkan',
+                    label: `Tak'Kan`,
+                  },
+                ]}
+              />
+            </Form.Item>
+          </div>
         </Card>
 
         <Form.Item>

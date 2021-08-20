@@ -2,6 +2,8 @@ import { Table } from 'antd';
 
 const nF = (number) => number.toLocaleString('en-US');
 
+const numberColWidth = 120;
+
 const NumberCell = ({ children, format }) => {
   const number = children;
   const formattedNumber = !!format ? nF(Math.abs(number)) : Math.abs(number);
@@ -29,17 +31,20 @@ const Investments = ({ investments }) => {
       dataIndex: 'price',
       render: (price) => nF(price),
       sorter: (a, b) => a.price - b.price,
+      width: numberColWidth,
     },
     {
       title: `Profits`,
       dataIndex: 'profits',
       render: (profits) => nF(profits),
       sorter: (a, b) => a.profits - b.profits,
+      width: numberColWidth,
     },
     {
       title: `Social`,
       dataIndex: 'social',
       render: (social = 0) => <NumberCell>{social}</NumberCell>,
+      width: numberColWidth,
     },
   ];
 
@@ -66,16 +71,19 @@ const Others = ({ list = [] }) => {
       title: `Price`,
       dataIndex: 'price',
       render,
+      width: numberColWidth,
     },
     {
       title: `Profits`,
       dataIndex: 'profits',
       render,
+      width: numberColWidth,
     },
     {
       title: `Social`,
       dataIndex: 'social',
       render,
+      width: numberColWidth,
     },
   ];
 
@@ -102,16 +110,19 @@ const Ledger = ({
       title: `ProN`,
       dataIndex: 'money',
       render,
+      width: numberColWidth,
     },
     {
       title: `Profits`,
       dataIndex: 'profits',
       render,
+      width: numberColWidth,
     },
     {
       title: `Social`,
       dataIndex: 'social',
       render,
+      width: numberColWidth,
     },
   ];
 

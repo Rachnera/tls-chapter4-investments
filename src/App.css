@@ -57,6 +57,12 @@ form.first-round-form button[type='submit'] {
   padding: 0;
 }
 
+.ledger tr > td.ant-table-cell:nth-last-child(1),
+.ledger tr > td.ant-table-cell:nth-last-child(2),
+.ledger tr > td.ant-table-cell:nth-last-child(3) {
+  text-align: right;
+}
+
 .disclaimer {
   display: flex;
   flex-wrap: wrap;

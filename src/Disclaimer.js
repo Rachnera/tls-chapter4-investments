@@ -37,6 +37,7 @@ const Disclaimer = () => {
               <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>
               <li>{`Chapter 3 in general and the war in particular were good enough for all petitions favorable to Givini to appear.`}</li>
               <li>{`All such petitions were approved.`}</li>
+              <li>{`If purcharsed, the Givini Orc Merchant is bought before any other investment of the round.`}</li>
             </ol>
           </>
         }

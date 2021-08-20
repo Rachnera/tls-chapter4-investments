@@ -1,5 +1,5 @@
 import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const possiblePrevious = [
   "Min's Trade Route",
@@ -43,10 +43,25 @@ const toSelectOptions = (list) => {
   });
 };
 
+const isMerchantCompromiseAvailable = ({ strategy, jhenno }) =>
+  strategy !== 'money' && jhenno !== 'politics';
+
 const requiredRule = { required: true, message: `Please provide a value.` };
 
 const CustomForm = ({ onFinish, loading }) => {
   const [previous, setPrevious] = useState(initialValues.previous);
+
+  const [form] = Form.useForm();
+  const [merchantCompromiseAvailable, setMerchantCompromiseAvailable] =
+    useState(isMerchantCompromiseAvailable(initialValues));
+  useEffect(() => {
+    if (
+      !merchantCompromiseAvailable &&
+      form.getFieldValue('merchantSolution') === 'neutral'
+    ) {
+      form.setFieldsValue({ merchantSolution: 'wait' });
+    }
+  }, [form, merchantCompromiseAvailable]);
 
   return (
     <Card title={`Round one`}>
@@ -55,8 +70,12 @@ const CustomForm = ({ onFinish, loading }) => {
         onFinish={onFinish}
         onValuesChange={(_, allValues) => {
           setPrevious(allValues.previous);
+          setMerchantCompromiseAvailable(
+            isMerchantCompromiseAvailable(allValues)
+          );
         }}
         className="first-round-form"
+        form={form}
       >
         <Card title={`The past`} type="inner">
           <div className="numbers">
@@ -147,7 +166,12 @@ const CustomForm = ({ onFinish, loading }) => {
                 options={[
                   {
                     value: 'neutral',
-                    label: `Neutral compromise`,
+                    label:
+                      `Neutral compromise` +
+                      (!merchantCompromiseAvailable
+                        ? ` (unavailable with this strategy)`
+                        : ''),
+                    disabled: !merchantCompromiseAvailable,
                   },
                   {
                     value: 'givini',

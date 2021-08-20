@@ -43,6 +43,8 @@ const toSelectOptions = (list) => {
   });
 };
 
+const requiredRule = { required: true, message: `Please provide a value.` };
+
 const CustomForm = ({ onFinish, loading }) => {
   const [previous, setPrevious] = useState(initialValues.previous);
 
@@ -62,7 +64,7 @@ const CustomForm = ({ onFinish, loading }) => {
               label={`ProN remaining at the end of chapter 3`}
               name="remainingPron"
               tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "ProN available".`}
-              rules={[{ required: true }]}
+              rules={[requiredRule]}
             >
               <InputNumber />
             </Form.Item>
@@ -70,7 +72,7 @@ const CustomForm = ({ onFinish, loading }) => {
               label={`Total profit at the start of chapter 4`}
               name="baseProfit"
               tooltip={`In the Calculator, go to "First Tower Run and Investment and copy the value next to "Total ProN Return".`}
-              rules={[{ required: true }]}
+              rules={[requiredRule]}
             >
               <InputNumber />
             </Form.Item>
@@ -78,7 +80,7 @@ const CustomForm = ({ onFinish, loading }) => {
               label={`Your social standing at the start of chapter 4`}
               name="startingSocial"
               tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
-              rules={[{ required: true }]}
+              rules={[requiredRule]}
             >
               <InputNumber />
             </Form.Item>
@@ -117,7 +119,11 @@ const CustomForm = ({ onFinish, loading }) => {
         </Card>
 
         <Card title={`Strategy`} type="inner">
-          <Form.Item name="strategy" label={`Main strategy`}>
+          <Form.Item
+            name="strategy"
+            label={`Main strategy`}
+            rules={[requiredRule]}
+          >
             <Radio.Group
               options={[
                 {

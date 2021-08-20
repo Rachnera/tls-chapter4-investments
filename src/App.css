@@ -55,3 +55,22 @@ form.first-round-form button[type='submit'] {
 .results .ledger .ant-card-body {
   padding: 0;
 }
+
+.disclaimer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.disclaimer > * {
+  flex: 1;
+  min-width: 512px;
+}
+
+.disclaimer > .preamble {
+  padding: 24px;
+}
+
+.disclaimer > .preamble > *:last-child {
+  margin-bottom: 0;
+}

@@ -161,29 +161,6 @@ const CustomForm = ({ onFinish, loading }) => {
             />
           </Form.Item>
           <div className="selects">
-            <Form.Item label={`Merchant dispute`} name="merchantSolution">
-              <Select
-                options={[
-                  {
-                    value: 'neutral',
-                    label:
-                      `Neutral compromise` +
-                      (!merchantCompromiseAvailable
-                        ? ` (unavailable with this strategy)`
-                        : ''),
-                    disabled: !merchantCompromiseAvailable,
-                  },
-                  {
-                    value: 'givini',
-                    label: `Favor New Givini`,
-                  },
-                  {
-                    value: 'wait',
-                    label: `Wait`,
-                  },
-                ]}
-              />
-            </Form.Item>
             <Form.Item label={`Jhenno's cooperation`} name="jhenno">
               <Select
                 options={[
@@ -208,6 +185,29 @@ const CustomForm = ({ onFinish, loading }) => {
                   {
                     value: 'takkan',
                     label: `Tak'Kan`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Merchant dispute`} name="merchantSolution">
+              <Select
+                options={[
+                  {
+                    value: 'neutral',
+                    label:
+                      `Neutral compromise` +
+                      (!merchantCompromiseAvailable
+                        ? ` (unavailable with this strategy)`
+                        : ''),
+                    disabled: !merchantCompromiseAvailable,
+                  },
+                  {
+                    value: 'givini',
+                    label: `Favor New Givini`,
+                  },
+                  {
+                    value: 'wait',
+                    label: `Wait`,
                   },
                 ]}
               />

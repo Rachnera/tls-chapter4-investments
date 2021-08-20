@@ -60,7 +60,7 @@ const Others = ({ list = [] }) => {
     };
   });
 
-  const render = (value = 0) => <NumberCell>{value}</NumberCell>;
+  const render = (value = 0) => <NumberCell format={true}>{value}</NumberCell>;
 
   const columns = [
     {

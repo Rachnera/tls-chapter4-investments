@@ -35,6 +35,13 @@ form.first-round-form .selects {
   justify-content: space-around;
 }
 
+form.first-round-form .selects > * {
+  flex: 1;
+  margin: 0 24px;
+  min-width: 240px;
+  max-width: 480px;
+}
+
 form.first-round-form > .ant-row {
   margin-bottom: 0;
 }

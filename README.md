@@ -81,4 +81,12 @@ Only the main algorithm is covered however.
 
 ### Build
 
-TODO
+If need be, modify the package.json to specify the subfolder from which the site will be delivered: https://create-react-app.dev/docs/deployment/#building-for-relative-paths
+
+Then:
+
+```
+yarn build
+```
+
+And retrieve the static version of the site, ready to be deployed, from the `build/` folder.

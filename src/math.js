@@ -71,7 +71,9 @@ export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   return withPrice;
 };
 
-export const combinations = (investments, maxPrice = Infinity) => {
+export const combinations = (investments, options = {}) => {
+  const { maxPrice = Infinity } = options;
+
   const cheaperThan = buildCheaperThan(investments);
 
   let combsNMinusOne;
@@ -191,7 +193,7 @@ export const best = ({
 }) => {
   let result = null;
 
-  combinations(investments, money).forEach((comb) => {
+  combinations(investments, { maxPrice: money }).forEach((comb) => {
     const candidate = combine(comb, context);
     if (
       isBetter({

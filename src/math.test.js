@@ -44,6 +44,27 @@ describe('combinations', () => {
       invs('War Monument', 'Denmiel Archives', 'Imp Offices'),
     ]);
   });
+
+  test('maxPrice', () => {
+    expect(
+      combinations(
+        invs(
+          'Imp Offices',
+          'Denmiel Archives',
+          'War Monument',
+          'Givini Smithing'
+        ),
+        { maxPrice: 400000 }
+      )
+    ).toEqual([
+      [],
+      invs('Denmiel Archives'),
+      invs('Givini Smithing'),
+      invs('Imp Offices'),
+      invs('Denmiel Archives', 'Imp Offices'),
+      invs('Givini Smithing', 'Imp Offices'),
+    ]);
+  });
 });
 
 describe('combine', () => {

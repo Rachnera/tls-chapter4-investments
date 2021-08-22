@@ -114,6 +114,57 @@ describe('combinations', () => {
       ),
     ]);
   });
+
+  test('atLeastOne', () => {
+    expect(
+      combinations(
+        invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+        { atLeastOne: ['Yhilini Airship Fleet', 'War Monument'] }
+      )
+    ).toEqual([
+      invs('Yhilini Airship Fleet'),
+      invs('War Monument'),
+      invs('Yhilini Airship Fleet', 'Imp Offices'),
+      invs('War Monument', 'Yhilini Airship Fleet'),
+      invs('War Monument', 'Imp Offices'),
+      invs('War Monument', 'Yhilini Airship Fleet', 'Imp Offices'),
+    ]);
+  });
+
+  describe('mandatory + atLeastOne', () => {
+    test('both are applied', () => {
+      expect(
+        combinations(
+          invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+          {
+            atLeastOne: ['Yhilini Airship Fleet', 'War Monument'],
+            mandatory: ['Imp Offices'],
+          }
+        )
+      ).toEqual([
+        invs('Imp Offices', 'Yhilini Airship Fleet'),
+        invs('Imp Offices', 'War Monument'),
+        invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+      ]);
+    });
+
+    test('atLeastOne is useless', () => {
+      expect(
+        combinations(
+          invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+          {
+            atLeastOne: ['Yhilini Airship Fleet', 'War Monument'],
+            mandatory: ['War Monument'],
+          }
+        )
+      ).toEqual([
+        invs('War Monument'),
+        invs('War Monument', 'Yhilini Airship Fleet'),
+        invs('War Monument', 'Imp Offices'),
+        invs('War Monument', 'Yhilini Airship Fleet', 'Imp Offices'),
+      ]);
+    });
+  });
 });
 
 describe('combine', () => {
@@ -448,42 +499,6 @@ describe('best', () => {
       social: 0,
       givini: 7,
       investments: invs('Bank of Givini', 'Givini Smithing'),
-    });
-  });
-
-  describe('succession crisis', () => {
-    test('buys the required investments', () => {
-      expect(
-        best({
-          investments: invs('War Monument', 'Bank of Givini'),
-          money: 1000000,
-          otherRequirements: {
-            donovanKick: true,
-          },
-        })
-      ).toMatchObject({
-        price: 1000000,
-        profits: 0,
-        investments: invs('War Monument'),
-      });
-    });
-    test('ignores if investment already bought', () => {
-      expect(
-        best({
-          investments: invs('War Monument', 'Bank of Givini'),
-          money: 1000000,
-          otherRequirements: {
-            donovanKick: true,
-          },
-          context: {
-            previousInvestments: ['Givini Mage Guild'],
-          },
-        })
-      ).toMatchObject({
-        price: 350000,
-        profits: 300000,
-        investments: invs('Bank of Givini'),
-      });
     });
   });
 });

@@ -4,8 +4,8 @@ import {
   isBetter,
   buildCheaperThan,
   combsN,
+  combsO,
 } from './math';
-import { donovanHindered } from './misc';
 
 let cleanParams;
 let combs;
@@ -17,24 +17,17 @@ let combsNMinusOne;
 export const prepare = (params) => {
   cleanParams = buildParams(params);
   const mandatory = cleanParams.otherRequirements?.mandatory || [];
-  cheaperThan = buildCheaperThan(cleanParams.investments, mandatory);
+  cheaperThan = buildCheaperThan(cleanParams.investments, { mandatory });
 
-  if (cleanParams.otherRequirements?.donovanKick) {
-    const previous = cleanParams.context?.previousInvestments || [];
-    if (!donovanHindered([...previous, ...mandatory])) {
-      // "Hack" to speed up computation time by a ton in that specific case
-      const key = mandatory[mandatory.length - 1];
-      cheaperThan[key] = cheaperThan[key].filter((investment) =>
-        donovanHindered([investment.name])
-      );
-    }
-  }
-
-  combs = [];
+  combsNMinusOne = combsO(
+    cleanParams.investments,
+    cleanParams.otherRequirements
+  );
+  combs = [...combsNMinusOne.map((l) => l[0])];
 
   best = null;
 
-  return cleanParams.investments.length;
+  return cleanParams.investments.length - combsNMinusOne[0][0].length;
 };
 
 export const preprocess = () => {

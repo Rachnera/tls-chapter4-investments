@@ -98,8 +98,11 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
         merchantSolution,
       }),
       givini: giviniRequirement({ giviniStart, giviniExtra }),
-      donovanKick: strategy === 'succession',
       mandatory,
+      atLeastOne:
+        strategy === 'succession'
+          ? ['War Monument', 'Givini Mage Guild']
+          : undefined,
     },
     giviniStart,
     giviniExtra,

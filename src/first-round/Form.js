@@ -30,7 +30,7 @@ const initialValues = {
   strategy: 'social',
   startingSocial: 34,
   chapter3Infrastructure: true,
-  merchantSolution: 'neutral',
+  merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: [],
@@ -45,25 +45,23 @@ const toSelectOptions = (list) => {
   });
 };
 
-const isMerchantCompromiseAvailable = ({ strategy, jhenno }) =>
-  strategy !== 'money' && jhenno !== 'politics';
-
 const requiredRule = { required: true, message: `Please provide a value.` };
 
 const CustomForm = ({ onFinish, loading }) => {
   const [previous, setPrevious] = useState(initialValues.previous);
 
   const [form] = Form.useForm();
-  const [merchantCompromiseAvailable, setMerchantCompromiseAvailable] =
-    useState(isMerchantCompromiseAvailable(initialValues));
+  const [merchantSolution, setMerchantSolution] = useState(
+    initialValues.merchantSolution
+  );
   useEffect(() => {
     if (
-      !merchantCompromiseAvailable &&
-      form.getFieldValue('merchantSolution') === 'neutral'
+      merchantSolution === 'neutral' &&
+      form.getFieldValue('strategy') === 'money'
     ) {
-      form.setFieldsValue({ merchantSolution: 'wait' });
+      form.setFieldsValue({ strategy: 'social' });
     }
-  }, [form, merchantCompromiseAvailable]);
+  }, [form, merchantSolution]);
   useEffect(() => {
     form.setFieldsValue({
       mandatory: form
@@ -79,9 +77,7 @@ const CustomForm = ({ onFinish, loading }) => {
         onFinish={onFinish}
         onValuesChange={(_, allValues) => {
           setPrevious(allValues.previous);
-          setMerchantCompromiseAvailable(
-            isMerchantCompromiseAvailable(allValues)
-          );
+          setMerchantSolution(allValues.merchantSolution);
         }}
         className="first-round-form"
         form={form}
@@ -157,6 +153,7 @@ const CustomForm = ({ onFinish, loading }) => {
                 {
                   label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
                   value: 'money',
+                  disabled: merchantSolution === 'neutral',
                 },
                 {
                   label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
@@ -203,12 +200,7 @@ const CustomForm = ({ onFinish, loading }) => {
                 options={[
                   {
                     value: 'neutral',
-                    label:
-                      `Neutral compromise` +
-                      (!merchantCompromiseAvailable
-                        ? ` (unavailable with this strategy)`
-                        : ''),
-                    disabled: !merchantCompromiseAvailable,
+                    label: `Neutral compromise (force Social ≥ 40)`,
                   },
                   {
                     value: 'givini',

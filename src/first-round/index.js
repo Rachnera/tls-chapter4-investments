@@ -7,11 +7,16 @@ import {
   roundOneValue as giviniRoundOneValue,
 } from '../givini';
 
-const socialRequirement = ({ strategy, startingSocial, jhenno }) => {
+const socialRequirement = ({
+  strategy,
+  startingSocial,
+  jhenno,
+  merchantSolution,
+}) => {
   if (strategy === 'money') {
     return 0;
   }
-  if (jhenno === 'politics') {
+  if (jhenno === 'politics' && merchantSolution !== 'neutral') {
     return 39 - startingSocial;
   }
   return 40 - startingSocial;
@@ -86,7 +91,12 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     previousInvestments: previous,
     money: remainingPron + baseProfit,
     otherRequirements: {
-      social: socialRequirement({ startingSocial, strategy, jhenno }),
+      social: socialRequirement({
+        startingSocial,
+        strategy,
+        jhenno,
+        merchantSolution,
+      }),
       givini: giviniRequirement({ giviniStart, giviniExtra }),
       donovanKick: strategy === 'succession',
       mandatory,

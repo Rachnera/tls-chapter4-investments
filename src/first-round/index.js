@@ -36,6 +36,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     merchantSolution,
     jhenno,
     magicalItems,
+    mandatory,
     ...misc
   } = values;
 
@@ -88,6 +89,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
       social: socialRequirement({ startingSocial, strategy, jhenno }),
       givini: giviniRequirement({ giviniStart, giviniExtra }),
       donovanKick: strategy === 'succession',
+      mandatory,
     },
     giviniStart,
     giviniExtra,

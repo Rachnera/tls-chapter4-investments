@@ -1,5 +1,6 @@
 import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
 import { useEffect, useState } from 'react';
+import allInvestments from '../investments';
 
 const possiblePrevious = [
   "Min's Trade Route",
@@ -32,6 +33,7 @@ const initialValues = {
   merchantSolution: 'neutral',
   jhenno: 'religion',
   magicalItems: 'givini',
+  mandatory: [],
 };
 
 const toSelectOptions = (list) => {
@@ -213,6 +215,19 @@ const CustomForm = ({ onFinish, loading }) => {
               />
             </Form.Item>
           </div>
+          <Form.Item
+            label={`Investments you explictly want to buy, for any reason`}
+            name="mandatory"
+          >
+            <Select
+              options={toSelectOptions(
+                allInvestments
+                  .map(({ name }) => name)
+                  .filter((name) => !previous.includes(name))
+              )}
+              mode="multiple"
+            />
+          </Form.Item>
         </Card>
 
         <Form.Item>

@@ -171,12 +171,10 @@ export const isBetter = ({
 
   if (otherRequirements.donovanKick) {
     if (
-      !donovanHindered({
-        investments: [
-          ...(context.previousInvestments || []),
-          ...candidate.investments.map(({ name }) => name),
-        ],
-      })
+      !donovanHindered([
+        ...(context.previousInvestments || []),
+        ...candidate.investments.map(({ name }) => name),
+      ])
     ) {
       return false;
     }
@@ -199,8 +197,9 @@ export const best = ({
   context = {},
 }) => {
   let result = null;
+  const { mandatory = [] } = otherRequirements;
 
-  combinations(investments, { maxPrice: money }).forEach((comb) => {
+  combinations(investments, { maxPrice: money, mandatory }).forEach((comb) => {
     const candidate = combine(comb, context);
     if (
       isBetter({

@@ -16,18 +16,18 @@ let combsNMinusOne;
 
 export const prepare = (params) => {
   cleanParams = buildParams(params);
-  cheaperThan = buildCheaperThan(cleanParams.investments);
+  const mandatory = cleanParams.otherRequirements?.mandatory || [];
+  cheaperThan = buildCheaperThan(cleanParams.investments, mandatory);
 
-  // "Hack" to speed up computation time by a ton in that specific case
   if (cleanParams.otherRequirements?.donovanKick) {
-    cheaperThan[undefined] = cheaperThan[undefined].filter((investment) =>
-      donovanHindered({
-        investments: [
-          ...(cleanParams.context?.previousInvestments || []),
-          investment.name,
-        ],
-      })
-    );
+    const previous = cleanParams.context?.previousInvestments || [];
+    if (!donovanHindered([...previous, ...mandatory])) {
+      // "Hack" to speed up computation time by a ton in that specific case
+      const key = mandatory[mandatory.length - 1];
+      cheaperThan[key] = cheaperThan[key].filter((investment) =>
+        donovanHindered([investment.name])
+      );
+    }
   }
 
   combs = [];

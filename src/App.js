@@ -21,7 +21,11 @@ const buildRunInWorker =
     setInvestmentsCount(investmentsCount);
     setPreprogress(0);
     let combinationsCount = 0;
-    for (let i = 0; i <= investmentsCount; i++) {
+    for (
+      let i = params.otherRequirements?.length || 0;
+      i <= investmentsCount;
+      i++
+    ) {
       combinationsCount += await workerInstance.preprocess();
       setPreprogress(i / investmentsCount);
     }

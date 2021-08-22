@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build && rm -rf docs && mv build docs",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "git fetch origin && git merge origin/main -m 'Pre-release merge' && yarn build && git add . && git commit -m 'Release' && git push origin githubio"
   },
   "eslintConfig": {
     "extends": [

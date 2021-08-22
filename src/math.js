@@ -23,38 +23,54 @@
  */
 
 import allInvestments from './investments';
-import { donovanHindered } from './misc';
 
 const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
-export const buildCheaperThan = (investments) => {
-  const sortedInvestments = [...investments].sort(
-    ({ price: a = 0 }, { price: b = 0 }) => {
+export const buildCheaperThan = (investments, { mandatory = [] }) => {
+  const sortedInvestments = investments
+    .filter(({ name }) => !mandatory.includes(name))
+    .sort(({ price: a = 0 }, { price: b = 0 }) => {
       return b - a;
-    }
-  );
+    });
 
   let cheaperThan = {};
-  cheaperThan[undefined] = sortedInvestments.slice(0);
+
+  const defaultKey =
+    mandatory.length > 0 ? mandatory[mandatory.length - 1] : 'default';
+  cheaperThan[defaultKey] = sortedInvestments.slice(0);
+
   for (let i = 0; i < sortedInvestments.length; i++) {
     cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
+
   return cheaperThan;
 };
 
-export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
-  if (!combsNMinusOne) {
-    return [[[], 0]];
+export const combsO = (investments, { mandatory = [], atLeastOne = [] }) => {
+  const def = investments.filter(({ name }) => mandatory.includes(name));
+
+  const relevantAtLeastOne =
+    atLeastOne.length > 0 &&
+    !mandatory.some((name) => atLeastOne.includes(name));
+  if (relevantAtLeastOne) {
+    return atLeastOne.map((one) => {
+      const cb = [...def, investments.find(({ name }) => name === one)];
+      return [cb, cb.reduce((acc, { price }) => acc + price, 0)];
+    });
   }
 
+  return [[def, def.reduce((acc, { price }) => acc + price, 0)]];
+};
+
+export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   let withPrice = [];
 
   for (let i = 0; i < combsNMinusOne.length; i++) {
     const [invs, cost] = combsNMinusOne[i];
 
-    const lastName = invs[invs.length - 1]?.name;
+    const lastName = invs[invs.length - 1]?.name || 'default';
     const suffixes = cheaperThan[lastName];
     for (let j = 0; j < suffixes.length; j++) {
       const inv = suffixes[j];
@@ -71,12 +87,14 @@ export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   return withPrice;
 };
 
-export const combinations = (investments, maxPrice = Infinity) => {
-  const cheaperThan = buildCheaperThan(investments);
+export const combinations = (investments, options = {}) => {
+  const { maxPrice = Infinity, mandatory = [] } = options;
 
-  let combsNMinusOne;
-  let results = [];
-  for (let s = 0; s <= investments.length; s++) {
+  const cheaperThan = buildCheaperThan(investments, { mandatory });
+
+  let combsNMinusOne = combsO(investments, options);
+  let results = [...combsNMinusOne.map((l) => l[0])];
+  for (let s = combsNMinusOne[0][0].length; s <= investments.length; s++) {
     combsNMinusOne = combsN({
       combsNMinusOne,
       maxPrice,
@@ -142,15 +160,10 @@ export const combine = (investments, context = {}) => {
 export const isBetter = ({
   current,
   candidate,
-  money,
   otherRequirements = {},
   context = {},
 }) => {
   const { social = 0, givini = 0 } = otherRequirements;
-
-  if (candidate.price > money) {
-    return false;
-  }
 
   if (candidate.social < social) {
     return false;
@@ -158,19 +171,6 @@ export const isBetter = ({
 
   if (candidate.givini < givini) {
     return false;
-  }
-
-  if (otherRequirements.donovanKick) {
-    if (
-      !donovanHindered({
-        investments: [
-          ...(context.previousInvestments || []),
-          ...candidate.investments.map(({ name }) => name),
-        ],
-      })
-    ) {
-      return false;
-    }
   }
 
   if (!current) {
@@ -190,21 +190,23 @@ export const best = ({
   context = {},
 }) => {
   let result = null;
+  const { mandatory = [], atLeastOne = [] } = otherRequirements;
 
-  combinations(investments, money).forEach((comb) => {
-    const candidate = combine(comb, context);
-    if (
-      isBetter({
-        current: result,
-        candidate,
-        money,
-        otherRequirements,
-        context,
-      })
-    ) {
-      result = candidate;
+  combinations(investments, { maxPrice: money, mandatory, atLeastOne }).forEach(
+    (comb) => {
+      const candidate = combine(comb, context);
+      if (
+        isBetter({
+          current: result,
+          candidate,
+          otherRequirements,
+          context,
+        })
+      ) {
+        result = candidate;
+      }
     }
-  });
+  );
 
   return result;
 };

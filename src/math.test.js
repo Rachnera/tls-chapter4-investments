@@ -44,6 +44,127 @@ describe('combinations', () => {
       invs('War Monument', 'Denmiel Archives', 'Imp Offices'),
     ]);
   });
+
+  test('maxPrice', () => {
+    expect(
+      combinations(
+        invs(
+          'Imp Offices',
+          'Denmiel Archives',
+          'War Monument',
+          'Givini Smithing'
+        ),
+        { maxPrice: 400000 }
+      )
+    ).toEqual([
+      [],
+      invs('Denmiel Archives'),
+      invs('Givini Smithing'),
+      invs('Imp Offices'),
+      invs('Denmiel Archives', 'Imp Offices'),
+      invs('Givini Smithing', 'Imp Offices'),
+    ]);
+  });
+
+  test('mandatory', () => {
+    expect(
+      combinations(
+        invs(
+          'Imp Offices',
+          'Denmiel Archives',
+          'War Monument',
+          'Yhilini Airship Fleet',
+          'Gasm Falls Water Cleanup'
+        ),
+        { mandatory: ['Yhilini Airship Fleet', 'Gasm Falls Water Cleanup'] }
+      )
+    ).toEqual([
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup'),
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'War Monument'),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'Denmiel Archives'
+      ),
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'Imp Offices'),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Denmiel Archives'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Imp Offices'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'Denmiel Archives',
+        'Imp Offices'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Denmiel Archives',
+        'Imp Offices'
+      ),
+    ]);
+  });
+
+  test('atLeastOne', () => {
+    expect(
+      combinations(
+        invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+        { atLeastOne: ['Yhilini Airship Fleet', 'War Monument'] }
+      )
+    ).toEqual([
+      invs('Yhilini Airship Fleet'),
+      invs('War Monument'),
+      invs('Yhilini Airship Fleet', 'Imp Offices'),
+      invs('War Monument', 'Yhilini Airship Fleet'),
+      invs('War Monument', 'Imp Offices'),
+      invs('War Monument', 'Yhilini Airship Fleet', 'Imp Offices'),
+    ]);
+  });
+
+  describe('mandatory + atLeastOne', () => {
+    test('both are applied', () => {
+      expect(
+        combinations(
+          invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+          {
+            atLeastOne: ['Yhilini Airship Fleet', 'War Monument'],
+            mandatory: ['Imp Offices'],
+          }
+        )
+      ).toEqual([
+        invs('Imp Offices', 'Yhilini Airship Fleet'),
+        invs('Imp Offices', 'War Monument'),
+        invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+      ]);
+    });
+
+    test('atLeastOne is useless', () => {
+      expect(
+        combinations(
+          invs('Imp Offices', 'War Monument', 'Yhilini Airship Fleet'),
+          {
+            atLeastOne: ['Yhilini Airship Fleet', 'War Monument'],
+            mandatory: ['War Monument'],
+          }
+        )
+      ).toEqual([
+        invs('War Monument'),
+        invs('War Monument', 'Yhilini Airship Fleet'),
+        invs('War Monument', 'Imp Offices'),
+        invs('War Monument', 'Yhilini Airship Fleet', 'Imp Offices'),
+      ]);
+    });
+  });
 });
 
 describe('combine', () => {
@@ -85,7 +206,6 @@ describe('combine', () => {
           name: 'Booze Shack',
           price: 150000,
           profits: 50000,
-          country: "Tak'Kan",
           social: 1,
         },
       ])
@@ -105,7 +225,6 @@ describe('combine', () => {
           name: 'Booze Shack',
           price: 150000,
           profits: 50000,
-          country: "Tak'Kan",
           social: 1,
         },
       ],
@@ -132,12 +251,10 @@ describe('combine', () => {
           name: "Tradesmasher's Guild",
           price: 350000,
           profits: 125000,
-          country: "Tak'Kan",
         },
         {
           name: 'Orcish Democracy',
           price: 1000000,
-          country: "Tak'Kan",
           social: 5,
           profits: 0,
         },
@@ -155,7 +272,6 @@ describe('combine', () => {
           name: 'Givini Orc Merchant',
           price: 100000,
           profits: 25000,
-          country: 'New Givini',
           givini: 5,
         },
       ],
@@ -172,7 +288,6 @@ describe('combine', () => {
           name: 'Givini Orc Merchant',
           price: 500000,
           profits: 200000,
-          country: 'New Givini',
           givini: 5,
         },
       ],
@@ -195,20 +310,17 @@ describe('combine', () => {
           name: 'Givini Orc Merchant',
           price: 100000,
           profits: 100000,
-          country: 'New Givini',
           givini: 5,
         },
         {
           name: 'Bank of Givini',
           price: 350000,
           profits: 300000,
-          country: 'New Givini',
           givini: 5,
         },
         {
           name: 'War Monument',
           price: 1000000,
-          country: 'New Givini',
           givini: 10,
           social: 3,
           profits: 0,
@@ -307,13 +419,11 @@ describe('best', () => {
           name: 'Givini Smithing',
           price: 200000,
           profits: 10000,
-          country: 'New Givini',
           givini: 2,
         },
         {
           name: 'Givini Banners + Givini Dragon Statue',
           price: 1000 + 2500,
-          country: 'New Givini',
           givini: 1,
           profits: 0,
         },
@@ -364,7 +474,6 @@ describe('best', () => {
           name: 'Givini Orc Merchant',
           price: 100000,
           profits: 100000,
-          country: 'New Givini',
           givini: 5,
         },
       ],
@@ -390,42 +499,6 @@ describe('best', () => {
       social: 0,
       givini: 7,
       investments: invs('Bank of Givini', 'Givini Smithing'),
-    });
-  });
-
-  describe('succession crisis', () => {
-    test('buys the required investments', () => {
-      expect(
-        best({
-          investments: invs('War Monument', 'Bank of Givini'),
-          money: 1000000,
-          otherRequirements: {
-            donovanKick: true,
-          },
-        })
-      ).toMatchObject({
-        price: 1000000,
-        profits: 0,
-        investments: invs('War Monument'),
-      });
-    });
-    test('ignores if investment already bought', () => {
-      expect(
-        best({
-          investments: invs('War Monument', 'Bank of Givini'),
-          money: 1000000,
-          otherRequirements: {
-            donovanKick: true,
-          },
-          context: {
-            previousInvestments: ['Givini Mage Guild'],
-          },
-        })
-      ).toMatchObject({
-        price: 350000,
-        profits: 300000,
-        investments: invs('Bank of Givini'),
-      });
     });
   });
 });

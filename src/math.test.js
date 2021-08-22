@@ -65,6 +65,55 @@ describe('combinations', () => {
       invs('Givini Smithing', 'Imp Offices'),
     ]);
   });
+
+  test('mandatory', () => {
+    expect(
+      combinations(
+        invs(
+          'Imp Offices',
+          'Denmiel Archives',
+          'War Monument',
+          'Yhilini Airship Fleet',
+          'Gasm Falls Water Cleanup'
+        ),
+        { mandatory: ['Yhilini Airship Fleet', 'Gasm Falls Water Cleanup'] }
+      )
+    ).toEqual([
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup'),
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'War Monument'),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'Denmiel Archives'
+      ),
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'Imp Offices'),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Denmiel Archives'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Imp Offices'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'Denmiel Archives',
+        'Imp Offices'
+      ),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'War Monument',
+        'Denmiel Archives',
+        'Imp Offices'
+      ),
+    ]);
+  });
 });
 
 describe('combine', () => {

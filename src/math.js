@@ -29,15 +29,17 @@ const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
-export const buildCheaperThan = (investments) => {
-  const sortedInvestments = [...investments].sort(
-    ({ price: a = 0 }, { price: b = 0 }) => {
+export const buildCheaperThan = (investments, mandatory = []) => {
+  const sortedInvestments = investments
+    .filter(({ name }) => !mandatory.includes(name))
+    .sort(({ price: a = 0 }, { price: b = 0 }) => {
       return b - a;
-    }
-  );
+    });
 
   let cheaperThan = {};
-  cheaperThan[undefined] = sortedInvestments.slice(0);
+  const init = investments.filter(({ name }) => mandatory.includes(name));
+  cheaperThan['init'] = init;
+  cheaperThan[init[init.length - 1]?.name] = sortedInvestments.slice(0);
   for (let i = 0; i < sortedInvestments.length; i++) {
     cheaperThan[sortedInvestments[i]['name']] = sortedInvestments.slice(i + 1);
   }
@@ -46,7 +48,12 @@ export const buildCheaperThan = (investments) => {
 
 export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
   if (!combsNMinusOne) {
-    return [[[], 0]];
+    return [
+      [
+        cheaperThan['init'],
+        cheaperThan['init'].reduce((acc, { price }) => acc + price, 0),
+      ],
+    ];
   }
 
   let withPrice = [];
@@ -72,13 +79,13 @@ export const combsN = ({ combsNMinusOne, maxPrice, cheaperThan }) => {
 };
 
 export const combinations = (investments, options = {}) => {
-  const { maxPrice = Infinity } = options;
+  const { maxPrice = Infinity, mandatory = [] } = options;
 
-  const cheaperThan = buildCheaperThan(investments);
+  const cheaperThan = buildCheaperThan(investments, mandatory);
 
   let combsNMinusOne;
   let results = [];
-  for (let s = 0; s <= investments.length; s++) {
+  for (let s = mandatory.length; s <= investments.length; s++) {
     combsNMinusOne = combsN({
       combsNMinusOne,
       maxPrice,

@@ -64,6 +64,13 @@ const CustomForm = ({ onFinish, loading }) => {
       form.setFieldsValue({ merchantSolution: 'wait' });
     }
   }, [form, merchantCompromiseAvailable]);
+  useEffect(() => {
+    form.setFieldsValue({
+      mandatory: form
+        .getFieldValue('mandatory')
+        .filter((name) => !previous.includes(name)),
+    });
+  }, [form, previous]);
 
   return (
     <Card title={`Round one`}>

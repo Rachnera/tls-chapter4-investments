@@ -151,15 +151,10 @@ export const combine = (investments, context = {}) => {
 export const isBetter = ({
   current,
   candidate,
-  money,
   otherRequirements = {},
   context = {},
 }) => {
   const { social = 0, givini = 0 } = otherRequirements;
-
-  if (candidate.price > money) {
-    return false;
-  }
 
   if (candidate.social < social) {
     return false;
@@ -205,7 +200,6 @@ export const best = ({
       isBetter({
         current: result,
         candidate,
-        money,
         otherRequirements,
         context,
       })

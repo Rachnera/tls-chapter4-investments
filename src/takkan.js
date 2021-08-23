@@ -6,7 +6,7 @@ export const preliminaryChanges = () => {
     {
       label: `Tak'Kan Trade`,
       values: [5, 1],
-      explanation: `+5 when bought, +1 at round's start`,
+      explanation: `+5 when bought, +1 at the start of the round`,
     },
   ];
 };

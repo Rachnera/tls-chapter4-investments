@@ -251,12 +251,14 @@ describe('combine', () => {
           name: "Tradesmasher's Guild",
           price: 350000,
           profits: 125000,
+          takkan: 5,
         },
         {
           name: 'Orcish Democracy',
           price: 1000000,
           social: 5,
           profits: 0,
+          takkan: 10,
         },
       ],
     });
@@ -317,6 +319,7 @@ describe('combine', () => {
           price: 350000,
           profits: 300000,
           givini: 5,
+          takkan: 2,
         },
         {
           name: 'War Monument',
@@ -324,6 +327,7 @@ describe('combine', () => {
           givini: 10,
           social: 3,
           profits: 0,
+          takkan: 2,
         },
       ],
     });

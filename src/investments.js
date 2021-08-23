@@ -102,6 +102,7 @@ const investments = [
     price: 1500000,
     profits: 300000,
     givini: 3,
+    takkan: 3,
   },
   {
     name: 'Lustlord Temples',
@@ -114,6 +115,7 @@ const investments = [
     profits: 2000,
     givini: 2,
     social: 1,
+    takkan: 2,
   },
   {
     name: 'Gasm Falls Water Cleanup',
@@ -177,12 +179,14 @@ const investments = [
     profits: 30000,
     givini: 2,
     social: 1,
+    takkan: 1,
   },
   {
     name: 'Bank of Givini',
     price: 350000,
     profits: 300000,
     givini: 5,
+    takkan: 2,
   },
   {
     name: 'Givini Mage Guild',
@@ -195,24 +199,28 @@ const investments = [
     price: 1000000,
     givini: 10,
     social: 3,
+    takkan: 2,
   },
   {
     name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
     price: 1000000 + 100000,
     profits: 50000 + 50000,
     social: 1,
+    takkan: 5 + 2,
   },
   {
     name: 'Hall of Mental Strength',
     price: 200000,
     profits: 25000,
     social: 1,
+    takkan: 3,
   },
   {
     name: 'Booze Shack',
     price: 150000,
     profits: 50000,
     social: 1,
+    takkan: 2,
   },
   {
     name: "Tradesmasher's Guild",
@@ -249,37 +257,48 @@ const investments = [
       }
       return 200000;
     },
+    takkan: 5,
   },
   {
     name: 'Lonely Sailor Services',
     price: 250000,
     profits: 100000,
     social: 1,
+    takkan: 5,
   },
   {
     name: "Cee'Kan Shipping",
     price: 700000,
     profits: 200000,
+    takkan: 5,
   },
   {
     name: 'Orcish Democracy',
     price: 1000000,
     social: 5,
+    takkan: 10,
   },
   {
     name: 'Imp Offices',
     price: 100000,
     social: 1,
+    takkan: 1,
   },
   {
     name: 'Orc Pools Upgrade',
     price: 500000,
     social: 2,
+    takkan: 5,
   },
   {
     name: 'Givini Banners + Givini Dragon Statue',
     price: 1000 + 2500,
     givini: 1,
+  },
+  {
+    name: 'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+    price: 1000 + 2000 + 5000,
+    takkan: 1,
   },
 ];
 

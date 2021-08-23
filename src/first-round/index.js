@@ -128,8 +128,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   });
 };
 
-const FirstRound = ({ runInWoker, loading }) => {
-  const [result, setResult] = useState();
+const FirstRound = ({ runInWoker, loading, result, setResult }) => {
   const [error, setError] = useState();
 
   return (

@@ -55,6 +55,8 @@ const App = () => {
   const [investmentsCount, setInvestmentsCount] = useState();
   const [preprogress, setPreprogress] = useState(0);
 
+  const [firstRoundResult, setFirstRoundResult] = useState();
+
   useEffect(() => {
     if (!workerInstance) {
       setWorkerInstance(worker());
@@ -81,7 +83,12 @@ const App = () => {
   return (
     <div>
       <Disclaimer />
-      <FirstRound runInWoker={runInWoker} loading={loading} />
+      <FirstRound
+        runInWoker={runInWoker}
+        loading={loading}
+        result={firstRoundResult}
+        setResult={setFirstRoundResult}
+      />
       {loading && (
         <Loading
           combinationsCount={combinationsCount}

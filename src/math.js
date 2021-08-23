@@ -22,7 +22,7 @@
  * d
  */
 
-import allInvestments from './investments';
+import allInvestments from './data/investments';
 
 const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'

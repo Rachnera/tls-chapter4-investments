@@ -1,5 +1,9 @@
 import Addition from './Addition';
-import { startingValue, preliminaryChanges, roundOneChanges } from '../givini';
+import {
+  startingValue,
+  preliminaryChanges,
+  roundOneChanges,
+} from '../data/givini';
 
 const Givini = ({
   chapter3Investments = [],

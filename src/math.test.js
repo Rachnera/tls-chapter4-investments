@@ -1,5 +1,5 @@
 import { combinations, combine, best, finest } from './math';
-import investments from './investments';
+import investments from './data/investments';
 
 const inv = (a) => investments.find(({ name }) => name === a);
 const invs = (...list) => list.map(inv);

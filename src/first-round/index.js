@@ -5,7 +5,7 @@ import Failure from '../Failure';
 import {
   baseValue as giviniBaseValue,
   roundOneValue as giviniRoundOneValue,
-} from '../givini';
+} from '../data/givini';
 
 const socialRequirement = ({
   strategy,

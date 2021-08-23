@@ -1,6 +1,6 @@
 import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
 import { useEffect, useState } from 'react';
-import allInvestments from '../investments';
+import allInvestments from '../data/investments';
 
 const possiblePrevious = [
   "Min's Trade Route",

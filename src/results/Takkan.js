@@ -1,5 +1,9 @@
 import Addition from './Addition';
-import { startingValue, preliminaryChanges, roundOneChanges } from '../takkan';
+import {
+  startingValue,
+  preliminaryChanges,
+  roundOneChanges,
+} from '../data/takkan';
 
 const Takkan = ({ roundOneInvestments = [], decisions = {} }) => {
   return (

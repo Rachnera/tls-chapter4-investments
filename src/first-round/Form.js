@@ -167,6 +167,28 @@ const CustomForm = ({ onFinish, loading }) => {
             />
           </Form.Item>
           <div className="selects">
+            <Form.Item label={`Research`} name="research">
+              <Select
+                options={[
+                  {
+                    value: 'orc',
+                    label: `Orc Diversification`,
+                  },
+                  {
+                    value: 'unpeople',
+                    label: `Unpeople Transformation`,
+                  },
+                  {
+                    value: 'purity',
+                    label: `Purity Magic`,
+                  },
+                  {
+                    value: 'defense',
+                    label: `Base Defense`,
+                  },
+                ]}
+              />
+            </Form.Item>
             <Form.Item label={`Jhenno's cooperation`} name="jhenno">
               <Select
                 options={[

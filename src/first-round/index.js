@@ -42,10 +42,11 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     jhenno,
     magicalItems,
     mandatory,
+    research,
     ...misc
   } = values;
 
-  const decisions = { strategy, merchantSolution, magicalItems };
+  const decisions = { strategy, merchantSolution, magicalItems, research };
 
   const giviniStart = giviniBaseValue({ chapter3Investments: previous });
   const giviniExtra = giviniRoundOneValue(decisions);

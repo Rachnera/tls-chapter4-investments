@@ -17,14 +17,14 @@ export const roundOneChanges = ({ magicalItems, research }) => {
       label: `House Rose's magical items: Tak'Kan`,
       values: [2],
     },
-    research === 'orc' && {
-      label: `Research: Orc Diversification`,
-      values: [5],
-    },
     {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `+1 at the end of the round`,
+    },
+    research === 'orc' && {
+      label: `Research: Orc Diversification`,
+      values: [5],
     },
   ].filter(Boolean);
 };

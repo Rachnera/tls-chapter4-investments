@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import Form from './Form';
 import Result from '../results';
-import Failure from '../Failure';
 import {
   baseValue as giviniBaseValue,
   roundOneValue as giviniRoundOneValue,
@@ -128,9 +126,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   });
 };
 
-const FirstRound = ({ runInWoker, loading, result, setResult }) => {
-  const [error, setError] = useState();
-
+const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
   return (
     <>
       <Form
@@ -139,7 +135,6 @@ const FirstRound = ({ runInWoker, loading, result, setResult }) => {
         }}
         loading={loading}
       />
-      {error && <Failure message={error} />}
       {result && <Result {...result} />}
     </>
   );

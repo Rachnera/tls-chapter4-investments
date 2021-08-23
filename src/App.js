@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 import Disclaimer from './Disclaimer';
 import Loading from './Loading';
+import Failure from './Failure';
 
 const buildRunInWorker =
   ({
@@ -56,6 +57,7 @@ const App = () => {
   const [preprogress, setPreprogress] = useState(0);
 
   const [firstRoundResult, setFirstRoundResult] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     if (!workerInstance) {
@@ -88,6 +90,7 @@ const App = () => {
         loading={loading}
         result={firstRoundResult}
         setResult={setFirstRoundResult}
+        setError={setError}
       />
       {loading && (
         <Loading
@@ -97,6 +100,7 @@ const App = () => {
           investmentsCount={investmentsCount}
         />
       )}
+      {error && <Failure message={error} />}
     </div>
   );
 };

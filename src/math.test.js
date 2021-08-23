@@ -525,7 +525,11 @@ describe('finest', () => {
         money: 7500 + 2435000,
         otherRequirements: {
           social: 6,
-          mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
+          mandatory: [
+            'Givini Orc Merchant',
+            'Bank of Givini',
+            'Bank of Stineford',
+          ],
         },
         giviniStart: 18,
         giviniExtra: 6,

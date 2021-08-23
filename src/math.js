@@ -37,8 +37,15 @@ export const buildCheaperThan = (investments, { mandatory = [] }) => {
 
   let cheaperThan = {};
 
-  const defaultKey =
-    mandatory.length > 0 ? mandatory[mandatory.length - 1] : 'default';
+  const defaultKey = (() => {
+    const mandatoryInvestments = investments.filter(({ name }) =>
+      mandatory.includes(name)
+    );
+    if (mandatoryInvestments.length > 0) {
+      return mandatoryInvestments[mandatoryInvestments.length - 1]['name'];
+    }
+    return 'default';
+  })();
   cheaperThan[defaultKey] = sortedInvestments.slice(0);
 
   for (let i = 0; i < sortedInvestments.length; i++) {

@@ -215,7 +215,7 @@ const CustomForm = ({ onFinish, loading }) => {
             </Form.Item>
           </div>
           <Form.Item
-            label={`Investments you explictly want to buy, for any reason`}
+            label={`Investments you explicitly want to buy, for any reason`}
             name="mandatory"
           >
             <Select

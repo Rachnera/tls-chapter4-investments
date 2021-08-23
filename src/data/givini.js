@@ -12,7 +12,7 @@ export const preliminaryChanges = ({ investments }) => {
     {
       label: `New Givini Trade`,
       values: [5, 1],
-      explanation: `+5 when bought, +1 at round's start`,
+      explanation: `+5 when bought, +1 at the start of the round`,
     },
     investments.includes("Min's Trade Route") && {
       label: `Min's Trade Route`,

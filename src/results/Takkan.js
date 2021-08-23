@@ -3,27 +3,23 @@ import {
   startingValue,
   preliminaryChanges,
   roundOneChanges,
-} from '../data/givini';
+} from '../data/takkan';
 
-const Givini = ({
-  chapter3Investments = [],
-  roundOneInvestments = [],
-  decisions = {},
-}) => {
+const Takkan = ({ roundOneInvestments = [], decisions = {} }) => {
   return (
     <Addition
       startingValue={startingValue}
       dataSources={[
         {
           title: `Chapter start`,
-          dataSource: preliminaryChanges({ investments: chapter3Investments }),
+          dataSource: preliminaryChanges(),
         },
         {
           title: `Investments`,
           dataSource: roundOneInvestments
-            .filter(({ givini = 0 }) => givini !== 0)
-            .map(({ name, givini }) => {
-              return { label: name, values: [givini] };
+            .filter(({ takkan = 0 }) => takkan !== 0)
+            .map(({ name, takkan }) => {
+              return { label: name, values: [takkan] };
             })
             .sort(({ label: a }, { label: b }) => a.localeCompare(b)),
         },
@@ -36,4 +32,4 @@ const Givini = ({
   );
 };
 
-export default Givini;
+export default Takkan;

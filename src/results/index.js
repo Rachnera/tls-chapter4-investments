@@ -1,6 +1,7 @@
 import Ledger from './Ledger';
 import { Card } from 'antd';
 import Givini from './Givini';
+import Takkan from './Takkan';
 
 const Result = ({
   initialStandings,
@@ -21,6 +22,12 @@ const Result = ({
         <Card title={`New Givini`} type="inner">
           <Givini
             chapter3Investments={initialStandings.previousInvestments}
+            roundOneInvestments={investmentChanges.investments}
+            decisions={decisions}
+          />
+        </Card>
+        <Card title={`Tak'Kan`} type="inner">
+          <Takkan
             roundOneInvestments={investmentChanges.investments}
             decisions={decisions}
           />

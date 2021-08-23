@@ -1,6 +1,6 @@
 import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
 import { useEffect, useState } from 'react';
-import allInvestments from '../investments';
+import allInvestments from '../data/investments';
 
 const possiblePrevious = [
   "Min's Trade Route",
@@ -34,6 +34,7 @@ const initialValues = {
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: [],
+  research: 'purity',
 };
 
 const toSelectOptions = (list) => {
@@ -167,6 +168,28 @@ const CustomForm = ({ onFinish, loading }) => {
             />
           </Form.Item>
           <div className="selects">
+            <Form.Item label={`Research`} name="research">
+              <Select
+                options={[
+                  {
+                    value: 'orc',
+                    label: `Orc Diversification`,
+                  },
+                  {
+                    value: 'unpeople',
+                    label: `Unpeople Transformation`,
+                  },
+                  {
+                    value: 'purity',
+                    label: `Purity Magic`,
+                  },
+                  {
+                    value: 'defense',
+                    label: `Base Defense`,
+                  },
+                ]}
+              />
+            </Form.Item>
             <Form.Item label={`Jhenno's cooperation`} name="jhenno">
               <Select
                 options={[
@@ -215,7 +238,7 @@ const CustomForm = ({ onFinish, loading }) => {
             </Form.Item>
           </div>
           <Form.Item
-            label={`Investments you explictly want to buy, for any reason`}
+            label={`Investments you explicitly want to buy, for any reason`}
             name="mandatory"
           >
             <Select

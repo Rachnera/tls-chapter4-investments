@@ -1,5 +1,5 @@
 import { combinations, combine, best, finest } from './math';
-import investments from './investments';
+import investments from './data/investments';
 
 const inv = (a) => investments.find(({ name }) => name === a);
 const invs = (...list) => list.map(inv);
@@ -251,12 +251,14 @@ describe('combine', () => {
           name: "Tradesmasher's Guild",
           price: 350000,
           profits: 125000,
+          takkan: 5,
         },
         {
           name: 'Orcish Democracy',
           price: 1000000,
           social: 5,
           profits: 0,
+          takkan: 10,
         },
       ],
     });
@@ -317,6 +319,7 @@ describe('combine', () => {
           price: 350000,
           profits: 300000,
           givini: 5,
+          takkan: 2,
         },
         {
           name: 'War Monument',
@@ -324,6 +327,7 @@ describe('combine', () => {
           givini: 10,
           social: 3,
           profits: 0,
+          takkan: 2,
         },
       ],
     });
@@ -513,20 +517,21 @@ describe('finest', () => {
         'Eustrin Guild',
         "Min's Trade Route",
         'Yhilini Succubi Trade',
-
-        // Reduce possible combinations by forcing some investments
-        'Givini Orc Merchant',
-        'Bank of Givini',
       ];
 
       const result = finest({
         previousInvestments,
-        // Remaining + Profits - Already invested
-        money: 7500 + 2435000 - 450000,
+        // Remaining + Profits
+        money: 7500 + 2435000,
         otherRequirements: {
           social: 6,
+          mandatory: [
+            'Givini Orc Merchant',
+            'Bank of Givini',
+            'Bank of Stineford',
+          ],
         },
-        giviniStart: 18 + 10,
+        giviniStart: 18,
         giviniExtra: 6,
         chapter1Bank: true,
         chapter3Infrastructure: true,
@@ -538,6 +543,8 @@ describe('finest', () => {
           .sort((a, b) => a.localeCompare(b))
       ).toEqual(
         [
+          'Givini Orc Merchant',
+          'Bank of Givini',
           'Bank of Stineford',
           'Stineford Weapons Store',
           'Yhilini Brothel Reform',
@@ -574,18 +581,18 @@ describe('finest', () => {
         'Imp Offices',
         'Trading Pillar Rights',
         'Gasm Falls Trade',
-
-        'Hall of Mental Strength',
-        'Orc Pools Upgrade',
       ];
 
       const result = finest({
         previousInvestments,
-        // Remaining + Profits - Cost of (unlisted) magic/military upgrades - Cost of bribing orc vote
-        money: 42500 + 3262000 - 460000 - 700000,
+        // Remaining + Profits - Cost of (unlisted) magic/military upgrades
+        money: 42500 + 3262000 - 460000,
         giviniStart: 35,
         giviniExtra: 1,
         chapter1Bank: true,
+        otherRequirements: {
+          mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
+        },
       });
 
       expect(
@@ -594,6 +601,8 @@ describe('finest', () => {
           .sort((a, b) => a.localeCompare(b))
       ).toEqual(
         [
+          'Hall of Mental Strength',
+          'Orc Pools Upgrade',
           "Cee'Kan Shipping",
           'Givini Teahouse Chain',
           'Succubus Armorer',

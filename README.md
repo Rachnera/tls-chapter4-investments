@@ -90,3 +90,21 @@ yarn build
 ```
 
 And retrieve the static version of the site, ready to be deployed, from the `build/` folder.
+
+### Deploy on Github Pages
+
+Only relevant for this repository and its forks
+
+#### One-time setup
+
+Go to Pages in your repository Settings
+
+Select branch: `githubio`, folder: `/docs` and save
+
+##### Deploy
+
+```
+git checkout githubio
+yarn release
+git checkout main
+```

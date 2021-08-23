@@ -34,6 +34,7 @@ const initialValues = {
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: [],
+  research: 'purity',
 };
 
 const toSelectOptions = (list) => {

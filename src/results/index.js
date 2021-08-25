@@ -21,7 +21,7 @@ const Result = ({
       <Card title={`Countries`} type="inner">
         <Card title={`New Givini`} type="inner">
           <Givini
-            chapter3Investments={initialStandings.previousInvestments}
+            chapter3Investments={initialStandings.investments}
             roundOneInvestments={investmentChanges.investments}
             decisions={decisions}
           />

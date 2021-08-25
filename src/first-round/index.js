@@ -65,7 +65,7 @@ const buildFinalStandings = ({
 }) => {
   let finalStandings = {};
 
-  ['money', 'profits', 'givini', 'social'].forEach((key) => {
+  ['profits', 'givini', 'social'].forEach((key) => {
     finalStandings[key] =
       initialStandings[key] +
       investmentChanges[key] +
@@ -76,6 +76,12 @@ const buildFinalStandings = ({
     ...initialStandings.investments,
     ...investmentChanges.investments.map(({ name }) => name),
   ];
+
+  finalStandings['money'] =
+    initialStandings.money +
+    initialStandings.profits -
+    investmentChanges.price +
+    nonInvestmentChanges.money;
 
   return finalStandings;
 };
@@ -137,7 +143,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   } = values;
 
   const initialStandings = {
-    money: remainingPron + baseProfit,
+    money: remainingPron,
     profits: baseProfit,
     investments: previous,
     social: startingSocial,

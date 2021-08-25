@@ -134,6 +134,7 @@ const Ledger = ({
       ...initialStandings,
       key: 'base',
       category: `Previously`,
+      money: initialStandings.money + initialStandings.profits,
     },
     {
       ...investmentChanges,
@@ -174,6 +175,7 @@ const Ledger = ({
             <Table.Summary.Cell>
               {nF(
                 initialStandings.money +
+                  initialStandings.profits +
                   nonInvestmentChanges.money -
                   investmentChanges.price
               )}

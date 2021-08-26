@@ -5,6 +5,10 @@ import {
   roundOneValue as giviniRoundOneValue,
 } from '../data/givini';
 import { buildFinalStandings } from '../misc';
+import {
+  baseValue as takkanBaseValue,
+  roundOneValue as takkanRoundOneValue,
+} from '../data/takkan';
 
 const socialRequirement = (
   startingSocial,
@@ -46,6 +50,7 @@ const buildNonInvestmentsChange = (decisions) => {
 
   return {
     givini: giviniRoundOneValue(decisions),
+    takkan: takkanRoundOneValue(decisions),
     money: 0,
     profits: nonInvestmentChangesList.reduce(
       (acc, { profits = 0 }) => acc + profits,
@@ -121,6 +126,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     investments: previous,
     social: startingSocial,
     givini: giviniBaseValue({ chapter3Investments: previous }),
+    takkan: takkanBaseValue(),
   };
 
   const decisions = {

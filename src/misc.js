@@ -5,7 +5,7 @@ export const buildFinalStandings = ({
 }) => {
   let finalStandings = {};
 
-  ['profits', 'givini', 'social'].forEach((key) => {
+  ['profits', 'givini', 'social', 'takkan'].forEach((key) => {
     finalStandings[key] =
       initialStandings[key] +
       investmentChanges[key] +

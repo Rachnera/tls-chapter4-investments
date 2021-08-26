@@ -1,3 +1,9 @@
+const sum = (list) =>
+  list.reduce(
+    (acc, { values }) => acc + values.reduce((acc, value) => acc + value, 0),
+    0
+  );
+
 export const startingValue = -5;
 
 export const preliminaryChanges = () => {
@@ -10,6 +16,8 @@ export const preliminaryChanges = () => {
     },
   ];
 };
+
+export const baseValue = () => startingValue + sum(preliminaryChanges());
 
 export const roundOneChanges = ({ magicalItems, research }) => {
   return [
@@ -27,4 +35,16 @@ export const roundOneChanges = ({ magicalItems, research }) => {
       values: [5],
     },
   ].filter(Boolean);
+};
+
+export const roundOneValue = (...params) => sum(roundOneChanges(...params));
+
+export const roundTwoChanges = () => {
+  return [
+    {
+      label: `Tak'Kan Trade`,
+      values: [1],
+      explanation: `+1 at the end of the round`,
+    },
+  ];
 };

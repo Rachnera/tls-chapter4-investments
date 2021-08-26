@@ -134,12 +134,18 @@ const Ledger = ({
       ...initialStandings,
       key: 'base',
       category: `Previously`,
-      money: initialStandings.money + initialStandings.profits,
+    },
+    {
+      key: 'previous_investments',
+      category: `Start of the round`,
+      money: initialStandings.profits,
+      profits: 0,
+      social: 0,
     },
     {
       ...investmentChanges,
       key: 'investments',
-      category: `Changes from investments`,
+      category: `Changes from new investments`,
       money: -investmentChanges.price,
     },
     {
@@ -171,7 +177,9 @@ const Ledger = ({
       summary={() => {
         return (
           <Table.Summary.Row>
-            <Table.Summary.Cell colSpan={2}>{`Result`}</Table.Summary.Cell>
+            <Table.Summary.Cell
+              colSpan={2}
+            >{`Standings at the end of the round`}</Table.Summary.Cell>
             <Table.Summary.Cell>
               {nF(
                 initialStandings.money +

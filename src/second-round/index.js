@@ -1,16 +1,19 @@
 import Form from './Form';
 import { buildFinalStandings } from '../misc';
 import Result from './results';
+import { roundTwoValue } from '../data/givini';
 
 const onFinish = async ({
   setResult,
   runInWoker,
   setError,
   firstRoundResult,
+  values,
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const decisions = {};
+  const { merchantSolution2 } = values;
+  const decisions = { merchantSolution2 };
 
   const nonInvestmentChanges = {
     money: 0,
@@ -21,7 +24,7 @@ const onFinish = async ({
   };
 
   const giviniStart = initialStandings.givini;
-  const giviniExtra = 1; //FIXME Actual value is dependant from first round merchant decision
+  const giviniExtra = roundTwoValue(decisions);
 
   const params = {
     ...misc,
@@ -68,15 +71,17 @@ const FirstRound = ({
   return (
     <>
       <Form
-        onFinish={() => {
+        onFinish={(values) => {
           onFinish({
             setResult,
             runInWoker,
             setError,
             firstRoundResult,
+            values,
           });
         }}
         loading={loading}
+        firstRoundDecisions={firstRoundResult.decisions}
       />
       {result && <Result {...result} />}
     </>

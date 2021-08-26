@@ -49,3 +49,23 @@ export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
 };
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
+
+export const roundTwoChanges = ({ merchantSolution2 }) => {
+  return [
+    merchantSolution2 === 'neutral' && {
+      label: `Merchant dispute: Neutral compromise`,
+      values: [1],
+    },
+    merchantSolution2 === 'givini' && {
+      label: `Merchant dispute: Favor New Givini`,
+      values: [2],
+    },
+    {
+      label: `New Givini Trade`,
+      values: [1],
+      explanation: `+1 at the end of the round (before profits from the Givini Orc Merchant are computed)`,
+    },
+  ].filter(Boolean);
+};
+
+export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));

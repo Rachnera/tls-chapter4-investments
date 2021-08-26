@@ -1,8 +1,10 @@
-import { Form, Button, Card } from 'antd';
+import { Form, Button, Card, Select } from 'antd';
 
-const initialValues = {};
+const initialValues = {
+  merchantSolution2: 'neutral',
+};
 
-const CustomForm = ({ onFinish, loading }) => {
+const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
   return (
     <Card title={`Round two`}>
       <Form
@@ -10,6 +12,23 @@ const CustomForm = ({ onFinish, loading }) => {
         onFinish={onFinish}
         className="second-round-form"
       >
+        {firstRoundDecisions.merchantSolution === 'wait' && (
+          <Form.Item label={`Merchant dispute`} name="merchantSolution2">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+              ]}
+            />
+          </Form.Item>
+        )}
+
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             {`Submit`}

@@ -171,7 +171,17 @@ const Ledger = ({
           }
           return null;
         },
-        rowExpandable: ({ key }) => ['investments', 'other'].includes(key),
+        rowExpandable: ({ key }) => {
+          if (key === 'investments') {
+            return true;
+          }
+
+          if (key === 'other' && !!nonInvestmentChanges.list?.length) {
+            return true;
+          }
+
+          return false;
+        },
         defaultExpandAllRows: true,
       }}
       summary={() => {

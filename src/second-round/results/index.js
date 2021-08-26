@@ -1,10 +1,12 @@
 import Ledger from '../../results/Ledger';
 import { Card } from 'antd';
+import Givini from './Givini';
 
 const Result = ({
   initialStandings,
   nonInvestmentChanges,
   investmentChanges,
+  decisions,
 }) => {
   return (
     <Card title={`Changes`} className="results">
@@ -14,6 +16,15 @@ const Result = ({
           nonInvestmentChanges={nonInvestmentChanges}
           investmentChanges={investmentChanges}
         />
+      </Card>
+      <Card title={`Countries`} type="inner">
+        <Card title={`New Givini`} type="inner">
+          <Givini
+            startingValue={initialStandings.givini}
+            roundTwoInvestments={investmentChanges.investments}
+            decisions={decisions}
+          />
+        </Card>
       </Card>
     </Card>
   );

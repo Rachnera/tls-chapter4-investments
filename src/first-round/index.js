@@ -1,5 +1,5 @@
 import Form from './Form';
-import Result from '../results';
+import Result from './results';
 import {
   baseValue as giviniBaseValue,
   roundOneValue as giviniRoundOneValue,

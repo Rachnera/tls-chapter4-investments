@@ -1,4 +1,4 @@
-import Ledger from './Ledger';
+import Ledger from '../../results/Ledger';
 import { Card } from 'antd';
 import Givini from './Givini';
 import Takkan from './Takkan';

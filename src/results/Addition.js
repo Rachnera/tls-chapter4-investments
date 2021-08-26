@@ -8,26 +8,28 @@ const Addition = ({ startingValue = 0, dataSources }) => {
           <td></td>
         </tr>
       </tbody>
-      {dataSources.map(({ title, dataSource }, index) => {
-        return (
-          <tbody key={index.toString()}>
-            <tr>
-              <th colSpan="3" scope="col">
-                {title}
-              </th>
-            </tr>
-            {dataSource.map(({ label, values, explanation }, index) => {
-              return (
-                <tr key={index.toString()}>
-                  <td>{label}</td>
-                  <td>{values.map((value) => `+${value}`).join(' ')}</td>
-                  <td>{explanation}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        );
-      })}
+      {dataSources
+        .filter(({ dataSource }) => dataSource.length > 0)
+        .map(({ title, dataSource }, index) => {
+          return (
+            <tbody key={index.toString()}>
+              <tr>
+                <th colSpan="3" scope="col">
+                  {title}
+                </th>
+              </tr>
+              {dataSource.map(({ label, values, explanation }, index) => {
+                return (
+                  <tr key={index.toString()}>
+                    <td>{label}</td>
+                    <td>{values.map((value) => `+${value}`).join(' ')}</td>
+                    <td>{explanation}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          );
+        })}
       <tfoot>
         <tr>
           <th scope="row">{`Total`}</th>

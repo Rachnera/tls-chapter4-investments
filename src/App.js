@@ -91,8 +91,14 @@ const App = () => {
         runInWoker={runInWoker}
         loading={loading}
         result={firstRoundResult}
-        setResult={setFirstRoundResult}
-        setError={setError}
+        setResult={(data) => {
+          setSecondRoundResult(undefined);
+          setFirstRoundResult(data);
+        }}
+        setError={(error) => {
+          setSecondRoundResult(undefined);
+          setError(error);
+        }}
       />
       {firstRoundResult && (
         <SecondRound

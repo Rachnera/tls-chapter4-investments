@@ -4,6 +4,7 @@ import {
   baseValue as giviniBaseValue,
   roundOneValue as giviniRoundOneValue,
 } from '../data/givini';
+import { buildFinalStandings } from '../misc';
 
 const socialRequirement = (
   startingSocial,
@@ -56,34 +57,6 @@ const buildNonInvestmentsChange = (decisions) => {
     ),
     list: nonInvestmentChangesList,
   };
-};
-
-const buildFinalStandings = ({
-  initialStandings,
-  investmentChanges,
-  nonInvestmentChanges,
-}) => {
-  let finalStandings = {};
-
-  ['profits', 'givini', 'social'].forEach((key) => {
-    finalStandings[key] =
-      initialStandings[key] +
-      investmentChanges[key] +
-      nonInvestmentChanges[key];
-  });
-
-  finalStandings['investments'] = [
-    ...initialStandings.investments,
-    ...investmentChanges.investments.map(({ name }) => name),
-  ];
-
-  finalStandings['money'] =
-    initialStandings.money +
-    initialStandings.profits -
-    investmentChanges.price +
-    nonInvestmentChanges.money;
-
-  return finalStandings;
 };
 
 const compute = async ({

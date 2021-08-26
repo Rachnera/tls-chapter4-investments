@@ -5,6 +5,7 @@ import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no
 import Disclaimer from './Disclaimer';
 import Loading from './Loading';
 import Failure from './Failure';
+import SecondRound from './second-round';
 
 const buildRunInWorker =
   ({
@@ -57,6 +58,7 @@ const App = () => {
   const [preprogress, setPreprogress] = useState(0);
 
   const [firstRoundResult, setFirstRoundResult] = useState();
+  const [secondRoundResult, setSecondRoundResult] = useState();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -92,6 +94,16 @@ const App = () => {
         setResult={setFirstRoundResult}
         setError={setError}
       />
+      {firstRoundResult && (
+        <SecondRound
+          runInWoker={runInWoker}
+          loading={loading}
+          result={secondRoundResult}
+          setResult={setSecondRoundResult}
+          setError={setError}
+          firstRoundResult={firstRoundResult}
+        />
+      )}
       {loading && (
         <Loading
           combinationsCount={combinationsCount}

@@ -4,6 +4,14 @@ import Result from './results';
 import { roundTwoValue } from '../data/givini';
 import { price as headquartersPrice } from './Headquarters';
 
+const socialRequirement = (initialSocial, decisions) => {
+  if (decisions.merchantSolution2 === 'neutral' && initialSocial < 40) {
+    return 40 - initialSocial;
+  }
+
+  return 0;
+};
+
 const onFinish = async ({
   setResult,
   runInWoker,
@@ -46,6 +54,9 @@ const onFinish = async ({
       headquartersUpgradesPrice,
     giviniStart,
     giviniExtra,
+    otherRequirements: {
+      social: socialRequirement(initialStandings.social, decisions),
+    },
   };
 
   const result = await runInWoker(params);

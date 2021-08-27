@@ -25,3 +25,5 @@ export const buildFinalStandings = ({
 
   return finalStandings;
 };
+
+export const nF = (number) => number.toLocaleString('en-US');

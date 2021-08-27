@@ -1,6 +1,5 @@
 import { Table } from 'antd';
-
-const nF = (number) => number.toLocaleString('en-US');
+import { nF } from '../misc';
 
 const numberColWidth = 120;
 

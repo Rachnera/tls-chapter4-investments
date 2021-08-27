@@ -51,3 +51,43 @@ export const roundTwoChanges = () => {
 
 export const roundTwoValue = () => 1;
 
+export const council = ({ investments, takkan, research }) => {
+  let yes = 3 + 1 + 1; //Base, Elleani, Impaler
+  let no = 2;
+
+  if (takkan >= 40) {
+    yes += 4;
+  } else if (takkan >= 30) {
+    yes += 3;
+    no += 1;
+  } else if (takkan >= 20) {
+    yes += 2;
+    no += 2;
+  } else if (takkan >= 10) {
+    yes += 1;
+    no += 3;
+  } else {
+    no += 4;
+  }
+
+  if (research === 'orc') {
+    yes += 1;
+  } else {
+    no += 1;
+  }
+
+  yes += investments.filter((name) => {
+    return [
+      'Orc Pools Upgrade',
+      "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+      'Hall of Mental Strength',
+      'Imp Offices',
+    ].includes(name);
+  }).length;
+
+  if (investments.includes('Orcish Democracy')) {
+    yes = +2;
+  }
+
+  return yes / (yes + no);
+};

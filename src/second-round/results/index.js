@@ -8,6 +8,8 @@ const Result = ({
   nonInvestmentChanges,
   investmentChanges,
   decisions,
+  finalStandings,
+  roundOneDecisions,
 }) => {
   return (
     <Card title={`Changes`} className="results">
@@ -31,6 +33,9 @@ const Result = ({
             startingValue={initialStandings.takkan}
             roundTwoInvestments={investmentChanges.investments}
             decisions={decisions}
+            takkanScore={finalStandings.takkan}
+            roundOneResearch={roundOneDecisions.research}
+            previousInvestments={initialStandings.investments}
           />
         </Card>
       </Card>

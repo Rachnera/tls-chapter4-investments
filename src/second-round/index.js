@@ -110,7 +110,9 @@ const FirstRound = ({
         loading={loading}
         firstRoundDecisions={firstRoundResult.decisions}
       />
-      {result && <Result {...result} />}
+      {result && (
+        <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
+      )}
     </>
   );
 };

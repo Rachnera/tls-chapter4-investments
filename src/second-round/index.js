@@ -1,8 +1,9 @@
 import Form from './Form';
 import { buildFinalStandings } from '../misc';
 import Result from './results';
-import { roundTwoValue } from '../data/givini';
+import { roundTwoValue as giviniRoundTwoValue } from '../data/givini';
 import { price as headquartersPrice } from './Headquarters';
+import { roundTwoValue as takkanRoundTwoValue } from '../data/takkan';
 
 const socialRequirement = (initialSocial, decisions) => {
   if (decisions.merchantSolution2 === 'neutral' && initialSocial < 40) {
@@ -33,7 +34,8 @@ const onFinish = async ({
     money: -headquartersUpgradesPrice,
     profits: 0,
     social: 0,
-    givini: 0,
+    givini: giviniRoundTwoValue(decisions),
+    takkan: takkanRoundTwoValue(),
     list: [
       {
         name: `Headquarters upgrades`,
@@ -43,7 +45,7 @@ const onFinish = async ({
   };
 
   const giviniStart = initialStandings.givini;
-  const giviniExtra = roundTwoValue(decisions);
+  const giviniExtra = nonInvestmentChanges.givini;
 
   const params = {
     ...misc,

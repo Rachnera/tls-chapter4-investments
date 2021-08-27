@@ -48,3 +48,6 @@ export const roundTwoChanges = () => {
     },
   ];
 };
+
+export const roundTwoValue = () => 1;
+

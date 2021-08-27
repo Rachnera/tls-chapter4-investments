@@ -89,3 +89,11 @@ form.first-round-form button[type='submit'] {
 .disclaimer > .preamble > *:last-child {
   margin-bottom: 0;
 }
+
+.headquarters-upgrades tr > td.ant-table-cell {
+  text-align: right;
+}
+
+.headquarters-upgrades tr > td.ant-table-cell:first-child {
+  text-align: left;
+}

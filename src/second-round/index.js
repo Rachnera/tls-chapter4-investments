@@ -2,6 +2,7 @@ import Form from './Form';
 import { buildFinalStandings } from '../misc';
 import Result from './results';
 import { roundTwoValue } from '../data/givini';
+import { price as headquartersPrice } from './Headquarters';
 
 const onFinish = async ({
   setResult,
@@ -12,15 +13,25 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2 } = values;
-  const decisions = { merchantSolution2 };
+  const { merchantSolution2, headquarters } = values;
+  const decisions = { merchantSolution2, headquarters };
+
+  const headquartersUpgradesPrice = headquartersPrice({
+    research: firstRoundResult.decisions.research,
+    extra: decisions.headquarters === 'extra',
+  });
 
   const nonInvestmentChanges = {
-    money: 0,
+    money: -headquartersUpgradesPrice,
     profits: 0,
     social: 0,
     givini: 0,
-    list: [],
+    list: [
+      {
+        name: `Headquarters upgrades`,
+        price: -headquartersUpgradesPrice,
+      },
+    ],
   };
 
   const giviniStart = initialStandings.givini;
@@ -29,7 +40,10 @@ const onFinish = async ({
   const params = {
     ...misc,
     previousInvestments: initialStandings.investments,
-    money: initialStandings.money + initialStandings.profits,
+    money:
+      initialStandings.money +
+      initialStandings.profits -
+      headquartersUpgradesPrice,
     giviniStart,
     giviniExtra,
   };

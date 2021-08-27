@@ -8,8 +8,8 @@ export const buildFinalStandings = ({
   ['profits', 'givini', 'social', 'takkan'].forEach((key) => {
     finalStandings[key] =
       initialStandings[key] +
-      investmentChanges[key] +
-      nonInvestmentChanges[key];
+      (investmentChanges[key] || 0) +
+      (nonInvestmentChanges[key] || 0);
   });
 
   finalStandings['investments'] = [

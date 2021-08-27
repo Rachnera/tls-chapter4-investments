@@ -128,6 +128,13 @@ const Ledger = ({
   const sum = (key) =>
     initialStandings[key] + nonInvestmentChanges[key] + investmentChanges[key];
 
+  const extraProfits =
+    investmentChanges.profits -
+    investmentChanges.investments.reduce(
+      (acc, { profits }) => acc + profits,
+      0
+    );
+
   const dataSource = [
     {
       ...initialStandings,
@@ -146,13 +153,29 @@ const Ledger = ({
       key: 'investments',
       category: `Changes from new investments`,
       money: -investmentChanges.price,
+      profits: investmentChanges.profits - extraProfits,
     },
     {
       ...nonInvestmentChanges,
       key: 'other',
       category: `Other changes`,
+      profits: nonInvestmentChanges.profits + extraProfits,
     },
   ];
+
+  const otherList = (() => {
+    if (extraProfits > 0) {
+      return [
+        ...nonInvestmentChanges.list,
+        {
+          name: `Extra profits from past investments`,
+          profits: extraProfits,
+        },
+      ];
+    }
+
+    return nonInvestmentChanges.list;
+  })();
 
   return (
     <Table
@@ -166,7 +189,7 @@ const Ledger = ({
             return <Investments investments={investmentChanges.investments} />;
           }
           if (key === 'other') {
-            return <Others list={nonInvestmentChanges.list} />;
+            return <Others list={otherList} />;
           }
           return null;
         },

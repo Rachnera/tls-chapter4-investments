@@ -22,7 +22,7 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2, headquarters, orcCouncil } = values;
+  const { merchantSolution2, headquarters, orcCouncil, mandatory } = values;
   const decisions = { merchantSolution2, headquarters, orcCouncil };
 
   const headquartersUpgradesPrice = headquartersPrice({
@@ -58,6 +58,7 @@ const onFinish = async ({
     otherRequirements: {
       social: socialRequirement(initialStandings.social, decisions),
       orcCouncil: decisions.orcCouncil,
+      mandatory,
     },
   };
 
@@ -109,6 +110,7 @@ const FirstRound = ({
         }}
         loading={loading}
         firstRoundDecisions={firstRoundResult.decisions}
+        purchasedInvestments={firstRoundResult.finalStandings.investments}
       />
       {result && (
         <Result roundOneDecisions={firstRoundResult.decisions} {...result} />

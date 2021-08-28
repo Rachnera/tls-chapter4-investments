@@ -13,7 +13,7 @@ const Takkan = ({
   takkanScore,
 }) => {
   const councilResult = council({
-    research: roundOneResearch,
+    researches: [roundOneResearch],
     investments: [
       ...previousInvestments,
       ...roundTwoInvestments.map(({ name }) => name),

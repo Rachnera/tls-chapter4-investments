@@ -51,7 +51,7 @@ export const roundTwoChanges = () => {
 
 export const roundTwoValue = () => 1;
 
-export const council = ({ investments, takkan, research }) => {
+export const council = ({ investments, takkan, researches }) => {
   let yes = 3 + 1 + 1; //Base, Elleani, Impaler
   let no = 2;
 
@@ -70,7 +70,7 @@ export const council = ({ investments, takkan, research }) => {
     no += 4;
   }
 
-  if (research === 'orc') {
+  if (researches.includes('orc')) {
     yes += 1;
   } else {
     no += 1;

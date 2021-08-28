@@ -22,8 +22,8 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2, headquarters } = values;
-  const decisions = { merchantSolution2, headquarters };
+  const { merchantSolution2, headquarters, orcCouncil } = values;
+  const decisions = { merchantSolution2, headquarters, orcCouncil };
 
   const headquartersUpgradesPrice = headquartersPrice({
     research: firstRoundResult.decisions.research,
@@ -44,9 +44,6 @@ const onFinish = async ({
     ],
   };
 
-  const giviniStart = initialStandings.givini;
-  const giviniExtra = nonInvestmentChanges.givini;
-
   const params = {
     ...misc,
     previousInvestments: initialStandings.investments,
@@ -54,10 +51,13 @@ const onFinish = async ({
       initialStandings.money +
       initialStandings.profits -
       headquartersUpgradesPrice,
-    giviniStart,
-    giviniExtra,
+    giviniStart: initialStandings.givini,
+    giviniExtra: nonInvestmentChanges.givini,
+    takkan: initialStandings.takkan,
+    completedResearch: [firstRoundResult.decisions.research],
     otherRequirements: {
       social: socialRequirement(initialStandings.social, decisions),
+      orcCouncil: decisions.orcCouncil,
     },
   };
 

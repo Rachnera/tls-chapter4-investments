@@ -51,7 +51,7 @@ export const roundTwoChanges = () => {
 
 export const roundTwoValue = () => 1;
 
-export const council = ({ investments, takkan, researches }) => {
+export const council = ({ investments = [], takkan, researches = [] }) => {
   let yes = 3 + 1 + 1; //Base, Elleani, Impaler
   let no = 2;
 

@@ -6,6 +6,7 @@ import { nF } from '../misc';
 const initialValues = {
   merchantSolution2: 'neutral',
   headquarters: 'enough',
+  orcCouncil: 0.8,
 };
 
 const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
@@ -28,8 +29,8 @@ const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
           setMilitaryExtra(allValues.headquarters === 'extra');
         }}
       >
-        {firstRoundDecisions.merchantSolution === 'wait' && (
-          <Card title={`Pending`} type="inner">
+        <Card title={`Stategy`} type="inner">
+          {firstRoundDecisions.merchantSolution === 'wait' && (
             <Form.Item label={`Merchant dispute`} name="merchantSolution2">
               <Select
                 options={[
@@ -48,11 +49,8 @@ const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
                 ]}
               />
             </Form.Item>
-          </Card>
-        )}
-
-        <Card title={`Headquarters`} type="inner">
-          <Form.Item name="headquarters" label={`Headquarters strategy`}>
+          )}
+          <Form.Item name="headquarters" label={`Headquarters`}>
             <Radio.Group
               options={[
                 {
@@ -74,6 +72,21 @@ const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
             />
           </Form.Item>
           <Headquarters research={previousResearch} extra={militaryExtra} />
+
+          <Form.Item name="orcCouncil" label={`Orc council`}>
+            <Select
+              options={[
+                {
+                  label: `Substantial majority (≥ 65%)`,
+                  value: 0.65,
+                },
+                {
+                  label: `Overwhelming majority (≥ 80%)`,
+                  value: 0.8,
+                },
+              ]}
+            />
+          </Form.Item>
         </Card>
 
         <Form.Item>

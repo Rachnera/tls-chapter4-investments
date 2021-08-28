@@ -65,7 +65,7 @@ const CustomForm = ({ onFinish, loading, firstRoundDecisions }) => {
                       research: previousResearch,
                       extra: true,
                     })
-                  )} for strong magical defenses and military defenses.`,
+                  )} for strong magical and military defenses.`,
                   value: 'extra',
                 },
               ]}

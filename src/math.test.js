@@ -517,6 +517,38 @@ describe('best', () => {
       investments: invs('Bank of Givini', 'Givini Smithing'),
     });
   });
+
+  test('orc council bribe', () => {
+    expect(
+      best({
+        investments: invs(
+          'Hall of Mental Strength',
+          'Bank of Stineford',
+          'Imp Offices',
+          'Orc Pools Upgrade',
+          "Tradesmasher's Guild"
+        ),
+        money: 800000,
+        otherRequirements: {
+          orcCouncil: 0.8,
+        },
+        context: {
+          takkan: 34,
+          completedResearch: ['orc'],
+        },
+      })
+    ).toMatchObject({
+      investments: [
+        {
+          name: "Tradesmasher's Guild",
+          price: 350000,
+          profits: 50000,
+          takkan: 5,
+        },
+        inv('Hall of Mental Strength'),
+      ],
+    });
+  });
 });
 
 describe('finest', () => {

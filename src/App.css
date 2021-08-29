@@ -97,3 +97,9 @@ form.first-round-form button[type='submit'] {
 .headquarters-upgrades tr > td.ant-table-cell:first-child {
   text-align: left;
 }
+
+.abort-button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 24px;
+}

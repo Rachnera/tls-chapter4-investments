@@ -1,10 +1,12 @@
-import { Progress, Divider, Modal } from 'antd';
+import { Progress, Divider, Modal, Button } from 'antd';
+import { PoweroffOutlined } from '@ant-design/icons';
 
 const Loading = ({
   combinationsCount,
   progress,
   investmentsCount,
   preprogress,
+  abort,
 }) => {
   if (!investmentsCount) {
     return null;
@@ -31,6 +33,12 @@ const Loading = ({
           </div>
         </>
       )}
+      <Button
+        danger={true}
+        icon={<PoweroffOutlined />}
+        onClick={abort}
+        className="abort-button"
+      >{`Abort`}</Button>
     </Modal>
   );
 };

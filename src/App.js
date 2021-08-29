@@ -84,6 +84,22 @@ const App = () => {
     setPreprogress,
   });
 
+  const abort = async () => {
+    workerInstance.terminate();
+
+    const newWorkerInstance = worker();
+    await newWorkerInstance.clean();
+
+    setWorkerInstance(newWorkerInstance);
+
+    setCombinationsCount(undefined);
+    setInvestmentsCount(undefined);
+    setProgress(0);
+    setPreprogress(0);
+
+    setLoading(false);
+  };
+
   return (
     <div>
       <Disclaimer />
@@ -116,6 +132,7 @@ const App = () => {
           progress={progress}
           preprogress={preprogress}
           investmentsCount={investmentsCount}
+          abort={abort}
         />
       )}
       {error && <Failure message={error} />}

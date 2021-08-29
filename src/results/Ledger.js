@@ -225,6 +225,7 @@ const Ledger = ({
           </Table.Summary.Row>
         );
       }}
+      className="ledger"
     />
   );
 };

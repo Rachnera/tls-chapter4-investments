@@ -92,7 +92,7 @@ const onFinish = async ({
   setError(undefined);
 };
 
-const FirstRound = ({
+const SecondRound = ({
   runInWoker,
   loading,
   result,
@@ -124,4 +124,4 @@ const FirstRound = ({
   );
 };
 
-export default FirstRound;
+export default SecondRound;

@@ -89,6 +89,7 @@ const onFinish = async ({
     }),
     misc,
   });
+  setError(undefined);
 };
 
 const FirstRound = ({

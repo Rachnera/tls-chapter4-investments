@@ -176,6 +176,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     }),
     misc,
   });
+  setError(undefined);
 };
 
 const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {

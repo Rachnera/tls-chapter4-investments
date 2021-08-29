@@ -8,7 +8,6 @@ const Result = ({
   nonInvestmentChanges,
   investmentChanges,
   decisions,
-  finalStandings,
   roundOneDecisions,
 }) => {
   return (
@@ -31,7 +30,7 @@ const Result = ({
             startingValue={initialStandings.takkan}
             roundTwoInvestments={investmentChanges.investments}
             decisions={decisions}
-            takkanScore={finalStandings.takkan}
+            takkanScore={initialStandings.takkan + investmentChanges.takkan}
             roundOneResearch={roundOneDecisions.research}
             previousInvestments={initialStandings.investments}
           />

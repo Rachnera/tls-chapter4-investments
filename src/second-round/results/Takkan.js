@@ -18,7 +18,7 @@ const Takkan = ({
       ...previousInvestments,
       ...roundTwoInvestments.map(({ name }) => name),
     ],
-    takkan: takkanScore - 1, //The last point is added too late to count
+    takkan: takkanScore,
   });
 
   return (

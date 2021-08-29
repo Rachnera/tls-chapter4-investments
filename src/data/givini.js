@@ -11,8 +11,8 @@ export const preliminaryChanges = ({ investments }) => {
     { label: `Petitions`, values: [5, 5, 2, 2, 2] },
     {
       label: `New Givini Trade`,
-      values: [5, 1],
-      explanation: `+5 when bought, +1 at the start of the round`,
+      values: [5],
+      explanation: `On purchase`,
     },
     investments.includes("Min's Trade Route") && {
       label: `Min's Trade Route`,
@@ -43,7 +43,7 @@ export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
     {
       label: `New Givini Trade`,
       values: [1],
-      explanation: `+1 at the end of the round (before profits from the Givini Orc Merchant are computed)`,
+      explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,
     },
   ].filter(Boolean);
 };
@@ -63,7 +63,7 @@ export const roundTwoChanges = ({ merchantSolution2 }) => {
     {
       label: `New Givini Trade`,
       values: [1],
-      explanation: `+1 at the end of the round (before profits from the Givini Orc Merchant are computed)`,
+      explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,
     },
   ].filter(Boolean);
 };

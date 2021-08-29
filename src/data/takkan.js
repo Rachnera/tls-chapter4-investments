@@ -11,8 +11,8 @@ export const preliminaryChanges = () => {
     { label: `Petitions`, values: [5, 2, 2, 5] },
     {
       label: `Tak'Kan Trade`,
-      values: [5, 1],
-      explanation: `+5 when bought, +1 at the start of the round`,
+      values: [5],
+      explanation: `On purchase`,
     },
   ];
 };
@@ -28,7 +28,7 @@ export const roundOneChanges = ({ magicalItems, research }) => {
     {
       label: `Tak'Kan Trade`,
       values: [1],
-      explanation: `+1 at the end of the round`,
+      explanation: `At the end of the round`,
     },
     research === 'orc' && {
       label: `Research: Orc Diversification`,
@@ -44,7 +44,7 @@ export const roundTwoChanges = () => {
     {
       label: `Tak'Kan Trade`,
       values: [1],
-      explanation: `+1 at the end of the round`,
+      explanation: `At the end of the round`,
     },
   ];
 };

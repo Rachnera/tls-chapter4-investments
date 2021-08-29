@@ -112,3 +112,15 @@ table.addition td:nth-child(3) {
 .second-round-form > .ant-card {
   margin-bottom: 0;
 }
+
+.second-round-form .two-columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.second-round-form .two-columns > * {
+  margin: 0 12px;
+  flex: 1;
+}

@@ -43,7 +43,7 @@ const Takkan = ({
       />
       <Text>
         {`Orc council: `}
-        <Text type={councilResult > 0.8 ? 'success' : 'warning'}>
+        <Text type={councilResult >= 0.8 ? 'success' : 'warning'}>
           {(councilResult * 100).toFixed(2)}
           {`%`}
         </Text>

@@ -23,19 +23,19 @@ table.addition td:nth-child(3) {
   font-style: italic;
 }
 
-form.first-round-form .ant-card-type-inner {
+.round-form .ant-card-type-inner {
   margin-bottom: 24px;
 }
 
-form.first-round-form .numbers,
-form.first-round-form .checkboxes,
-form.first-round-form .selects {
+.round-form .numbers,
+.round-form .checkboxes,
+.round-form .selects {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-form.first-round-form .selects > * {
+.round-form .selects > * {
   flex: 1;
   margin-left: 24px;
   margin-right: 24px;
@@ -43,12 +43,16 @@ form.first-round-form .selects > * {
   max-width: 480px;
 }
 
-form.first-round-form > .ant-row {
-  margin-bottom: 0;
+.round-form .ant-card-body {
+  padding-bottom: 0;
 }
 
-form.first-round-form button[type='submit'] {
+.round-form button[type='submit'] {
   float: right;
+}
+
+.round-form .past-block {
+  margin-bottom: 24px;
 }
 
 .results > .ant-card-body {
@@ -56,13 +60,9 @@ form.first-round-form button[type='submit'] {
   flex-wrap: wrap;
 }
 
-.results > .ant-card-body > .ant-card-type-inner {
-  flex: 1;
+.results > .ant-card-body > * {
   margin: 0 24px;
-}
-
-.results .ledger .ant-card-body {
-  padding: 0;
+  flex: 1;
 }
 
 .ledger tr > td.ant-table-cell:nth-last-child(1),
@@ -102,4 +102,13 @@ form.first-round-form button[type='submit'] {
   display: block;
   margin: 0 auto;
   margin-top: 24px;
+}
+
+.round-one,
+.round-two {
+  padding: 24px;
+}
+
+.second-round-form > .ant-card {
+  margin-bottom: 0;
 }

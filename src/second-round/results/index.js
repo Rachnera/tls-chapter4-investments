@@ -13,14 +13,12 @@ const Result = ({
 }) => {
   return (
     <Card title={`Changes`} className="results">
-      <Card title={`Ledger`} type="inner" className="ledger">
-        <Ledger
-          initialStandings={initialStandings}
-          nonInvestmentChanges={nonInvestmentChanges}
-          investmentChanges={investmentChanges}
-        />
-      </Card>
-      <Card title={`Countries`} type="inner">
+      <Ledger
+        initialStandings={initialStandings}
+        nonInvestmentChanges={nonInvestmentChanges}
+        investmentChanges={investmentChanges}
+      />
+      <div>
         <Card title={`New Givini`} type="inner">
           <Givini
             startingValue={initialStandings.givini}
@@ -38,7 +36,7 @@ const Result = ({
             previousInvestments={initialStandings.investments}
           />
         </Card>
-      </Card>
+      </div>
     </Card>
   );
 };

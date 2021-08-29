@@ -4,6 +4,9 @@ import Result from './results';
 import { roundTwoValue as giviniRoundTwoValue } from '../data/givini';
 import { price as headquartersPrice } from './Headquarters';
 import { roundTwoValue as takkanRoundTwoValue } from '../data/takkan';
+import { Typography } from 'antd';
+
+const { Title } = Typography;
 
 const socialRequirement = (initialSocial, decisions) => {
   if (decisions.merchantSolution2 === 'neutral' && initialSocial < 40) {
@@ -97,7 +100,8 @@ const FirstRound = ({
   firstRoundResult,
 }) => {
   return (
-    <>
+    <div className="round-two">
+      <Title level={2}>{`Chapter 4 – Round 2`}</Title>
       <Form
         onFinish={(values) => {
           onFinish({
@@ -115,7 +119,7 @@ const FirstRound = ({
       {result && (
         <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
       )}
-    </>
+    </div>
   );
 };
 

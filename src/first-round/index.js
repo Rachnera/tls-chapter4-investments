@@ -180,7 +180,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 
 const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
   return (
-    <>
+    <div className="round-one">
       <Form
         onFinish={(values) => {
           onFinish({ values, setResult, runInWoker, setError });
@@ -188,7 +188,7 @@ const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
         loading={loading}
       />
       {result && <Result {...result} />}
-    </>
+    </div>
   );
 };
 

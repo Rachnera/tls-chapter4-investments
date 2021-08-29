@@ -1,6 +1,17 @@
-import { Form, Select, InputNumber, Button, Card, Checkbox, Radio } from 'antd';
+import {
+  Form,
+  Select,
+  InputNumber,
+  Button,
+  Card,
+  Checkbox,
+  Radio,
+  Typography,
+} from 'antd';
 import { useEffect, useState } from 'react';
 import allInvestments from '../data/investments';
+
+const { Title } = Typography;
 
 const possiblePrevious = [
   "Min's Trade Route",
@@ -72,18 +83,19 @@ const CustomForm = ({ onFinish, loading }) => {
   }, [form, previous]);
 
   return (
-    <Card title={`Round one`}>
-      <Form
-        initialValues={initialValues}
-        onFinish={onFinish}
-        onValuesChange={(_, allValues) => {
-          setPrevious(allValues.previous);
-          setMerchantSolution(allValues.merchantSolution);
-        }}
-        className="first-round-form"
-        form={form}
-      >
-        <Card title={`The past`} type="inner">
+    <Form
+      initialValues={initialValues}
+      onFinish={onFinish}
+      onValuesChange={(_, allValues) => {
+        setPrevious(allValues.previous);
+        setMerchantSolution(allValues.merchantSolution);
+      }}
+      className="round-form first-round-form"
+      form={form}
+    >
+      <div className="past-block">
+        <Title level={2}>{`Chapters 1-3`}</Title>
+        <Card>
           <div className="numbers">
             <Form.Item
               label={`ProN remaining at the end of chapter 3`}
@@ -142,123 +154,120 @@ const CustomForm = ({ onFinish, loading }) => {
             )}
           </div>
         </Card>
+      </div>
 
-        <Card title={`Strategy`} type="inner">
-          <Form.Item
-            name="strategy"
-            label={`Main strategy`}
-            rules={[requiredRule]}
-          >
-            <Radio.Group
+      <Title level={2}>{`Chapter 4 – Round 1`}</Title>
+      <Card title={`Strategy`}>
+        <Form.Item name="strategy" label={`Succession crisis`}>
+          <Radio.Group
+            options={[
+              {
+                label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
+                value: 'money',
+                disabled: merchantSolution === 'neutral',
+              },
+              {
+                label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
+                value: 'social',
+              },
+              {
+                label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, dedicated investments).`,
+                value: 'succession',
+              },
+            ]}
+          />
+        </Form.Item>
+        <div className="selects">
+          <Form.Item label={`Research`} name="research">
+            <Select
               options={[
                 {
-                  label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
-                  value: 'money',
-                  disabled: merchantSolution === 'neutral',
+                  value: 'orc',
+                  label: `Orc Diversification`,
                 },
                 {
-                  label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
-                  value: 'social',
+                  value: 'unpeople',
+                  label: `Unpeople Transformation`,
                 },
                 {
-                  label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, dedicated investments).`,
-                  value: 'succession',
+                  value: 'purity',
+                  label: `Purity Magic`,
+                },
+                {
+                  value: 'defense',
+                  label: `Base Defense`,
                 },
               ]}
             />
           </Form.Item>
-          <div className="selects">
-            <Form.Item label={`Research`} name="research">
-              <Select
-                options={[
-                  {
-                    value: 'orc',
-                    label: `Orc Diversification`,
-                  },
-                  {
-                    value: 'unpeople',
-                    label: `Unpeople Transformation`,
-                  },
-                  {
-                    value: 'purity',
-                    label: `Purity Magic`,
-                  },
-                  {
-                    value: 'defense',
-                    label: `Base Defense`,
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label={`Jhenno's cooperation`} name="jhenno">
-              <Select
-                options={[
-                  {
-                    value: 'politics',
-                    label: `Politics`,
-                  },
-                  {
-                    value: 'religion',
-                    label: `Religion`,
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label={`Rose's house magical items`} name="magicalItems">
-              <Select
-                options={[
-                  {
-                    value: 'givini',
-                    label: `Givini`,
-                  },
-                  {
-                    value: 'takkan',
-                    label: `Tak'Kan`,
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label={`Merchant dispute`} name="merchantSolution">
-              <Select
-                options={[
-                  {
-                    value: 'neutral',
-                    label: `Neutral compromise (force Social ≥ 40)`,
-                  },
-                  {
-                    value: 'givini',
-                    label: `Favor New Givini`,
-                  },
-                  {
-                    value: 'wait',
-                    label: `Wait`,
-                  },
-                ]}
-              />
-            </Form.Item>
-          </div>
-          <Form.Item
-            label={`Investments you explicitly want to buy, for any reason`}
-            name="mandatory"
-          >
+          <Form.Item label={`Jhenno's cooperation`} name="jhenno">
             <Select
-              options={toSelectOptions(
-                allInvestments
-                  .map(({ name }) => name)
-                  .filter((name) => !previous.includes(name))
-              )}
-              mode="multiple"
+              options={[
+                {
+                  value: 'politics',
+                  label: `Politics`,
+                },
+                {
+                  value: 'religion',
+                  label: `Religion`,
+                },
+              ]}
             />
           </Form.Item>
-        </Card>
+          <Form.Item label={`Rose's house magical items`} name="magicalItems">
+            <Select
+              options={[
+                {
+                  value: 'givini',
+                  label: `Givini`,
+                },
+                {
+                  value: 'takkan',
+                  label: `Tak'Kan`,
+                },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label={`Merchant dispute`} name="merchantSolution">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise (force Social ≥ 40)`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+                {
+                  value: 'wait',
+                  label: `Wait`,
+                },
+              ]}
+            />
+          </Form.Item>
+        </div>
+        <Form.Item
+          label={`Investments you explicitly want to buy, for any reason`}
+          name="mandatory"
+        >
+          <Select
+            options={toSelectOptions(
+              allInvestments
+                .map(({ name }) => name)
+                .filter((name) => !previous.includes(name))
+            )}
+            mode="multiple"
+          />
+        </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             {`Submit`}
           </Button>
         </Form.Item>
-      </Form>
-    </Card>
+      </Card>
+    </Form>
   );
 };
 

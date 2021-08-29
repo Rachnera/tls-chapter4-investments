@@ -7,6 +7,9 @@ import Loading from './Loading';
 import Failure from './Failure';
 import SecondRound from './second-round';
 
+let dumbCache = {};
+const dumbKey = (params) => JSON.stringify(params);
+
 const buildRunInWorker =
   ({
     workerInstance,
@@ -17,6 +20,11 @@ const buildRunInWorker =
     setPreprogress,
   }) =>
   async (params) => {
+    const cacheKey = dumbKey(params);
+    if (!!dumbCache[cacheKey]) {
+      return dumbCache[cacheKey];
+    }
+
     setLoading(true);
 
     const investmentsCount = await workerInstance.prepare(params);
@@ -45,6 +53,8 @@ const buildRunInWorker =
     setInvestmentsCount(undefined);
     setProgress(0);
     setPreprogress(0);
+
+    dumbCache[cacheKey] = result;
 
     return result;
   };

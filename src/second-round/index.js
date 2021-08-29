@@ -5,6 +5,7 @@ import { roundTwoValue as giviniRoundTwoValue } from '../data/givini';
 import { price as headquartersPrice } from './Headquarters';
 import { roundTwoValue as takkanRoundTwoValue } from '../data/takkan';
 import { Typography } from 'antd';
+import { useEffect, useRef } from 'react';
 
 const { Title } = Typography;
 
@@ -100,6 +101,14 @@ const SecondRound = ({
   setError,
   firstRoundResult,
 }) => {
+  const resultRef = useRef(null);
+  useEffect(() => {
+    if (!result || !resultRef.current) {
+      return;
+    }
+    resultRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [result, resultRef]);
+
   return (
     <div className="round-two">
       <Title level={2}>{`Chapter 4 – Round 2`}</Title>
@@ -118,7 +127,9 @@ const SecondRound = ({
         purchasedInvestments={firstRoundResult.finalStandings.investments}
       />
       {result && (
-        <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
+        <div ref={resultRef}>
+          <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
+        </div>
       )}
     </div>
   );

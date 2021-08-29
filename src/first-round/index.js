@@ -9,6 +9,7 @@ import {
   baseValue as takkanBaseValue,
   roundOneValue as takkanRoundOneValue,
 } from '../data/takkan';
+import { useEffect, useRef } from 'react';
 
 const socialRequirement = (
   startingSocial,
@@ -180,6 +181,14 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 };
 
 const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
+  const resultRef = useRef(null);
+  useEffect(() => {
+    if (!result || !resultRef.current) {
+      return;
+    }
+    resultRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [result, resultRef]);
+
   return (
     <div className="round-one">
       <Form
@@ -188,7 +197,11 @@ const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
         }}
         loading={loading}
       />
-      {result && <Result {...result} />}
+      {result && (
+        <div ref={resultRef}>
+          <Result {...result} />
+        </div>
+      )}
     </div>
   );
 };

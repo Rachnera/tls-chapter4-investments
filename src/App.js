@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 import worker from 'workerize-loader!./worker'; // eslint-disable-line import/no-webpack-loader-syntax
 import Disclaimer from './Disclaimer';
 import Loading from './Loading';
+import Failure from './Failure';
+import SecondRound from './second-round';
+
+let dumbCache = {};
+const dumbKey = (params) => JSON.stringify(params);
 
 const buildRunInWorker =
   ({
@@ -15,6 +20,11 @@ const buildRunInWorker =
     setPreprogress,
   }) =>
   async (params) => {
+    const cacheKey = dumbKey(params);
+    if (!!dumbCache[cacheKey]) {
+      return dumbCache[cacheKey];
+    }
+
     setLoading(true);
 
     const investmentsCount = await workerInstance.prepare(params);
@@ -44,6 +54,8 @@ const buildRunInWorker =
     setProgress(0);
     setPreprogress(0);
 
+    dumbCache[cacheKey] = result;
+
     return result;
   };
 
@@ -54,6 +66,10 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const [investmentsCount, setInvestmentsCount] = useState();
   const [preprogress, setPreprogress] = useState(0);
+
+  const [firstRoundResult, setFirstRoundResult] = useState();
+  const [secondRoundResult, setSecondRoundResult] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     if (!workerInstance) {
@@ -78,18 +94,58 @@ const App = () => {
     setPreprogress,
   });
 
+  const abort = async () => {
+    workerInstance.terminate();
+
+    const newWorkerInstance = worker();
+    await newWorkerInstance.clean();
+
+    setWorkerInstance(newWorkerInstance);
+
+    setCombinationsCount(undefined);
+    setInvestmentsCount(undefined);
+    setProgress(0);
+    setPreprogress(0);
+
+    setLoading(false);
+  };
+
   return (
     <div>
       <Disclaimer />
-      <FirstRound runInWoker={runInWoker} loading={loading} />
+      <FirstRound
+        runInWoker={runInWoker}
+        loading={loading}
+        result={firstRoundResult}
+        setResult={(data) => {
+          setSecondRoundResult(undefined);
+          setFirstRoundResult(data);
+        }}
+        setError={(error) => {
+          setSecondRoundResult(undefined);
+          setError(error);
+        }}
+      />
+      {firstRoundResult && (
+        <SecondRound
+          runInWoker={runInWoker}
+          loading={loading}
+          result={secondRoundResult}
+          setResult={setSecondRoundResult}
+          setError={setError}
+          firstRoundResult={firstRoundResult}
+        />
+      )}
       {loading && (
         <Loading
           combinationsCount={combinationsCount}
           progress={progress}
           preprogress={preprogress}
           investmentsCount={investmentsCount}
+          abort={abort}
         />
       )}
+      {error && <Failure message={error} />}
     </div>
   );
 };

@@ -23,6 +23,7 @@
  */
 
 import allInvestments from './data/investments';
+import { council } from './data/takkan';
 
 const specialInvestments = allInvestments.filter(
   ({ profits }) => typeof profits === 'function'
@@ -132,6 +133,7 @@ export const combine = (investments, context = {}) => {
   let profits = 0;
   let social = 0;
   let givini = 0;
+  let takkan = 0;
   let computedInvestments = [];
 
   investments.forEach((investment) => {
@@ -141,6 +143,7 @@ export const combine = (investments, context = {}) => {
     profits += invProfits;
     social += investment.social || 0;
     givini += investment.givini || 0;
+    takkan += investment.takkan || 0;
     computedInvestments.push({
       ...investment,
       profits: invProfits,
@@ -160,6 +163,7 @@ export const combine = (investments, context = {}) => {
     profits,
     social,
     givini,
+    takkan,
     investments: computedInvestments,
   };
 };
@@ -170,7 +174,7 @@ export const isBetter = ({
   otherRequirements = {},
   context = {},
 }) => {
-  const { social = 0, givini = 0 } = otherRequirements;
+  const { social = 0, givini = 0, orcCouncil } = otherRequirements;
 
   if (candidate.social < social) {
     return false;
@@ -178,6 +182,21 @@ export const isBetter = ({
 
   if (candidate.givini < givini) {
     return false;
+  }
+
+  if (!!orcCouncil) {
+    if (
+      council({
+        investments: [
+          ...(context.previousInvestments || []),
+          ...candidate.investments.map(({ name }) => name),
+        ],
+        takkan: context.takkan + candidate.takkan,
+        researches: context.completedResearch,
+      }) < orcCouncil
+    ) {
+      return false;
+    }
   }
 
   if (!current) {

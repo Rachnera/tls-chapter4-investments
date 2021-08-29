@@ -176,6 +176,7 @@ describe('combine', () => {
           price: 200000,
           profits: 25000,
           social: 1,
+          takkan: 3,
         },
       ])
     ).toEqual({
@@ -183,12 +184,14 @@ describe('combine', () => {
       profits: 25000,
       social: 1,
       givini: 0,
+      takkan: 3,
       investments: [
         {
           name: 'Hall of Mental Strength',
           price: 200000,
           profits: 25000,
           social: 1,
+          takkan: 3,
         },
       ],
     });
@@ -201,12 +204,14 @@ describe('combine', () => {
           price: 200000,
           profits: 25000,
           social: 1,
+          takkan: 3,
         },
         {
           name: 'Booze Shack',
           price: 150000,
           profits: 50000,
           social: 1,
+          takkan: 2,
         },
       ])
     ).toEqual({
@@ -214,18 +219,21 @@ describe('combine', () => {
       profits: 75000,
       social: 2,
       givini: 0,
+      takkan: 5,
       investments: [
         {
           name: 'Hall of Mental Strength',
           price: 200000,
           profits: 25000,
           social: 1,
+          takkan: 3,
         },
         {
           name: 'Booze Shack',
           price: 150000,
           profits: 50000,
           social: 1,
+          takkan: 2,
         },
       ],
     });
@@ -246,6 +254,7 @@ describe('combine', () => {
       profits: 125000,
       social: 5,
       givini: 0,
+      takkan: 15,
       investments: [
         {
           name: "Tradesmasher's Guild",
@@ -269,6 +278,7 @@ describe('combine', () => {
       profits: 25000,
       social: 0,
       givini: 5,
+      takkan: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -285,6 +295,7 @@ describe('combine', () => {
       profits: 200000,
       social: 0,
       givini: 5,
+      takkan: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -307,6 +318,7 @@ describe('combine', () => {
       profits: 400000,
       social: 3,
       givini: 20,
+      takkan: 4,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -503,6 +515,38 @@ describe('best', () => {
       social: 0,
       givini: 7,
       investments: invs('Bank of Givini', 'Givini Smithing'),
+    });
+  });
+
+  test('orc council bribe', () => {
+    expect(
+      best({
+        investments: invs(
+          'Hall of Mental Strength',
+          'Bank of Stineford',
+          'Imp Offices',
+          'Orc Pools Upgrade',
+          "Tradesmasher's Guild"
+        ),
+        money: 800000,
+        otherRequirements: {
+          orcCouncil: 0.8,
+        },
+        context: {
+          takkan: 34,
+          completedResearch: ['orc'],
+        },
+      })
+    ).toMatchObject({
+      investments: [
+        {
+          name: "Tradesmasher's Guild",
+          price: 350000,
+          profits: 50000,
+          takkan: 5,
+        },
+        inv('Hall of Mental Strength'),
+      ],
     });
   });
 });

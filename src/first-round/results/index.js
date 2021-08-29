@@ -1,4 +1,4 @@
-import Ledger from './Ledger';
+import Ledger from '../../results/Ledger';
 import { Card } from 'antd';
 import Givini from './Givini';
 import Takkan from './Takkan';
@@ -11,17 +11,15 @@ const Result = ({
 }) => {
   return (
     <Card title={`Changes`} className="results">
-      <Card title={`Ledger`} type="inner" className="ledger">
-        <Ledger
-          initialStandings={initialStandings}
-          nonInvestmentChanges={nonInvestmentChanges}
-          investmentChanges={investmentChanges}
-        />
-      </Card>
-      <Card title={`Countries`} type="inner">
+      <Ledger
+        initialStandings={initialStandings}
+        nonInvestmentChanges={nonInvestmentChanges}
+        investmentChanges={investmentChanges}
+      />
+      <div>
         <Card title={`New Givini`} type="inner">
           <Givini
-            chapter3Investments={initialStandings.previousInvestments}
+            chapter3Investments={initialStandings.investments}
             roundOneInvestments={investmentChanges.investments}
             decisions={decisions}
           />
@@ -32,7 +30,7 @@ const Result = ({
             decisions={decisions}
           />
         </Card>
-      </Card>
+      </div>
     </Card>
   );
 };

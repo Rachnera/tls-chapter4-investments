@@ -1,6 +1,5 @@
 import { Table } from 'antd';
-
-const nF = (number) => number.toLocaleString('en-US');
+import { nF } from '../misc';
 
 const numberColWidth = 120;
 
@@ -129,6 +128,13 @@ const Ledger = ({
   const sum = (key) =>
     initialStandings[key] + nonInvestmentChanges[key] + investmentChanges[key];
 
+  const extraProfits =
+    investmentChanges.profits -
+    investmentChanges.investments.reduce(
+      (acc, { profits }) => acc + profits,
+      0
+    );
+
   const dataSource = [
     {
       ...initialStandings,
@@ -136,17 +142,40 @@ const Ledger = ({
       category: `Previously`,
     },
     {
+      key: 'previous_investments',
+      category: `Start of the round`,
+      money: initialStandings.profits,
+      profits: 0,
+      social: 0,
+    },
+    {
       ...investmentChanges,
       key: 'investments',
-      category: `Changes from investments`,
+      category: `Changes from new investments`,
       money: -investmentChanges.price,
+      profits: investmentChanges.profits - extraProfits,
     },
     {
       ...nonInvestmentChanges,
       key: 'other',
       category: `Other changes`,
+      profits: nonInvestmentChanges.profits + extraProfits,
     },
   ];
+
+  const otherList = (() => {
+    if (extraProfits > 0) {
+      return [
+        ...nonInvestmentChanges.list,
+        {
+          name: `Extra profits from past investments`,
+          profits: extraProfits,
+        },
+      ];
+    }
+
+    return nonInvestmentChanges.list;
+  })();
 
   return (
     <Table
@@ -160,20 +189,33 @@ const Ledger = ({
             return <Investments investments={investmentChanges.investments} />;
           }
           if (key === 'other') {
-            return <Others list={nonInvestmentChanges.list} />;
+            return <Others list={otherList} />;
           }
           return null;
         },
-        rowExpandable: ({ key }) => ['investments', 'other'].includes(key),
+        rowExpandable: ({ key }) => {
+          if (key === 'investments') {
+            return true;
+          }
+
+          if (key === 'other' && !!nonInvestmentChanges.list?.length) {
+            return true;
+          }
+
+          return false;
+        },
         defaultExpandAllRows: true,
       }}
       summary={() => {
         return (
           <Table.Summary.Row>
-            <Table.Summary.Cell colSpan={2}>{`Result`}</Table.Summary.Cell>
+            <Table.Summary.Cell
+              colSpan={2}
+            >{`Standings at the end of the round`}</Table.Summary.Cell>
             <Table.Summary.Cell>
               {nF(
                 initialStandings.money +
+                  initialStandings.profits +
                   nonInvestmentChanges.money -
                   investmentChanges.price
               )}
@@ -183,6 +225,7 @@ const Ledger = ({
           </Table.Summary.Row>
         );
       }}
+      className="ledger"
     />
   );
 };

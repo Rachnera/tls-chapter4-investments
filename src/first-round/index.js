@@ -1,18 +1,19 @@
-import { useState } from 'react';
 import Form from './Form';
-import Result from '../results';
-import Failure from '../Failure';
+import Result from './results';
 import {
   baseValue as giviniBaseValue,
   roundOneValue as giviniRoundOneValue,
 } from '../data/givini';
+import { buildFinalStandings } from '../misc';
+import {
+  baseValue as takkanBaseValue,
+  roundOneValue as takkanRoundOneValue,
+} from '../data/takkan';
 
-const socialRequirement = ({
-  strategy,
+const socialRequirement = (
   startingSocial,
-  jhenno,
-  merchantSolution,
-}) => {
+  { strategy, jhenno, merchantSolution }
+) => {
   if (strategy === 'money') {
     return 0;
   }
@@ -29,35 +30,8 @@ const giviniRequirement = ({ giviniStart, giviniExtra }) => {
   return absoluteRequirement - giviniStart - giviniExtra + offset;
 };
 
-const onFinish = async ({ values, setResult, runInWoker, setError }) => {
-  setError(undefined);
-
-  const {
-    previous = [],
-    remainingPron,
-    baseProfit,
-    strategy,
-    startingSocial,
-    merchantSolution,
-    jhenno,
-    magicalItems,
-    mandatory,
-    research,
-    ...misc
-  } = values;
-
-  const decisions = { strategy, merchantSolution, magicalItems, research };
-
-  const giviniStart = giviniBaseValue({ chapter3Investments: previous });
-  const giviniExtra = giviniRoundOneValue(decisions);
-
-  const initialStandings = {
-    givini: giviniStart,
-    social: startingSocial,
-    money: remainingPron + baseProfit,
-    profits: baseProfit,
-    previousInvestments: previous,
-  };
+const buildNonInvestmentsChange = (decisions) => {
+  const { jhenno } = decisions;
 
   const nonInvestmentChangesList = [
     jhenno === 'politics' && {
@@ -74,8 +48,9 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     },
   ].filter(Boolean);
 
-  const nonInvestmentChanges = {
-    givini: giviniExtra,
+  return {
+    givini: giviniRoundOneValue(decisions),
+    takkan: takkanRoundOneValue(decisions),
     money: 0,
     profits: nonInvestmentChangesList.reduce(
       (acc, { profits = 0 }) => acc + profits,
@@ -87,30 +62,97 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     ),
     list: nonInvestmentChangesList,
   };
+};
+
+const compute = async ({
+  runInWoker,
+  initialStandings,
+  decisions,
+  nonInvestmentChanges,
+  mandatory,
+  misc,
+}) => {
+  const giviniStart = initialStandings.givini;
+  const giviniExtra = nonInvestmentChanges.givini;
 
   const params = {
-    previousInvestments: previous,
-    money: remainingPron + baseProfit,
+    ...misc,
+    previousInvestments: initialStandings.investments,
+    money: initialStandings.money + initialStandings.profits,
     otherRequirements: {
-      social: socialRequirement({
-        startingSocial,
-        strategy,
-        jhenno,
-        merchantSolution,
+      social: socialRequirement(initialStandings.social, decisions),
+      givini: giviniRequirement({
+        giviniStart,
+        giviniExtra,
       }),
-      givini: giviniRequirement({ giviniStart, giviniExtra }),
       mandatory,
       atLeastOne:
-        strategy === 'succession'
+        decisions.strategy === 'succession'
           ? ['War Monument', 'Givini Mage Guild']
           : undefined,
     },
     giviniStart,
     giviniExtra,
-    ...misc,
   };
 
-  const result = await runInWoker(params);
+  return runInWoker(params);
+};
+
+const onFinish = async ({ values, setResult, runInWoker, setError }) => {
+  setError(undefined);
+
+  const {
+    previous = [],
+    remainingPron,
+    baseProfit,
+    startingSocial,
+
+    strategy,
+    merchantSolution,
+    jhenno,
+    magicalItems,
+    research,
+
+    mandatory,
+
+    chapter1Bank,
+    chapter1Steel,
+    chapter3Infrastructure,
+  } = values;
+
+  const initialStandings = {
+    money: remainingPron,
+    profits: baseProfit,
+    investments: previous,
+    social: startingSocial,
+    givini: giviniBaseValue({ chapter3Investments: previous }),
+    takkan: takkanBaseValue(),
+  };
+
+  const decisions = {
+    strategy,
+    merchantSolution,
+    magicalItems,
+    research,
+    jhenno,
+  };
+
+  const misc = {
+    chapter1Bank,
+    chapter1Steel,
+    chapter3Infrastructure,
+  };
+
+  const nonInvestmentChanges = buildNonInvestmentsChange(decisions);
+
+  const result = await compute({
+    runInWoker,
+    initialStandings,
+    decisions,
+    nonInvestmentChanges,
+    mandatory,
+    misc,
+  });
 
   if (!result) {
     setResult(undefined);
@@ -120,29 +162,34 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     return;
   }
 
+  const investmentChanges = { ...result, money: -result.price };
+
   setResult({
     initialStandings,
-    nonInvestmentChanges,
-    investmentChanges: result,
     decisions,
+    nonInvestmentChanges,
+    investmentChanges,
+    finalStandings: buildFinalStandings({
+      initialStandings,
+      nonInvestmentChanges,
+      investmentChanges,
+    }),
+    misc,
   });
+  setError(undefined);
 };
 
-const FirstRound = ({ runInWoker, loading }) => {
-  const [result, setResult] = useState();
-  const [error, setError] = useState();
-
+const FirstRound = ({ runInWoker, loading, result, setResult, setError }) => {
   return (
-    <>
+    <div className="round-one">
       <Form
         onFinish={(values) => {
           onFinish({ values, setResult, runInWoker, setError });
         }}
         loading={loading}
       />
-      {error && <Failure message={error} />}
       {result && <Result {...result} />}
-    </>
+    </div>
   );
 };
 

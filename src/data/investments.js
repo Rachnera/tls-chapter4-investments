@@ -225,7 +225,7 @@ const investments = [
   {
     name: "Tradesmasher's Guild",
     price: 350000,
-    profits: ({ investments, previousInvestments }) => {
+    profits: ({ investments, previousInvestments = [] }) => {
       const guildScore =
         1 +
         [...previousInvestments, ...investments.map(({ name }) => name)].filter(

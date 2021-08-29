@@ -105,7 +105,7 @@ const investments = [
     takkan: 3,
   },
   {
-    name: 'Lustlord Temples',
+    name: 'Lustlord Statues + Lustlord Temples',
     price: 50000 + 750000,
     profits: 50000,
   },

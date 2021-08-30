@@ -31,6 +31,7 @@ const Disclaimer = () => {
             <span>{`This tool takes for granted that:`}</span>
             <ol>
               <li>{`The Succubus Tower was visited during chapter 1.`}</li>
+              <li>{`Simon invested in the bank during chapter 1 (with Megail and Trin help).`}</li>
               <li>{`AriGarda was bribed during chapter 2.`}</li>
               <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>
               <li>{`The three unique Trades (New Givini, Tak'Kan and Chalice States) were bought at the end of chapter 3.`}</li>

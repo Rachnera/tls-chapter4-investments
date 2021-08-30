@@ -577,7 +577,6 @@ describe('finest', () => {
         },
         giviniStart: 18,
         giviniExtra: 6,
-        chapter1Bank: true,
         chapter3Infrastructure: true,
       });
 
@@ -633,7 +632,6 @@ describe('finest', () => {
         money: 42500 + 3262000 - 460000,
         giviniStart: 35,
         giviniExtra: 1,
-        chapter1Bank: true,
         otherRequirements: {
           mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
         },

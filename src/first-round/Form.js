@@ -36,7 +36,6 @@ const initialValues = {
   ],
   remainingPron: 5000,
   baseProfit: 2000000,
-  chapter1Bank: true,
   chapter1Steel: false,
   strategy: 'social',
   startingSocial: 34,
@@ -134,11 +133,6 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
 
           <div className="checkboxes">
-            {!previous.includes('Yhilini Bank Core Lender') && (
-              <Form.Item name="chapter1Bank" valuePropName="checked">
-                <Checkbox>{`You invested 25,000 ProN in the Yhilin Bank during chapter 1.`}</Checkbox>
-              </Form.Item>
-            )}
             {!previous.includes('Premium Steel Owner') && (
               <Form.Item name="chapter1Steel" valuePropName="checked">
                 <Checkbox>{`You invested 20,000 ProN in Premium Steel during chapter 1.`}</Checkbox>

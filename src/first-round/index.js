@@ -116,7 +116,6 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 
     mandatory,
 
-    chapter1Bank,
     chapter1Steel,
     chapter3Infrastructure,
   } = values;
@@ -139,7 +138,6 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   };
 
   const misc = {
-    chapter1Bank,
     chapter1Steel,
     chapter3Infrastructure,
   };

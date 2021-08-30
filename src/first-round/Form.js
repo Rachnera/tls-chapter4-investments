@@ -33,10 +33,10 @@ const initialValues = {
     "Min's Trade Route",
     'Yhilini Succubi Trade',
     'Eustrin Guild',
+    'Denmiel Mushrooms',
   ],
-  remainingPron: 5000,
-  baseProfit: 2000000,
-  chapter1Bank: true,
+  remainingPron: 7500,
+  baseProfit: 2435000,
   chapter1Steel: false,
   strategy: 'social',
   startingSocial: 34,
@@ -44,7 +44,7 @@ const initialValues = {
   merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
-  mandatory: [],
+  mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
   research: 'purity',
 };
 
@@ -134,11 +134,6 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
 
           <div className="checkboxes">
-            {!previous.includes('Yhilini Bank Core Lender') && (
-              <Form.Item name="chapter1Bank" valuePropName="checked">
-                <Checkbox>{`You invested 25,000 ProN in the Yhilin Bank during chapter 1.`}</Checkbox>
-              </Form.Item>
-            )}
             {!previous.includes('Premium Steel Owner') && (
               <Form.Item name="chapter1Steel" valuePropName="checked">
                 <Checkbox>{`You invested 20,000 ProN in Premium Steel during chapter 1.`}</Checkbox>
@@ -250,6 +245,7 @@ const CustomForm = ({ onFinish, loading }) => {
         <Form.Item
           label={`Investments you explicitly want to buy, for any reason`}
           name="mandatory"
+          tooltip={`Forcing a few certain investments can improve performances tremendously.`}
         >
           <Select
             options={toSelectOptions(

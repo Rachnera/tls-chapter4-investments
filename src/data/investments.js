@@ -50,7 +50,7 @@ const investments = [
   },
   {
     name: 'Yhilini Bank Core Lender',
-    price: ({ chapter1Bank }) => (!!chapter1Bank ? 450000 : 500000),
+    price: 450000,
     profits: 150000,
   },
   {

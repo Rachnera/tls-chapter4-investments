@@ -44,7 +44,7 @@ const initialValues = {
   merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
-  mandatory: [],
+  mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
   research: 'purity',
 };
 
@@ -245,6 +245,7 @@ const CustomForm = ({ onFinish, loading }) => {
         <Form.Item
           label={`Investments you explicitly want to buy, for any reason`}
           name="mandatory"
+          tooltip={`Forcing a few certain investments can improve performances tremendously.`}
         >
           <Select
             options={toSelectOptions(

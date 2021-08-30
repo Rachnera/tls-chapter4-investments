@@ -6,7 +6,7 @@ const Disclaimer = () => {
   return (
     <div className="disclaimer">
       <div className="preamble">
-        <Title>{`Investment advisor`}</Title>
+        <Title>{`Investment Advisor`}</Title>
         <p>
           {`A tool to help you choose the best theoretical best possible investments for (the early steps of chapter 4 of) `}
           <a href="https://the-last-sovereign.blogspot.com/">{`The Last Sovereign`}</a>

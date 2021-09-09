@@ -3,12 +3,14 @@ import { Form, Button, Card, Select } from 'antd';
 import Headquarters, { price as headquartersPrice } from './Headquarters';
 import { nF } from '../misc';
 import allInvestments from '../data/investments';
+import Banned from '../components/form/Banned';
 
 const initialValues = {
   merchantSolution2: 'neutral',
   headquarters: 'enough',
   orcCouncil: 0.8,
   mandatory: [],
+  banned: [],
 };
 
 const CustomForm = ({
@@ -17,11 +19,12 @@ const CustomForm = ({
   firstRoundDecisions,
   purchasedInvestments,
 }) => {
+  const [form] = Form.useForm();
+
   const [militaryExtra, setMilitaryExtra] = useState(
     initialValues.headquarters === 'extra'
   );
-
-  const [form] = Form.useForm();
+  const [mandatory, setMandatory] = useState(initialValues.mandatory);
 
   const previousResearch = firstRoundDecisions.research;
 
@@ -33,6 +36,7 @@ const CustomForm = ({
       form={form}
       onValuesChange={(_, allValues) => {
         setMilitaryExtra(allValues.headquarters === 'extra');
+        setMandatory(allValues.mandatory);
       }}
     >
       <Card title={`Stategy`} type="inner">
@@ -106,6 +110,7 @@ const CustomForm = ({
                 mode="multiple"
               />
             </Form.Item>
+            <Banned mandatory={mandatory} form={form} />
           </div>
           <Headquarters research={previousResearch} extra={militaryExtra} />
         </div>

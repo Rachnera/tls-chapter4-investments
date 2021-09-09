@@ -10,6 +10,7 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import allInvestments from '../data/investments';
+import Banned from '../components/form/Banned';
 
 const { Title } = Typography;
 
@@ -85,16 +86,6 @@ const CustomForm = ({ onFinish, loading }) => {
         .filter((name) => !previous.includes(name)),
     });
   }, [form, previous]);
-
-  useEffect(() => {
-    form.setFieldsValue({
-      banned: form
-        .getFieldValue('banned')
-        .filter(
-          (name) => !previous.includes(name) && !mandatory.includes(name)
-        ),
-    });
-  }, [form, previous, mandatory]);
 
   return (
     <Form
@@ -257,6 +248,7 @@ const CustomForm = ({ onFinish, loading }) => {
             />
           </Form.Item>
         </div>
+
         <Form.Item
           label={`Investments you explicitly want to buy, for any reason`}
           name="mandatory"
@@ -271,23 +263,7 @@ const CustomForm = ({ onFinish, loading }) => {
             mode="multiple"
           />
         </Form.Item>
-        <Form.Item
-          label={`Investments you explicitly refuse to buy, for any reason`}
-          name="banned"
-          tooltip={`For cases where a particular investment might be more of a curse than a blessing in the long run and you want to see what happens without it`}
-        >
-          <Select
-            options={toSelectOptions(
-              allInvestments
-                .map(({ name }) => name)
-                .filter(
-                  (name) =>
-                    !previous.includes(name) && !mandatory.includes(name)
-                )
-            )}
-            mode="multiple"
-          />
-        </Form.Item>
+        <Banned mandatory={[...previous, ...mandatory]} form={form} />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

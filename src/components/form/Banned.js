@@ -2,14 +2,14 @@ import { Form, Select } from 'antd';
 import allInvestments from '../../data/investments';
 import { useEffect } from 'react';
 
-const CustomForm = ({ mandatory, form }) => {
+const CustomForm = ({ purchased, form }) => {
   useEffect(() => {
     form.setFieldsValue({
       banned: form
         .getFieldValue('banned')
-        .filter((name) => !mandatory.includes(name)),
+        .filter((name) => !purchased.includes(name)),
     });
-  }, [form, mandatory]);
+  }, [form, purchased]);
 
   return (
     <Form.Item
@@ -19,7 +19,7 @@ const CustomForm = ({ mandatory, form }) => {
     >
       <Select
         options={allInvestments
-          .filter(({ name }) => !mandatory.includes(name))
+          .filter(({ name }) => !purchased.includes(name))
           .map(({ name }) => {
             return {
               label: name,

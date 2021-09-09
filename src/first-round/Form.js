@@ -263,7 +263,7 @@ const CustomForm = ({ onFinish, loading }) => {
             mode="multiple"
           />
         </Form.Item>
-        <Banned mandatory={[...previous, ...mandatory]} form={form} />
+        <Banned purchased={[...previous, ...mandatory]} form={form} />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

@@ -110,7 +110,10 @@ const CustomForm = ({
                 mode="multiple"
               />
             </Form.Item>
-            <Banned mandatory={mandatory} form={form} />
+            <Banned
+              purchased={[...purchasedInvestments, ...mandatory]}
+              form={form}
+            />
           </div>
           <Headquarters research={previousResearch} extra={militaryExtra} />
         </div>

@@ -10,6 +10,7 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import allInvestments from '../data/investments';
+import Banned from '../components/form/Banned';
 
 const { Title } = Typography;
 
@@ -46,6 +47,7 @@ const initialValues = {
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
   research: 'purity',
+  banned: [],
 };
 
 const toSelectOptions = (list) => {
@@ -60,12 +62,14 @@ const toSelectOptions = (list) => {
 const requiredRule = { required: true, message: `Please provide a value.` };
 
 const CustomForm = ({ onFinish, loading }) => {
-  const [previous, setPrevious] = useState(initialValues.previous);
-
   const [form] = Form.useForm();
+
+  const [previous, setPrevious] = useState(initialValues.previous);
+  const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [merchantSolution, setMerchantSolution] = useState(
     initialValues.merchantSolution
   );
+
   useEffect(() => {
     if (
       merchantSolution === 'neutral' &&
@@ -74,6 +78,7 @@ const CustomForm = ({ onFinish, loading }) => {
       form.setFieldsValue({ strategy: 'social' });
     }
   }, [form, merchantSolution]);
+
   useEffect(() => {
     form.setFieldsValue({
       mandatory: form
@@ -89,6 +94,7 @@ const CustomForm = ({ onFinish, loading }) => {
       onValuesChange={(_, allValues) => {
         setPrevious(allValues.previous);
         setMerchantSolution(allValues.merchantSolution);
+        setMandatory(allValues.mandatory);
       }}
       className="round-form first-round-form"
       form={form}
@@ -242,6 +248,7 @@ const CustomForm = ({ onFinish, loading }) => {
             />
           </Form.Item>
         </div>
+
         <Form.Item
           label={`Investments you explicitly want to buy, for any reason`}
           name="mandatory"
@@ -256,6 +263,7 @@ const CustomForm = ({ onFinish, loading }) => {
             mode="multiple"
           />
         </Form.Item>
+        <Banned mandatory={[...previous, ...mandatory]} form={form} />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

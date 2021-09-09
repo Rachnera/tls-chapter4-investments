@@ -26,7 +26,8 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2, headquarters, orcCouncil, mandatory } = values;
+  const { merchantSolution2, headquarters, orcCouncil, mandatory, banned } =
+    values;
   const decisions = { merchantSolution2, headquarters, orcCouncil };
 
   const headquartersUpgradesPrice = headquartersPrice({
@@ -63,6 +64,7 @@ const onFinish = async ({
       social: socialRequirement(initialStandings.social, decisions),
       orcCouncil: decisions.orcCouncil,
       mandatory,
+      banned,
     },
   };
 

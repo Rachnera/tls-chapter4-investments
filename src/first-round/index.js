@@ -72,6 +72,7 @@ const compute = async ({
   nonInvestmentChanges,
   mandatory,
   misc,
+  banned,
 }) => {
   const giviniStart = initialStandings.givini;
   const giviniExtra = nonInvestmentChanges.givini;
@@ -91,6 +92,7 @@ const compute = async ({
         decisions.strategy === 'succession'
           ? ['War Monument', 'Givini Mage Guild']
           : undefined,
+      banned,
     },
     giviniStart,
     giviniExtra,
@@ -115,6 +117,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     research,
 
     mandatory,
+    banned,
 
     chapter1Steel,
     chapter3Infrastructure,
@@ -151,6 +154,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     nonInvestmentChanges,
     mandatory,
     misc,
+    banned,
   });
 
   if (!result) {

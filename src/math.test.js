@@ -654,5 +654,111 @@ describe('finest', () => {
         ].sort((a, b) => a.localeCompare(b))
       );
     });
+
+    describe('banned', () => {
+      test('it does not buy banned investments', () => {
+        const previousInvestments = [
+          'Premium Steel Owner',
+
+          'Denmiel Mushrooms',
+          'Eustrin Guild',
+          "Min's Trade Route",
+          'Yhilini Succubi Trade',
+
+          'Givini Orc Merchant',
+          'Bank of Givini',
+
+          'Bank of Stineford',
+          'Stineford Weapons Store',
+          'Yhilini Brothel Reform',
+          'Booze Shack',
+          'Lonely Sailor Services',
+          'Succubus Band Tour',
+          'Mercenary Offices',
+          'Imp Offices',
+          'Trading Pillar Rights',
+          'Gasm Falls Trade',
+        ];
+
+        const result = finest({
+          previousInvestments,
+          money: 42500 + 3262000 - 460000,
+          giviniStart: 35,
+          giviniExtra: 1,
+          otherRequirements: {
+            mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
+            banned: ['Succubus Armorer'],
+          },
+        });
+
+        expect(
+          result.investments
+            .map(({ name }) => name)
+            .sort((a, b) => a.localeCompare(b))
+        ).toEqual(
+          [
+            'Hall of Mental Strength',
+            'Orc Pools Upgrade',
+            "Cee'Kan Shipping",
+            'Givini Teahouse Chain',
+            'Yhilini Bank Core Lender',
+            "Tradesmasher's Guild",
+            'Theltiar Flowhouse',
+          ].sort((a, b) => a.localeCompare(b))
+        );
+      });
+
+      test('it ignores banned investments that are also mandatory or semi-mandatory', () => {
+        const previousInvestments = [
+          'Premium Steel Owner',
+
+          'Denmiel Mushrooms',
+          'Eustrin Guild',
+          "Min's Trade Route",
+          'Yhilini Succubi Trade',
+
+          'Givini Orc Merchant',
+          'Bank of Givini',
+
+          'Bank of Stineford',
+          'Stineford Weapons Store',
+          'Yhilini Brothel Reform',
+          'Booze Shack',
+          'Lonely Sailor Services',
+          'Succubus Band Tour',
+          'Mercenary Offices',
+          'Imp Offices',
+          'Trading Pillar Rights',
+          'Gasm Falls Trade',
+        ];
+
+        const result = finest({
+          previousInvestments,
+          money: 42500 + 3262000 - 460000,
+          giviniStart: 35,
+          giviniExtra: 1,
+          otherRequirements: {
+            mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
+            banned: ['Succubus Armorer', 'Hall of Mental Strength'],
+          },
+        });
+
+        expect(
+          result.investments
+            .map(({ name }) => name)
+            .sort((a, b) => a.localeCompare(b))
+        ).toEqual(
+          [
+            'Hall of Mental Strength',
+            'Orc Pools Upgrade',
+            "Cee'Kan Shipping",
+            'Givini Teahouse Chain',
+            'Yhilini Bank Core Lender',
+            "Tradesmasher's Guild",
+            'Theltiar Flowhouse',
+          ].sort((a, b) => a.localeCompare(b))
+        );
+      });
+    });
   });
 });

@@ -239,12 +239,27 @@ export const best = ({
 
 export const buildParams = ({ money, otherRequirements = {}, ...context }) => {
   const { previousInvestments = [] } = context;
+  const { mandatory = [], atLeastOne = [], banned = [] } = otherRequirements;
 
   return {
     money,
     otherRequirements,
     investments: allInvestments
-      .filter(({ name }) => !previousInvestments.includes(name))
+      .filter(({ name }) => {
+        if (previousInvestments.includes(name)) {
+          return false;
+        }
+
+        if (
+          banned.includes(name) &&
+          !atLeastOne.includes(name) &&
+          !mandatory.includes(name)
+        ) {
+          return false;
+        }
+
+        return true;
+      })
       .map((investment) => {
         return {
           ...investment,

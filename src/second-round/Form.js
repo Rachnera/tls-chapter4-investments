@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Card, Select } from 'antd';
 import Headquarters, { price as headquartersPrice } from './Headquarters';
 import { nF } from '../misc';
@@ -27,13 +27,15 @@ const CustomForm = ({
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
 
   const previousResearch = firstRoundDecisions.research;
+  useEffect(() => {
+    form.setFieldsValue({
+      research: previousResearch === 'purity' ? 'orc' : 'purity',
+    });
+  }, [form, previousResearch]);
 
   return (
     <Form
-      initialValues={{
-        ...initialValues,
-        research: previousResearch === 'purity' ? 'orc' : 'purity',
-      }}
+      initialValues={initialValues}
       onFinish={onFinish}
       className="round-form second-round-form"
       form={form}

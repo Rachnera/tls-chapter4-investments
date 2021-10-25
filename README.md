@@ -104,7 +104,5 @@ Select branch: `githubio`, folder: `/docs` and save
 ##### Deploy
 
 ```
-git checkout githubio
 yarn release
-git checkout main
 ```

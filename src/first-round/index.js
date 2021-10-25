@@ -92,7 +92,15 @@ const compute = async ({
         decisions.strategy === 'succession'
           ? ['War Monument', 'Givini Mage Guild']
           : undefined,
-      banned,
+      banned: [
+        ...banned,
+        // FIXME Performance hack: Exclude a few objectively bad investments
+        // mandatory/atLeastOne are prioritized over ban, so no issue if the user want to force them manually
+        'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+        'Lustlord Statues + Lustlord Temples',
+        'Stineford Succubus Tower',
+      ],
     },
     giviniStart,
     giviniExtra,

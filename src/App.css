@@ -86,7 +86,8 @@ table.addition td:nth-child(3) {
   padding: 24px;
 }
 
-.disclaimer > .preamble > *:last-child {
+.disclaimer > .preamble > *:last-child,
+.disclaimer > .assumptions ol {
   margin-bottom: 0;
 }
 

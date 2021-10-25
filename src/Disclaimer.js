@@ -44,6 +44,7 @@ const Disclaimer = () => {
         }
         type="info"
         showIcon
+        className="assumptions"
       />
     </div>
   );

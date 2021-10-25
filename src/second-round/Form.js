@@ -30,7 +30,10 @@ const CustomForm = ({
 
   return (
     <Form
-      initialValues={initialValues}
+      initialValues={{
+        ...initialValues,
+        research: previousResearch === 'purity' ? 'orc' : 'purity',
+      }}
       onFinish={onFinish}
       className="round-form second-round-form"
       form={form}
@@ -95,6 +98,28 @@ const CustomForm = ({
                     value: 'extra',
                   },
                 ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Research`} name="research">
+              <Select
+                options={[
+                  {
+                    value: 'orc',
+                    label: `Orc Diversification`,
+                  },
+                  {
+                    value: 'unpeople',
+                    label: `Unpeople Transformation`,
+                  },
+                  {
+                    value: 'purity',
+                    label: `Purity Magic`,
+                  },
+                  {
+                    value: 'defense',
+                    label: `Base Defense`,
+                  },
+                ].filter(({ value }) => value !== previousResearch)}
               />
             </Form.Item>
             <Form.Item

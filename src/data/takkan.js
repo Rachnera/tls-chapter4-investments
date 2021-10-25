@@ -39,17 +39,21 @@ export const roundOneChanges = ({ magicalItems, research }) => {
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
 
-export const roundTwoChanges = () => {
+export const roundTwoChanges = ({ research }) => {
   return [
     {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `At the end of the round`,
     },
-  ];
+    research === 'orc' && {
+      label: `Research: Orc Diversification`,
+      values: [5],
+    },
+  ].filter(Boolean);
 };
 
-export const roundTwoValue = () => 1;
+export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
 
 export const council = ({ investments = [], takkan, researches = [] }) => {
   let yes = 3 + 1 + 1; //Base, Elleani, Impaler

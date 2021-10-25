@@ -26,9 +26,15 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2, headquarters, orcCouncil, mandatory, banned } =
-    values;
-  const decisions = { merchantSolution2, headquarters, orcCouncil };
+  const {
+    merchantSolution2,
+    headquarters,
+    orcCouncil,
+    mandatory,
+    banned,
+    research,
+  } = values;
+  const decisions = { merchantSolution2, headquarters, orcCouncil, research };
 
   const headquartersUpgradesPrice = headquartersPrice({
     research: firstRoundResult.decisions.research,
@@ -40,7 +46,7 @@ const onFinish = async ({
     profits: 0,
     social: 0,
     givini: giviniRoundTwoValue(decisions),
-    takkan: takkanRoundTwoValue(),
+    takkan: takkanRoundTwoValue(decisions),
     list: [
       {
         name: `Headquarters upgrades`,

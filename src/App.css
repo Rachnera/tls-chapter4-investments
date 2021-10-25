@@ -71,15 +71,15 @@ table.addition td:nth-child(3) {
   text-align: right;
 }
 
-.disclaimer {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
+@media (min-width: 992px) {
+  .disclaimer {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.disclaimer > * {
-  flex: 1;
-  min-width: 512px;
+  .disclaimer > * {
+    flex: 1;
+  }
 }
 
 .disclaimer > .preamble {

@@ -6,6 +6,7 @@ import Disclaimer from './Disclaimer';
 import Loading from './Loading';
 import Failure from './Failure';
 import SecondRound from './second-round';
+import ThirdRound from './third-round';
 
 let dumbCache = {};
 const dumbKey = (params) => JSON.stringify(params);
@@ -134,6 +135,12 @@ const App = () => {
           setResult={setSecondRoundResult}
           setError={setError}
           firstRoundResult={firstRoundResult}
+        />
+      )}
+      {firstRoundResult && secondRoundResult && (
+        <ThirdRound
+          firstRoundResult={firstRoundResult}
+          secondRoundResult={secondRoundResult}
         />
       )}
       {loading && (

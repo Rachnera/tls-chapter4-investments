@@ -105,7 +105,7 @@ const investments = [
     takkan: 3,
   },
   {
-    name: 'Lustlord Statues + Lustlord Temples',
+    name: 'Lustlord Temples',
     price: 50000 + 750000,
     profits: 50000,
   },
@@ -299,6 +299,99 @@ const investments = [
     name: 'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
     price: 1000 + 2000 + 5000,
     takkan: 1,
+  },
+];
+
+export const postGawnfallInvestments = [
+  ...investments.filter(
+    ({ name }) =>
+      ![
+        'Lustlord Temples',
+        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+        'Denmiel Archives',
+      ].includes(name)
+  ),
+  {
+    name: 'Lustlord Temples',
+    price: 750000,
+    profits: 50000,
+  },
+  {
+    name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+    price: ({ gawnfallTakkan }) => {
+      if (gawnfallTakkan === 'major') {
+        return 750000 + 100000;
+      }
+      if (gawnfallTakkan === 'minor') {
+        return 900000 + 100000;
+      }
+      return 1000000 + 100000;
+    },
+    profits: 50000 + 50000,
+    social: 1,
+    takkan: 5 + 2,
+  },
+  {
+    name: 'Denmiel Archives',
+    price: ({ gawnfallMother }) => {
+      if (gawnfallMother === 'full_unlock') {
+        return 150000;
+      }
+      return 250000;
+    },
+    profits: 20000,
+    social: 1,
+  },
+  {
+    name: "Tak'Kan Mine",
+    price: ({ gawnfallTakkan }) => {
+      if (gawnfallTakkan === 'major') {
+        return 250000;
+      }
+      if (gawnfallTakkan === 'minor') {
+        return 125000;
+      }
+      return Infinity;
+    },
+    profits: 125000,
+    social: 1,
+    takkan: 5 + 2,
+  },
+  {
+    name: 'Ivalan Bank',
+    price: 550000,
+    profits: 225000,
+  },
+  {
+    name: 'Mercenary Flotilla',
+    price: 500000,
+    profits: 25000,
+  },
+  {
+    name: 'Sanitation Mages Guild',
+    price: 100000,
+    profits: 5000,
+  },
+  {
+    name: 'Crystal Refiner',
+    price: 400000,
+    profits: 55000,
+  },
+  {
+    name: 'Ardford Restaurant',
+    price: 100000,
+    profits: ({ investments, previousInvestments = [], gawnfallArford }) => {
+      if (
+        gawnfallArford === 'open' &&
+        [
+          ...previousInvestments,
+          ...investments.map(({ name }) => name),
+        ].includes('Givini Teahouse Chain')
+      ) {
+        return 25000;
+      }
+      return 10000;
+    },
   },
 ];
 

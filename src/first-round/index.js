@@ -98,7 +98,7 @@ const compute = async ({
         // mandatory/atLeastOne are prioritized over ban, so no issue if the user want to force them manually
         'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
         "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
-        'Lustlord Statues + Lustlord Temples',
+        'Lustlord Temples',
         'Stineford Succubus Tower',
       ],
     },

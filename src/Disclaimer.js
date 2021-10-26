@@ -32,7 +32,7 @@ const Disclaimer = () => {
             <ol>
               <li>{`The Succubus Tower was visited during chapter 1.`}</li>
               <li>{`Simon invested in the bank during chapter 1 (with Megail and Trin help).`}</li>
-              <li>{`Through chapter 2, AriGarda was bribed, the Order of Silence funded, and the Merchant's Guild joined.`}</li>
+              <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, the Order of Silence funded, and the Ardan Bank invested into.`}</li>
               <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>
               <li>{`The three unique Trades (New Givini, Tak'Kan and Chalice States) were bought at the end of chapter 3.`}</li>
               <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>

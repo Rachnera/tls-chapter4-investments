@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Form, Card, Radio, Select } from 'antd';
 import preGawnfallInvestments from '../data/investments';
 
@@ -10,30 +11,41 @@ const initialValues = {
 };
 
 const CustomForm = ({ previousInvestments, previousResearch }) => {
+  const [form] = Form.useForm();
+
+  const availableResearch = [
+    {
+      value: 'orc',
+      label: `Orc Diversification`,
+    },
+    {
+      value: 'unpeople',
+      label: `Unpeople Transformation`,
+    },
+    {
+      value: 'purity',
+      label: `Purity Magic`,
+    },
+    {
+      value: 'defense',
+      label: `Base Defense`,
+    },
+  ].filter(({ value }) => !previousResearch.includes(value));
+  useEffect(() => {
+    form.setFieldsValue({
+      research: availableResearch[0]['value'],
+    });
+  }, [form, availableResearch]);
+
   return (
-    <Form initialValues={initialValues} className="round-form third-round-form">
+    <Form
+      initialValues={initialValues}
+      className="round-form third-round-form"
+      form={form}
+    >
       <Card title={`Gawnfall – Stategy`} type="inner">
         <Form.Item label={`Research`} name="research">
-          <Select
-            options={[
-              {
-                value: 'orc',
-                label: `Orc Diversification`,
-              },
-              {
-                value: 'unpeople',
-                label: `Unpeople Transformation`,
-              },
-              {
-                value: 'purity',
-                label: `Purity Magic`,
-              },
-              {
-                value: 'defense',
-                label: `Base Defense`,
-              },
-            ].filter(({ value }) => !previousResearch.includes(value))}
-          />
+          <Select options={availableResearch} />
         </Form.Item>
         {!previousInvestments.includes('Lustlord Temples') && (
           <Form.Item label={`Yelarel-related investments`} name="yelarel">

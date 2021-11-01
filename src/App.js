@@ -70,6 +70,7 @@ const App = () => {
 
   const [firstRoundResult, setFirstRoundResult] = useState();
   const [secondRoundResult, setSecondRoundResult] = useState();
+  const [thirdRoundResult, setThirdRoundResult] = useState();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -141,6 +142,11 @@ const App = () => {
         <ThirdRound
           firstRoundResult={firstRoundResult}
           secondRoundResult={secondRoundResult}
+          runInWoker={runInWoker}
+          loading={loading}
+          setResult={setThirdRoundResult}
+          setError={setError}
+          result={thirdRoundResult}
         />
       )}
       {loading && (

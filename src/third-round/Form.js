@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Form, Card, Radio, Select } from 'antd';
+import { Form, Card, Radio, Select, Button } from 'antd';
 import preGawnfallInvestments from '../data/investments';
 
 const initialValues = {
+  mandatory1: [],
   yelarel: 'min',
   takkan: 'major',
   mercantile: 'excellent',
@@ -10,7 +11,12 @@ const initialValues = {
   mother: 'full_unlock',
 };
 
-const CustomForm = ({ previousInvestments, previousResearch }) => {
+const CustomForm = ({
+  previousInvestments,
+  previousResearch,
+  onFinish,
+  loading,
+}) => {
   const [form] = Form.useForm();
 
   const availableResearch = [
@@ -42,6 +48,7 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
       initialValues={initialValues}
       className="round-form third-round-form"
       form={form}
+      onFinish={onFinish}
     >
       <Card title={`Gawnfall – Stategy`} type="inner">
         <Form.Item label={`Research`} name="research">
@@ -167,6 +174,12 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
           />
         </Form.Item>
       </Card>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          {`Submit`}
+        </Button>
+      </Form.Item>
     </Form>
   );
 };

@@ -93,19 +93,19 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
             options={[
               {
                 value: 'excellent',
-                label: `Excellent (5+)`,
+                label: `Excellent`,
               },
               {
                 value: 'good',
-                label: `Good (3-4)`,
+                label: `Good`,
               },
               {
                 value: 'fair',
-                label: `Fair (1-2)`,
+                label: `Fair`,
               },
               {
                 value: 'poor',
-                label: `Poor (0)`,
+                label: `Poor`,
               },
             ]}
           />
@@ -119,11 +119,11 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
               },
               {
                 value: 'resolved',
-                label: `Lifted (2-4)`,
+                label: `Lifted`,
               },
               {
                 value: 'unresolved',
-                label: `Unsolved (1-)`,
+                label: `Unsolved`,
               },
             ]}
           />
@@ -133,15 +133,15 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
             options={[
               {
                 value: 'full_unlock',
-                label: `Crushed (6+)`,
+                label: `Crushed`,
               },
               {
                 value: 'partial_unlock',
-                label: `Dealt with (3-5)`,
+                label: `Dealt with`,
               },
               {
                 value: 'locked',
-                label: `Unrestrained (2-)`,
+                label: `Unrestrained`,
               },
             ]}
           />

@@ -277,7 +277,8 @@ export const buildParams = ({
           ...investment,
           price: comp(investment.price, context),
         };
-      }),
+      })
+      .filter(({ price }) => price !== Infinity),
     context,
   };
 };

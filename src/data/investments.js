@@ -349,7 +349,7 @@ export const postGawnfallInvestments = [
         return 250000;
       }
       if (gawnfallTakkan === 'minor') {
-        return 125000;
+        return 500000;
       }
       return Infinity;
     },
@@ -382,7 +382,7 @@ export const postGawnfallInvestments = [
     price: 100000,
     profits: ({ investments, previousInvestments = [], gawnfallArford }) => {
       if (
-        gawnfallArford === 'open' &&
+        (gawnfallArford === 'resolved' || gawnfallArford === 'overkill') &&
         [
           ...previousInvestments,
           ...investments.map(({ name }) => name),

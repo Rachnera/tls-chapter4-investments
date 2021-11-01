@@ -22,7 +22,7 @@
  * d
  */
 
-import allInvestments from './data/investments';
+import allInvestments, { postGawnfallInvestments } from './data/investments';
 import { council } from './data/takkan';
 
 const specialInvestments = allInvestments.filter(
@@ -237,14 +237,26 @@ export const best = ({
   return result;
 };
 
-export const buildParams = ({ money, otherRequirements = {}, ...context }) => {
+export const buildParams = ({
+  money,
+  otherRequirements = {},
+  list = 'default',
+  ...context
+}) => {
   const { previousInvestments = [] } = context;
   const { mandatory = [], atLeastOne = [], banned = [] } = otherRequirements;
+
+  const investmentsList = (() => {
+    if (list === 'gawnfall') {
+      return postGawnfallInvestments;
+    }
+    return allInvestments;
+  })();
 
   return {
     money,
     otherRequirements,
-    investments: allInvestments
+    investments: investmentsList
       .filter(({ name }) => {
         if (previousInvestments.includes(name)) {
           return false;

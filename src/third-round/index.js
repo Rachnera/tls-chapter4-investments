@@ -12,7 +12,7 @@ const onFinish = async ({
   secondRoundResult,
   values,
 }) => {
-  const { finalStandings: initialStandings, misc } = secondRoundResult;
+  const { finalStandings: initialStandings } = secondRoundResult;
 
   const { research, mandatory1, yelarel, takkan, mercantile, ardford, mother } =
     values;
@@ -25,9 +25,29 @@ const onFinish = async ({
     mandatory.push('Lustlord Temples');
   }
 
+  const misc = {
+    ...secondRoundResult.misc,
+    gawnfallTakkan: decisions.gawnfall.takkan,
+    gawnfallMother: decisions.gawnfall.mother,
+    gawnfallArford: decisions.gawnfall.ardford,
+  };
+
+  const mercantileMoney = (() => {
+    switch (decisions.gawnfall.mercantile) {
+      case 'excellent':
+        return 250000;
+      case 'good':
+        return 100000;
+      case 'poor':
+        return -100000;
+      default:
+        return 0;
+    }
+  })();
+
   const nonInvestmentChanges = {
     money: -50000,
-    profits: 0,
+    profits: mercantileMoney,
     social: 0,
     givini: 0,
     takkan: 0,
@@ -35,6 +55,10 @@ const onFinish = async ({
       {
         name: `New Lustlord Statues`,
         price: -50000,
+      },
+      {
+        name: `One-time mercantile issue modifier`,
+        profits: mercantileMoney,
       },
     ],
   };
@@ -51,6 +75,7 @@ const onFinish = async ({
     otherRequirements: {
       mandatory,
     },
+    list: 'gawnfall',
   };
 
   const result = await runInWoker(params);

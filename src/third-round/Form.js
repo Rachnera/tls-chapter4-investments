@@ -52,7 +52,9 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
           </Form.Item>
         )}
         <Form.Item
-          label={`All investments you wish to do before the Council (example: Givini Tunnels)`}
+          label={`${
+            previousInvestments.includes('Lustlord Temples') ? `All` : `Other`
+          } investments you wish to do before the Council (example: Givini Tunnels)`}
           name="mandatory1"
         >
           <Select
@@ -60,7 +62,13 @@ const CustomForm = ({ previousInvestments, previousResearch }) => {
               .filter(
                 ({ name }) =>
                   !previousInvestments.includes(name) &&
-                  'Lustlord Temples' !== name
+                  'Lustlord Temples' !== name &&
+                  // FIXME: Removing investments whose price can change from the list for now
+                  // Should be handled for real later
+                  ![
+                    'Denmiel Archives',
+                    "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+                  ].includes(name)
               )
               .map(({ name }) => {
                 return { label: name, value: name };

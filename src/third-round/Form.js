@@ -155,7 +155,7 @@ const CustomForm = ({
             options={[
               {
                 value: 'overkill',
-                label: `Lifted, with an extra bit of acceptance (5+)`,
+                label: `Lifted, with an extra bit of acceptance`,
               },
               {
                 value: 'resolved',

@@ -302,6 +302,14 @@ const investments = [
   },
 ];
 
+const ardfordOpen = ({ gawnfallArford }) => {
+  return gawnfallArford === 'resolved' || gawnfallArford === 'overkill';
+};
+
+const ifArdfordOpen = (price) => {
+  return (params) => (ardfordOpen(params) && price) || Infinity;
+};
+
 export const postGawnfallInvestments = [
   ...investments.filter(
     ({ name }) =>
@@ -359,30 +367,31 @@ export const postGawnfallInvestments = [
   },
   {
     name: 'Ivalan Bank',
-    price: 550000,
+    price: ifArdfordOpen(550000),
     profits: 225000,
   },
   {
     name: 'Mercenary Flotilla',
-    price: 500000,
+    price: ifArdfordOpen(500000),
     profits: 25000,
   },
   {
     name: 'Sanitation Mages Guild',
-    price: 100000,
+    price: ifArdfordOpen(100000),
     profits: 5000,
   },
   {
     name: 'Crystal Refiner',
-    price: 400000,
+    price: ifArdfordOpen(400000),
     profits: 55000,
   },
   {
     name: 'Ardford Restaurant',
-    price: 100000,
-    profits: ({ investments, previousInvestments = [], gawnfallArford }) => {
+    price: ifArdfordOpen(100000),
+    profits: (params) => {
+      const { investments, previousInvestments = [] } = params;
       if (
-        (gawnfallArford === 'resolved' || gawnfallArford === 'overkill') &&
+        ardfordOpen(params) &&
         [
           ...previousInvestments,
           ...investments.map(({ name }) => name),

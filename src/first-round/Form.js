@@ -26,6 +26,11 @@ const possiblePrevious = [
   'Eustrin Guild',
   'Gasm Falls Trade',
   'Premium Steel Owner',
+  'Ivalan Bank',
+  'Mercenary Flotilla',
+  'Sanitation Mages Guild',
+  'Crystal Refiner',
+  'Ardford Restaurant',
 ];
 
 const initialValues = {
@@ -35,6 +40,9 @@ const initialValues = {
     'Yhilini Succubi Trade',
     'Eustrin Guild',
     'Denmiel Mushrooms',
+    'Ivalan Bank',
+    'Crystal Refiner',
+    'Ardford Restaurant',
   ],
   remainingPron: 7500,
   baseProfit: 2435000,

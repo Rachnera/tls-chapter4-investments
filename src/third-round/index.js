@@ -14,8 +14,16 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings } = secondRoundResult;
 
-  const { research, mandatory1, yelarel, takkan, mercantile, ardford, mother } =
-    values;
+  const {
+    research,
+    mandatory1,
+    yelarel,
+    takkan,
+    mercantile,
+    ardford,
+    mother,
+    vera,
+  } = values;
   const decisions = {
     research,
     gawnfall: { takkan, mercantile, ardford, mother },
@@ -45,22 +53,29 @@ const onFinish = async ({
     }
   })();
 
+  const nonInvestmentChangesList = [
+    {
+      name: `New Lustlord Statues`,
+      price: -50000,
+    },
+    vera && {
+      name: `Goddess of Magic Statue`,
+      price: -10000,
+    },
+    {
+      name: `One-time mercantile issue modifier`,
+      price: 0,
+      profits: mercantileMoney,
+    },
+  ].filter(Boolean);
+
   const nonInvestmentChanges = {
-    money: -50000,
+    money: nonInvestmentChangesList.reduce((acc, { price }) => acc + price, 0),
     profits: mercantileMoney,
     social: 0,
     givini: 0,
     takkan: 0,
-    list: [
-      {
-        name: `New Lustlord Statues`,
-        price: -50000,
-      },
-      {
-        name: `One-time mercantile issue modifier`,
-        profits: mercantileMoney,
-      },
-    ],
+    list: nonInvestmentChangesList,
   };
 
   const params = {

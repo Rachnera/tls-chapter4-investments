@@ -9,6 +9,7 @@ const initialValues = {
   mercantile: 'excellent',
   ardford: 'resolved',
   mother: 'full_unlock',
+  vera: false,
 };
 
 const CustomForm = ({
@@ -70,10 +71,22 @@ const CustomForm = ({
             />
           </Form.Item>
         )}
+        <Form.Item label={`Buy Goddess of Magic Statue?`} name="vera">
+          <Radio.Group
+            options={[
+              {
+                value: true,
+                label: `Yes`,
+              },
+              {
+                value: false,
+                label: `No`,
+              },
+            ]}
+          />
+        </Form.Item>
         <Form.Item
-          label={`${
-            previousInvestments.includes('Lustlord Temples') ? `All` : `Other`
-          } investments you wish to do before the Council (example: Givini Tunnels)`}
+          label={`Other investments you wish to do before the Council (example: Givini Tunnels)`}
           name="mandatory1"
         >
           <Select

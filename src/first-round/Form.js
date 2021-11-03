@@ -47,14 +47,14 @@ const initialValues = {
   remainingPron: 7500,
   baseProfit: 2435000,
   chapter1Steel: false,
-  strategy: 'social',
+  strategy: 'money',
   startingSocial: 34,
   chapter3Infrastructure: true,
   merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
-  research: 'purity',
+  research: 'orc',
   banned: [],
 };
 

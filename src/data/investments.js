@@ -302,8 +302,8 @@ const investments = [
   },
 ];
 
-const ardfordOpen = ({ gawnfallArford }) => {
-  return gawnfallArford === 'resolved' || gawnfallArford === 'overkill';
+const ardfordOpen = ({ gawnfallArdford }) => {
+  return gawnfallArdford === 'resolved' || gawnfallArdford === 'overkill';
 };
 
 const ifArdfordOpen = (price) => {

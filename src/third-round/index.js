@@ -21,7 +21,7 @@ const onFinish = async ({
     yelarel,
     gawnfallTakkan,
     gawnfallMercantile,
-    gawnfallArford,
+    gawnfallArdford,
     gawnfallMother,
     vera,
   } = values;
@@ -29,7 +29,7 @@ const onFinish = async ({
     research,
     gawnfallTakkan,
     gawnfallMercantile,
-    gawnfallArford,
+    gawnfallArdford,
     gawnfallMother,
   };
   let mandatory = [...mandatory1];
@@ -41,7 +41,7 @@ const onFinish = async ({
     ...secondRoundResult.misc,
     gawnfallTakkan,
     gawnfallMother,
-    gawnfallArford,
+    gawnfallArdford,
   };
 
   const mercantileMoney = (() => {

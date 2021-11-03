@@ -158,7 +158,7 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
-        <Form.Item label={`Ardford's ban`} name="gawnfallArford">
+        <Form.Item label={`Ardford's ban`} name="gawnfallArdford">
           <Select
             options={[
               {

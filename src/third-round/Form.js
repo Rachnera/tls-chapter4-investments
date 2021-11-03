@@ -110,7 +110,7 @@ const CustomForm = ({
         </Form.Item>
       </Card>
       <Card title={`Gawnfall – Investment-relevant results`} type="inner">
-        <Form.Item label={`Support for Tak'Kan`} name="takkan">
+        <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
           <Select
             options={[
               {
@@ -128,7 +128,10 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
-        <Form.Item label={`Mercantile issue resolution`} name="mercantile">
+        <Form.Item
+          label={`Mercantile issue resolution`}
+          name="gawnfallMercantile"
+        >
           <Select
             options={[
               {
@@ -150,7 +153,7 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
-        <Form.Item label={`Ardford's ban`} name="ardford">
+        <Form.Item label={`Ardford's ban`} name="gawnfallArford">
           <Select
             options={[
               {
@@ -168,7 +171,7 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
-        <Form.Item label={`Mother's Guard`} name="mother">
+        <Form.Item label={`Mother's Guard`} name="gawnfallMother">
           <Select
             options={[
               {

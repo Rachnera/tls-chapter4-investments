@@ -19,15 +19,18 @@ const onFinish = async ({
     research,
     mandatory1,
     yelarel,
-    takkan,
-    mercantile,
-    ardford,
-    mother,
+    gawnfallTakkan,
+    gawnfallMercantile,
+    gawnfallArford,
+    gawnfallMother,
     vera,
   } = values;
   const decisions = {
     research,
-    gawnfall: { takkan, mercantile, ardford, mother },
+    gawnfallTakkan,
+    gawnfallMercantile,
+    gawnfallArford,
+    gawnfallMother,
   };
   let mandatory = [...mandatory1];
   if (yelarel === 'max') {
@@ -36,13 +39,13 @@ const onFinish = async ({
 
   const misc = {
     ...secondRoundResult.misc,
-    gawnfallTakkan: decisions.gawnfall.takkan,
-    gawnfallMother: decisions.gawnfall.mother,
-    gawnfallArford: decisions.gawnfall.ardford,
+    gawnfallTakkan,
+    gawnfallMother,
+    gawnfallArford,
   };
 
   const mercantileMoney = (() => {
-    switch (decisions.gawnfall.mercantile) {
+    switch (decisions.gawnfallMercantile) {
       case 'excellent':
         return 250000;
       case 'good':

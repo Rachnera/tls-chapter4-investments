@@ -64,21 +64,23 @@ const onFinish = async ({
   const nonInvestmentChangesList = [
     {
       name: `New Lustlord Statues`,
-      price: -50000,
+      money: -50000,
     },
     vera && {
       name: `Goddess of Magic Statue`,
-      price: -10000,
+      money: -10000,
     },
     {
       name: `One-time mercantile issue modifier`,
-      price: 0,
       profits: mercantileMoney,
     },
   ].filter(Boolean);
 
   const nonInvestmentChanges = {
-    money: nonInvestmentChangesList.reduce((acc, { price }) => acc + price, 0),
+    money: nonInvestmentChangesList.reduce(
+      (acc, { money }) => acc + (money || 0),
+      0
+    ),
     profits: mercantileMoney,
     social: 0,
     givini: giviniRoundThreeValue(decisions),
@@ -91,7 +93,7 @@ const onFinish = async ({
     previousInvestments: initialStandings.investments,
     money:
       initialStandings.money +
-      initialStandings.profits -
+      initialStandings.profits +
       nonInvestmentChanges.money,
     giviniStart: initialStandings.givini,
     giviniExtra: nonInvestmentChanges.givini,

@@ -50,7 +50,7 @@ const onFinish = async ({
     list: [
       {
         name: `Headquarters upgrades`,
-        price: -headquartersUpgradesPrice,
+        money: -headquartersUpgradesPrice,
       },
     ],
   };

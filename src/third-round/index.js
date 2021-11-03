@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
 import Form from './Form';
 import { Typography } from 'antd';
 import { buildFinalStandings } from '../misc';
+import Result from './results';
+import ScrollTo from '../results/ScrollTo';
 
 const { Title } = Typography;
 
@@ -135,10 +136,6 @@ const ThirdRound = ({
     secondRoundResult.decisions.research,
   ];
 
-  useEffect(() => {
-    console.log(result);
-  }, [result]);
-
   return (
     <div className="round-three">
       <Title level={2}>{`Chapter 4 – Round 3`}</Title>
@@ -156,6 +153,9 @@ const ThirdRound = ({
         }}
         loading={loading}
       />
+      <ScrollTo data={result}>
+        <Result {...result} />
+      </ScrollTo>
     </div>
   );
 };

@@ -95,3 +95,35 @@ export const council = ({ investments = [], takkan, researches = [] }) => {
 
   return yes / (yes + no);
 };
+
+export const roundThreeChanges = ({
+  research,
+  gawnfallMercantile,
+  gawnfallTakkan,
+}) => {
+  return [
+    gawnfallTakkan === 'minor' && {
+      label: `Tak'Kan vote`,
+      values: [2],
+    },
+    gawnfallTakkan === 'major' && {
+      label: `Tak'Kan vote`,
+      values: [5],
+    },
+    ['excellent', 'good'].includes(gawnfallMercantile) && {
+      label: `Mercantile solution`,
+      values: [1],
+    },
+    {
+      label: `Tak'Kan Trade`,
+      values: [1],
+      explanation: `At the end of the round`,
+    },
+    research === 'orc' && {
+      label: `Research: Orc Diversification`,
+      values: [5],
+    },
+  ].filter(Boolean);
+};
+
+export const roundThreeValue = (...params) => sum(roundThreeChanges(...params));

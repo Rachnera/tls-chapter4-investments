@@ -69,3 +69,35 @@ export const roundTwoChanges = ({ merchantSolution2 }) => {
 };
 
 export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
+
+export const roundThreeChanges = ({
+  merchantSolution3,
+  gawnfallTakkan,
+  gawnfallMercantile,
+}) => {
+  return [
+    merchantSolution3 === 'neutral' && {
+      label: `Merchant dispute: Neutral compromise`,
+      values: [1],
+    },
+    merchantSolution3 === 'givini' && {
+      label: `Merchant dispute: Favor New Givini`,
+      values: [2],
+    },
+    gawnfallTakkan === 'major' && {
+      label: `Tak'Kan vote`,
+      values: [1],
+    },
+    ['excellent', 'good'].includes(gawnfallMercantile) && {
+      label: `Mercantile solution`,
+      values: [1],
+    },
+    {
+      label: `New Givini Trade`,
+      values: [1],
+      explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,
+    },
+  ].filter(Boolean);
+};
+
+export const roundThreeValue = (...params) => sum(roundThreeChanges(...params));

@@ -1,8 +1,10 @@
 import Form from './Form';
 import { Typography } from 'antd';
 import { buildFinalStandings } from '../misc';
-import Result from './results';
+import Result from './Result';
 import ScrollTo from '../results/ScrollTo';
+import { roundThreeValue as giviniRoundThreeValue } from '../data/givini';
+import { roundThreeValue as takkanRoundThreeValue } from '../data/takkan';
 
 const { Title } = Typography;
 
@@ -24,6 +26,7 @@ const onFinish = async ({
     gawnfallArdford,
     gawnfallMother,
     vera,
+    merchantSolution3,
   } = values;
   const decisions = {
     research,
@@ -31,6 +34,7 @@ const onFinish = async ({
     gawnfallMercantile,
     gawnfallArdford,
     gawnfallMother,
+    merchantSolution3,
   };
   let mandatory = [...mandatory1];
   if (yelarel === 'max') {
@@ -77,8 +81,8 @@ const onFinish = async ({
     money: nonInvestmentChangesList.reduce((acc, { price }) => acc + price, 0),
     profits: mercantileMoney,
     social: 0,
-    givini: 0,
-    takkan: 0,
+    givini: giviniRoundThreeValue(decisions),
+    takkan: takkanRoundThreeValue(decisions),
     list: nonInvestmentChangesList,
   };
 
@@ -90,7 +94,7 @@ const onFinish = async ({
       initialStandings.profits -
       nonInvestmentChanges.money,
     giviniStart: initialStandings.givini,
-    giviniExtra: 0,
+    giviniExtra: nonInvestmentChanges.givini,
     otherRequirements: {
       mandatory,
     },
@@ -138,6 +142,17 @@ const ThirdRound = ({
     firstRoundResult.decisions.research,
     secondRoundResult.decisions.research,
   ];
+  const merchantSolution = (() => {
+    if (firstRoundResult.decisions.merchantSolution !== 'wait') {
+      return firstRoundResult.decisions.merchantSolution;
+    }
+
+    if (secondRoundResult.decisions.merchantSolution2 !== 'wait') {
+      return secondRoundResult.decisions.merchantSolution2;
+    }
+
+    return undefined;
+  })();
 
   return (
     <div className="round-three">
@@ -155,6 +170,7 @@ const ThirdRound = ({
           });
         }}
         loading={loading}
+        merchantSolution={merchantSolution}
       />
       <ScrollTo data={result}>
         <Result {...result} />

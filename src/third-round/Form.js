@@ -10,6 +10,7 @@ const initialValues = {
   gawnfallArdford: 'resolved',
   gawnfallMother: 'full_unlock',
   vera: false,
+  merchantSolution3: 'neutral',
 };
 
 const CustomForm = ({
@@ -17,6 +18,7 @@ const CustomForm = ({
   previousResearch,
   onFinish,
   loading,
+  merchantSolution,
 }) => {
   const [form] = Form.useForm();
 
@@ -52,6 +54,22 @@ const CustomForm = ({
       onFinish={onFinish}
     >
       <Card title={`Gawnfall – Stategy`} type="inner">
+        {!merchantSolution && (
+          <Form.Item label={`Merchant dispute`} name="merchantSolution3">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+              ]}
+            />
+          </Form.Item>
+        )}
         <Form.Item label={`Research`} name="research">
           <Select options={availableResearch} />
         </Form.Item>

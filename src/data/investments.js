@@ -363,7 +363,7 @@ export const postGawnfallInvestments = [
     },
     profits: 125000,
     social: 1,
-    takkan: 5 + 2,
+    takkan: 5,
   },
   {
     name: 'Ivalan Bank',

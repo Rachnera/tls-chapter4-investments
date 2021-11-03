@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Form, Card, Radio, Select, Button } from 'antd';
+import { Form, Card, Radio, Select, Button, Alert } from 'antd';
 import preGawnfallInvestments from '../data/investments';
 
 const initialValues = {
@@ -110,6 +110,11 @@ const CustomForm = ({
         </Form.Item>
       </Card>
       <Card title={`Gawnfall – Investment-relevant results`} type="inner">
+        <Alert
+          message={`Assuming the council will go the Succubi Accepted path for now`}
+          type="info"
+          showIcon
+        />
         <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
           <Select
             options={[

@@ -5,10 +5,10 @@ import preGawnfallInvestments from '../data/investments';
 const initialValues = {
   mandatory1: [],
   yelarel: 'min',
-  takkan: 'major',
-  mercantile: 'excellent',
-  ardford: 'resolved',
-  mother: 'full_unlock',
+  gawnfallTakkan: 'major',
+  gawnfallMercantile: 'excellent',
+  gawnfallArdford: 'resolved',
+  gawnfallMother: 'full_unlock',
   vera: false,
 };
 

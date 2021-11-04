@@ -2,7 +2,7 @@ import { Form, Select } from 'antd';
 import allInvestments from '../../data/investments';
 import { useEffect } from 'react';
 
-const CustomForm = ({ purchased, form }) => {
+const Banned = ({ purchased, form }) => {
   useEffect(() => {
     form.setFieldsValue({
       banned: form
@@ -33,4 +33,4 @@ const CustomForm = ({ purchased, form }) => {
   );
 };
 
-export default CustomForm;
+export default Banned;

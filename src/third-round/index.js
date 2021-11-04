@@ -27,6 +27,8 @@ const onFinish = async ({
     gawnfallMother,
     vera,
     merchantSolution3,
+    mandatory: mandatory2,
+    banned,
   } = values;
   const decisions = {
     research,
@@ -36,7 +38,7 @@ const onFinish = async ({
     gawnfallMother,
     merchantSolution3,
   };
-  let mandatory = [...mandatory1];
+  let mandatory = [...mandatory1, ...mandatory2];
   if (yelarel === 'max') {
     mandatory.push('Lustlord Temples');
   }
@@ -99,6 +101,7 @@ const onFinish = async ({
     giviniExtra: nonInvestmentChanges.givini,
     otherRequirements: {
       mandatory,
+      banned,
     },
     list: 'gawnfall',
   };

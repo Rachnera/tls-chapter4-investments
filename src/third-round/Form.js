@@ -1,6 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Card, Radio, Select, Button, Alert } from 'antd';
-import preGawnfallInvestments from '../data/investments';
+import preGawnfallInvestments, {
+  postGawnfallInvestments,
+} from '../data/investments';
+import Mandatory from '../components/form/Mandatory';
+import Banned from '../components/form/Banned';
 
 const initialValues = {
   mandatory1: [],
@@ -11,6 +15,8 @@ const initialValues = {
   gawnfallMother: 'full_unlock',
   vera: false,
   merchantSolution3: 'neutral',
+  mandatory: [],
+  banned: [],
 };
 
 const CustomForm = ({
@@ -21,6 +27,9 @@ const CustomForm = ({
   merchantSolution,
 }) => {
   const [form] = Form.useForm();
+  const [mandatory1, setMandatory1] = useState(initialValues.mandatory1);
+  const [mandatory, setMandatory] = useState(initialValues.mandatory);
+  const [lockedInvestments, setLockedInvestments] = useState([]);
 
   const availableResearch = [
     {
@@ -52,6 +61,23 @@ const CustomForm = ({
       className="round-form third-round-form"
       form={form}
       onFinish={onFinish}
+      onValuesChange={(_, allValues) => {
+        setMandatory1(allValues.mandatory1);
+        setMandatory(allValues.mandatory);
+        setLockedInvestments(
+          postGawnfallInvestments
+            .filter(({ name, price }) => {
+              if (previousInvestments.includes(name)) {
+                return false;
+              }
+              if (typeof price !== 'function') {
+                return false;
+              }
+              return price(allValues) === Infinity;
+            })
+            .map(({ name }) => name)
+        );
+      }}
     >
       <Card title={`Gawnfall – Stategy`} type="inner">
         {!merchantSolution && (
@@ -212,6 +238,28 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
+      </Card>
+
+      <Card title={`Post Gawnfall`} type="inner">
+        <Mandatory
+          form={form}
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...lockedInvestments,
+          ]}
+          list="gawnfall"
+        />
+        <Banned
+          form={form}
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...mandatory,
+            ...lockedInvestments,
+          ]}
+          list="gawnfall"
+        />
       </Card>
 
       <Form.Item>

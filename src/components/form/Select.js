@@ -1,8 +1,8 @@
 import { Form, Select } from 'antd';
-import allInvestments from '../../data/investments';
+import { getInvestments } from '../../data/investments';
 import { useEffect } from 'react';
 
-const CustomSelect = ({ name, label, tooltip, purchased, form }) => {
+const CustomSelect = ({ name, label, tooltip, purchased, form, list }) => {
   useEffect(() => {
     form.setFieldsValue({
       [name]: form
@@ -14,7 +14,7 @@ const CustomSelect = ({ name, label, tooltip, purchased, form }) => {
   return (
     <Form.Item label={label} name={name} tooltip={tooltip}>
       <Select
-        options={allInvestments
+        options={getInvestments(list)
           .filter(({ name }) => !purchased.includes(name))
           .sort(({ name: a }, { name: b }) => a.localeCompare(b))
           .map(({ name }) => {

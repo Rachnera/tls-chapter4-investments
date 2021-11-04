@@ -1,6 +1,6 @@
 import Select from './Select';
 
-const Mandatory = ({ form, purchased, tooltip, label }) => {
+const Mandatory = ({ form, purchased, tooltip, label, list }) => {
   return (
     <Select
       name="mandatory"
@@ -8,6 +8,7 @@ const Mandatory = ({ form, purchased, tooltip, label }) => {
       purchased={purchased}
       label={label || `Investments you explicitly want to buy, for any reason`}
       tooltip={tooltip}
+      list={list}
     />
   );
 };

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Form, Button, Card, Select } from 'antd';
 import Headquarters, { price as headquartersPrice } from './Headquarters';
 import { nF } from '../misc';
-import allInvestments from '../data/investments';
 import Banned from '../components/form/Banned';
+import Mandatory from '../components/form/Mandatory';
 
 const initialValues = {
   merchantSolution2: 'neutral',
@@ -124,19 +124,11 @@ const CustomForm = ({
                 ].filter(({ value }) => value !== previousResearch)}
               />
             </Form.Item>
-            <Form.Item
+            <Mandatory
               label={`Investments you explicitly want to buy now (example: Airships)`}
-              name="mandatory"
-            >
-              <Select
-                options={allInvestments
-                  .filter(({ name }) => !purchasedInvestments.includes(name))
-                  .map(({ name }) => {
-                    return { label: name, value: name };
-                  })}
-                mode="multiple"
-              />
-            </Form.Item>
+              form={form}
+              purchased={purchasedInvestments}
+            />
             <Banned
               purchased={[...purchasedInvestments, ...mandatory]}
               form={form}

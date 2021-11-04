@@ -9,8 +9,8 @@ import {
   Typography,
 } from 'antd';
 import { useEffect, useState } from 'react';
-import allInvestments from '../data/investments';
 import Banned from '../components/form/Banned';
+import Mandatory from '../components/form/Mandatory';
 
 const { Title } = Typography;
 
@@ -86,14 +86,6 @@ const CustomForm = ({ onFinish, loading }) => {
       form.setFieldsValue({ strategy: 'social' });
     }
   }, [form, merchantSolution]);
-
-  useEffect(() => {
-    form.setFieldsValue({
-      mandatory: form
-        .getFieldValue('mandatory')
-        .filter((name) => !previous.includes(name)),
-    });
-  }, [form, previous]);
 
   return (
     <Form
@@ -257,20 +249,11 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
         </div>
 
-        <Form.Item
-          label={`Investments you explicitly want to buy, for any reason`}
-          name="mandatory"
+        <Mandatory
+          purchased={previous}
+          form={form}
           tooltip={`Forcing a few certain investments can improve performances tremendously.`}
-        >
-          <Select
-            options={toSelectOptions(
-              allInvestments
-                .map(({ name }) => name)
-                .filter((name) => !previous.includes(name))
-            )}
-            mode="multiple"
-          />
-        </Form.Item>
+        />
         <Banned purchased={[...previous, ...mandatory]} form={form} />
 
         <Form.Item>

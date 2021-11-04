@@ -404,4 +404,11 @@ export const postGawnfallInvestments = [
   },
 ];
 
+export const getInvestments = (key) => {
+  if (key === 'gawnfall') {
+    return postGawnfallInvestments;
+  }
+  return investments;
+};
+
 export default investments;

@@ -22,7 +22,7 @@
  * d
  */
 
-import allInvestments, { postGawnfallInvestments } from './data/investments';
+import allInvestments, { getInvestments } from './data/investments';
 import { council } from './data/takkan';
 
 const specialInvestments = allInvestments.filter(
@@ -246,12 +246,7 @@ export const buildParams = ({
   const { previousInvestments = [] } = context;
   const { mandatory = [], atLeastOne = [], banned = [] } = otherRequirements;
 
-  const investmentsList = (() => {
-    if (list === 'gawnfall') {
-      return postGawnfallInvestments;
-    }
-    return allInvestments;
-  })();
+  const investmentsList = getInvestments(list);
 
   return {
     money,

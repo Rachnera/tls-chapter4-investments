@@ -121,10 +121,12 @@ const App = () => {
         result={firstRoundResult}
         setResult={(data) => {
           setSecondRoundResult(undefined);
+          setThirdRoundResult(undefined);
           setFirstRoundResult(data);
         }}
         setError={(error) => {
           setSecondRoundResult(undefined);
+          setThirdRoundResult(undefined);
           setError(error);
         }}
       />
@@ -133,8 +135,14 @@ const App = () => {
           runInWoker={runInWoker}
           loading={loading}
           result={secondRoundResult}
-          setResult={setSecondRoundResult}
-          setError={setError}
+          setResult={(data) => {
+            setThirdRoundResult(undefined);
+            setSecondRoundResult(data);
+          }}
+          setError={(error) => {
+            setThirdRoundResult(undefined);
+            setError(error);
+          }}
           firstRoundResult={firstRoundResult}
         />
       )}

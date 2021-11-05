@@ -17,6 +17,7 @@ const initialValues = {
   merchantSolution3: 'neutral',
   mandatory: [],
   banned: [],
+  gawnfallHigh: 'herin_overwhelming',
 };
 
 const CustomForm = ({
@@ -173,6 +174,28 @@ const CustomForm = ({
               {
                 value: 'none',
                 label: `None`,
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item label={`Promotion vote`} name="gawnfallHigh">
+          <Select
+            options={[
+              {
+                value: 'herin_overwhelming',
+                label: `Overwhelming victory for Herin`,
+              },
+              {
+                value: 'herin_promoted',
+                label: `Herin promoted`,
+              },
+              {
+                value: 'kaskia_promoted',
+                label: `Kaskia promoted`,
+              },
+              {
+                value: 'kaskia_overwhelming',
+                label: `Overwhelming victory for Kaskia`,
               },
             ]}
           />

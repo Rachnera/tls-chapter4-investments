@@ -8,6 +8,25 @@ import { roundThreeValue as takkanRoundThreeValue } from '../data/takkan';
 
 const { Title } = Typography;
 
+const gawnfallSocial = ({ gawnfallMother, gawnfallHigh }) => {
+  let social = 0;
+
+  if (gawnfallMother === 'full_unlock') {
+    social += 2;
+  }
+  if (gawnfallMother === 'partial_unlock') {
+    social += 1;
+  }
+  if (gawnfallHigh === 'herin_overwhelming') {
+    social += 1;
+  }
+  if (gawnfallHigh === 'kaskia_overwhelming') {
+    social -= 1;
+  }
+
+  return social;
+};
+
 const onFinish = async ({
   runInWoker,
   setResult,
@@ -29,6 +48,7 @@ const onFinish = async ({
     merchantSolution3,
     mandatory: mandatory2,
     banned,
+    gawnfallHigh,
   } = values;
   const decisions = {
     research,
@@ -37,6 +57,7 @@ const onFinish = async ({
     gawnfallArdford,
     gawnfallMother,
     merchantSolution3,
+    gawnfallHigh,
   };
   let mandatory = [...mandatory1, ...mandatory2];
   if (yelarel === 'max') {
@@ -81,6 +102,10 @@ const onFinish = async ({
       money: -10000,
     },
     {
+      name: `Gawnfall social influence`,
+      social: gawnfallSocial(decisions),
+    },
+    {
       name: `One-time mercantile issue modifier`,
       profits: mercantileMoney,
     },
@@ -92,7 +117,10 @@ const onFinish = async ({
       0
     ),
     profits: mercantileMoney,
-    social: 0,
+    social: nonInvestmentChangesList.reduce(
+      (acc, { social }) => acc + (social || 0),
+      0
+    ),
     givini: giviniRoundThreeValue(decisions),
     takkan: takkanRoundThreeValue(decisions),
     list: nonInvestmentChangesList,

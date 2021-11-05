@@ -22,10 +22,10 @@
  * d
  */
 
-import allInvestments, { getInvestments } from './data/investments';
+import { getInvestments, postGawnfallInvestments } from './data/investments';
 import { council } from './data/takkan';
 
-const specialInvestments = allInvestments.filter(
+const specialInvestments = postGawnfallInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 

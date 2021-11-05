@@ -762,3 +762,46 @@ describe('finest', () => {
     });
   });
 });
+
+describe('ardford restaurant', () => {
+  test('owning restaurant, buying teahouse', () => {
+    const result = finest({
+      previousInvestments: ['Ardford Restaurant'],
+      money: 275000,
+      otherRequirements: {
+        mandatory: ['Givini Teahouse Chain'],
+      },
+      list: 'gawnfall',
+      gawnfallArdford: 'resolved',
+    });
+
+    expect(result.profits).toBe(45000);
+  });
+
+  test('owning restaurant, buying teahouse, but ardford closed', () => {
+    const result = finest({
+      previousInvestments: ['Ardford Restaurant'],
+      money: 275000,
+      otherRequirements: {
+        mandatory: ['Givini Teahouse Chain'],
+      },
+      list: 'gawnfall',
+    });
+
+    expect(result.profits).toBe(30000);
+  });
+
+  test('owning teahouse, buying restaurant', () => {
+    const result = finest({
+      previousInvestments: ['Givini Teahouse Chain'],
+      money: 100000,
+      otherRequirements: {
+        mandatory: ['Ardford Restaurant'],
+      },
+      list: 'gawnfall',
+      gawnfallArdford: 'resolved',
+    });
+
+    expect(result.profits).toBe(25000);
+  });
+});

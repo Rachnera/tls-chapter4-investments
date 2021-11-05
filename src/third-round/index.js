@@ -63,6 +63,14 @@ const onFinish = async ({
     }
   })();
 
+  const ardfordOpen = ['resolved', 'overkill'].includes(
+    decisions.gawnfallArdford
+  );
+  const preInvestmentsOrii =
+    ardfordOpen &&
+    initialStandings.investments.includes('Ardford Restaurant') &&
+    initialStandings.investments.includes('Givini Teahouse Chain');
+
   const nonInvestmentChangesList = [
     {
       name: `New Lustlord Statues`,
@@ -117,6 +125,27 @@ const onFinish = async ({
   }
 
   const investmentChanges = { ...result, money: -result.price };
+
+  const allInvestments = [
+    ...initialStandings.investments,
+    ...investmentChanges.investments.map(({ name }) => name),
+  ];
+  const postInvestmentsOrri =
+    !preInvestmentsOrii &&
+    ardfordOpen &&
+    allInvestments.includes('Ardford Restaurant') &&
+    allInvestments.includes('Givini Teahouse Chain');
+
+  if (preInvestmentsOrii || postInvestmentsOrri) {
+    const orri = {
+      name: `Orri's Quest`,
+      social: 1,
+      // Need to explictly add the profits if no investment is new
+      profits: preInvestmentsOrii ? 15000 : 0,
+    };
+    nonInvestmentChanges.profits += orri.profits;
+    nonInvestmentChanges.list.push(orri);
+  }
 
   setResult({
     initialStandings,

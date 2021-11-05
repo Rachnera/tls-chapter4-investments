@@ -138,6 +138,10 @@ const onFinish = async ({
     otherRequirements: {
       mandatory,
       banned,
+      social:
+        decisions.merchantSolution3 === 'neutral'
+          ? Math.max(40 - initialStandings.social, 0)
+          : 0,
     },
     list: 'gawnfall',
   };

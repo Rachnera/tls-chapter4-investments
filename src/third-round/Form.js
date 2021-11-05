@@ -87,11 +87,15 @@ const CustomForm = ({
               options={[
                 {
                   value: 'neutral',
-                  label: `Neutral compromise`,
+                  label: `Neutral compromise (force Social ≥ 40)`,
                 },
                 {
                   value: 'givini',
                   label: `Favor New Givini`,
+                },
+                {
+                  value: 'wait',
+                  label: `Wait`,
                 },
               ]}
             />

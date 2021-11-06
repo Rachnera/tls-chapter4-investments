@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Form, Card, Radio, Select, Button, Alert } from 'antd';
+import { Form, Card, Radio, Select, Button, Alert, InputNumber } from 'antd';
 import preGawnfallInvestments, {
   postGawnfallInvestments,
 } from '../data/investments';
 import Mandatory from '../components/form/Mandatory';
 import Banned from '../components/form/Banned';
+import { nF } from '../misc';
 
 const initialValues = {
   mandatory1: [],
@@ -18,6 +19,8 @@ const initialValues = {
   mandatory: [],
   banned: [],
   gawnfallHigh: 'herin_overwhelming',
+  reserves: 5000000,
+  extra_reserves: 0,
 };
 
 const CustomForm = ({
@@ -287,6 +290,50 @@ const CustomForm = ({
           ]}
           list="gawnfall"
         />
+      </Card>
+      <Card title={`Planning ahead`} type="inner">
+        <Form.Item
+          label={`Keep enough cash in reserve, if need be, to:`}
+          name="reserves"
+        >
+          <Select
+            options={[
+              {
+                label: `Open the ruins after the war`,
+                value: 0,
+              },
+              {
+                label: `Open the ruins before the war (${nF(5000000)} ProN)`,
+                value: 5000000,
+              },
+              {
+                label: `Open the ruins and buy everything but the Smithing in Kyangan (${nF(
+                  5000000 + 125000
+                )} ProN)`,
+                value: 5000000 + 125000,
+              },
+              {
+                label: `Open the ruins and buy everything in Kyangan (${nF(
+                  5000000 + 125000 + 250000
+                )} ProN)`,
+                value: 5000000 + 125000 + 250000,
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item
+          label={`Also make sure to have the additional amount available`}
+          name="extra_reserves"
+          tooltip={
+            <>
+              {`For extra expanses not covered in the previous option.`}
+              <br />
+              {`For example, if you also plan to buy Armory Upgrade and Entity's Shield Upgrade before the war, enter their total cost i.e. 260000.`}
+            </>
+          }
+        >
+          <InputNumber />
+        </Form.Item>
       </Card>
 
       <Form.Item>

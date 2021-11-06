@@ -49,6 +49,8 @@ const onFinish = async ({
     mandatory: mandatory2,
     banned,
     gawnfallHigh,
+    reserves,
+    extra_reserves,
   } = values;
   const decisions = {
     research,
@@ -142,6 +144,10 @@ const onFinish = async ({
         decisions.merchantSolution3 === 'neutral'
           ? Math.max(40 - initialStandings.social, 0)
           : 0,
+      reserve:
+        reserves +
+        extra_reserves -
+        (initialStandings.profits + nonInvestmentChanges.profits),
     },
     list: 'gawnfall',
   };

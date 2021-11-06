@@ -549,6 +549,22 @@ describe('best', () => {
       ],
     });
   });
+
+  test('reserve', () => {
+    expect(
+      best({
+        investments: invs('Bank of Givini', 'Succubus Armorer'),
+        money: 500000,
+        otherRequirements: {
+          reserve: 400000,
+        },
+      })
+    ).toMatchObject({
+      price: 350000,
+      profits: 300000,
+      investments: [inv('Bank of Givini')],
+    });
+  });
 });
 
 describe('finest', () => {

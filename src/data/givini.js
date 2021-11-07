@@ -85,11 +85,11 @@ export const roundThreeChanges = ({
       values: [2],
     },
     gawnfallTakkan === 'major' && {
-      label: `Tak'Kan vote`,
+      label: `Gawnfall: Tak'Kan vote`,
       values: [1],
     },
     ['excellent', 'good'].includes(gawnfallMercantile) && {
-      label: `Mercantile solution`,
+      label: `Gawnfall: Mercantile solution`,
       values: [1],
     },
     {

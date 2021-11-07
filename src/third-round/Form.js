@@ -83,194 +83,241 @@ const CustomForm = ({
         );
       }}
     >
-      <Card title={`Gawnfall – Stategy`} type="inner">
-        {!merchantSolution && (
-          <Form.Item label={`Merchant dispute`} name="merchantSolution3">
+      <Card title={`Gawnfall`} type="inner" className="gawnfall">
+        <div className="two-columns">
+          <Card title={`Strategy`} type="inner">
+            {!merchantSolution && (
+              <Form.Item label={`Merchant dispute`} name="merchantSolution3">
+                <Select
+                  options={[
+                    {
+                      value: 'neutral',
+                      label: `Neutral compromise (force Social ≥ 40)`,
+                    },
+                    {
+                      value: 'givini',
+                      label: `Favor New Givini`,
+                    },
+                    {
+                      value: 'wait',
+                      label: `Wait`,
+                    },
+                  ]}
+                />
+              </Form.Item>
+            )}
+            <Form.Item label={`Research`} name="research">
+              <Select options={availableResearch} />
+            </Form.Item>
+            {!previousInvestments.includes('Lustlord Temples') && (
+              <Form.Item label={`Yelarel-related investments`} name="yelarel">
+                <Radio.Group
+                  options={[
+                    {
+                      value: 'min',
+                      label: `Pay 50,000 for New Lustlord Statues`,
+                    },
+                    {
+                      value: 'max',
+                      label: `Invest 800,000 (total) in the Lustlord Temples`,
+                    },
+                  ]}
+                />
+              </Form.Item>
+            )}
+            <Form.Item label={`Buy Goddess of Magic Statue?`} name="vera">
+              <Radio.Group
+                options={[
+                  {
+                    value: true,
+                    label: `Yes`,
+                  },
+                  {
+                    value: false,
+                    label: `No`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
+              label={`Other investments you wish to do before the Council (example: Givini Tunnels)`}
+              name="mandatory1"
+            >
+              <Select
+                options={preGawnfallInvestments
+                  .filter(
+                    ({ name }) =>
+                      !previousInvestments.includes(name) &&
+                      'Lustlord Temples' !== name &&
+                      // FIXME: Removing investments whose price can change from the list for now
+                      // Should be handled for real later
+                      ![
+                        'Denmiel Archives',
+                        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+                      ].includes(name)
+                  )
+                  .map(({ name }) => {
+                    return { label: name, value: name };
+                  })}
+                mode="multiple"
+              />
+            </Form.Item>
+          </Card>
+          <Card title={`Investments-related results`} type="inner">
+            <Alert
+              message={`Only the Succubi Accepted path is supported as of now.`}
+              type="info"
+              showIcon
+            />
+            <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
+              <Select
+                options={[
+                  {
+                    value: 'major',
+                    label: `Major`,
+                  },
+                  {
+                    value: 'minor',
+                    label: `Minor`,
+                  },
+                  {
+                    value: 'none',
+                    label: `None`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Promotion vote`} name="gawnfallHigh">
+              <Select
+                options={[
+                  {
+                    value: 'herin_overwhelming',
+                    label: `Overwhelming victory for Herin`,
+                  },
+                  {
+                    value: 'herin_promoted',
+                    label: `Herin promoted`,
+                  },
+                  {
+                    value: 'kaskia_promoted',
+                    label: `Kaskia promoted`,
+                  },
+                  {
+                    value: 'kaskia_overwhelming',
+                    label: `Overwhelming victory for Kaskia`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
+              label={`Mercantile issue resolution`}
+              name="gawnfallMercantile"
+            >
+              <Select
+                options={[
+                  {
+                    value: 'excellent',
+                    label: `Excellent`,
+                  },
+                  {
+                    value: 'good',
+                    label: `Good`,
+                  },
+                  {
+                    value: 'fair',
+                    label: `Fair`,
+                  },
+                  {
+                    value: 'poor',
+                    label: `Poor`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Ardford's ban`} name="gawnfallArdford">
+              <Select
+                options={[
+                  {
+                    value: 'overkill',
+                    label: `Lifted, with an extra bit of acceptance`,
+                  },
+                  {
+                    value: 'resolved',
+                    label: `Lifted`,
+                  },
+                  {
+                    value: 'unresolved',
+                    label: `Unsolved`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`Mother's Guard`} name="gawnfallMother">
+              <Select
+                options={[
+                  {
+                    value: 'full_unlock',
+                    label: `Crushed`,
+                  },
+                  {
+                    value: 'partial_unlock',
+                    label: `Dealt with`,
+                  },
+                  {
+                    value: 'locked',
+                    label: `Unrestrained`,
+                  },
+                ]}
+              />
+            </Form.Item>
+          </Card>
+        </div>
+      </Card>
+      <Card title={`Post Gawnfall`} type="inner">
+        <div className="reserves">
+          <Form.Item
+            label={`Keep enough cash in reserve, if need be, to:`}
+            name="reserves"
+          >
             <Select
               options={[
                 {
-                  value: 'neutral',
-                  label: `Neutral compromise (force Social ≥ 40)`,
+                  label: `Open the ruins after the war`,
+                  value: 0,
                 },
                 {
-                  value: 'givini',
-                  label: `Favor New Givini`,
+                  label: `Open the ruins before the war (${nF(5000000)} ProN)`,
+                  value: 5000000,
                 },
                 {
-                  value: 'wait',
-                  label: `Wait`,
+                  label: `Open the ruins and buy everything but the Smithing in Kyangan (${nF(
+                    5000000 + 125000
+                  )} ProN)`,
+                  value: 5000000 + 125000,
+                },
+                {
+                  label: `Open the ruins and buy everything in Kyangan (${nF(
+                    5000000 + 125000 + 250000
+                  )} ProN)`,
+                  value: 5000000 + 125000 + 250000,
                 },
               ]}
             />
           </Form.Item>
-        )}
-        <Form.Item label={`Research`} name="research">
-          <Select options={availableResearch} />
-        </Form.Item>
-        {!previousInvestments.includes('Lustlord Temples') && (
-          <Form.Item label={`Yelarel-related investments`} name="yelarel">
-            <Radio.Group
-              options={[
-                {
-                  value: 'min',
-                  label: `Pay 50,000 for New Lustlord Statues`,
-                },
-                {
-                  value: 'max',
-                  label: `Invest 800,000 (total) in the Lustlord Temples`,
-                },
-              ]}
-            />
+          <Form.Item
+            label={`Also make sure to have the additional amount available`}
+            name="extra_reserves"
+            tooltip={
+              <>
+                {`For extra expanses not covered in the previous option.`}
+                <br />
+                {`For example, if you also plan to buy Armory Upgrade and Entity's Shield Upgrade before the war, enter their total cost i.e. 260000.`}
+              </>
+            }
+          >
+            <InputNumber />
           </Form.Item>
-        )}
-        <Form.Item label={`Buy Goddess of Magic Statue?`} name="vera">
-          <Radio.Group
-            options={[
-              {
-                value: true,
-                label: `Yes`,
-              },
-              {
-                value: false,
-                label: `No`,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item
-          label={`Other investments you wish to do before the Council (example: Givini Tunnels)`}
-          name="mandatory1"
-        >
-          <Select
-            options={preGawnfallInvestments
-              .filter(
-                ({ name }) =>
-                  !previousInvestments.includes(name) &&
-                  'Lustlord Temples' !== name &&
-                  // FIXME: Removing investments whose price can change from the list for now
-                  // Should be handled for real later
-                  ![
-                    'Denmiel Archives',
-                    "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
-                  ].includes(name)
-              )
-              .map(({ name }) => {
-                return { label: name, value: name };
-              })}
-            mode="multiple"
-          />
-        </Form.Item>
-      </Card>
-      <Card title={`Gawnfall – Investment-relevant results`} type="inner">
-        <Alert
-          message={`Assuming the council will go the Succubi Accepted path for now`}
-          type="info"
-          showIcon
-        />
-        <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
-          <Select
-            options={[
-              {
-                value: 'major',
-                label: `Major`,
-              },
-              {
-                value: 'minor',
-                label: `Minor`,
-              },
-              {
-                value: 'none',
-                label: `None`,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label={`Promotion vote`} name="gawnfallHigh">
-          <Select
-            options={[
-              {
-                value: 'herin_overwhelming',
-                label: `Overwhelming victory for Herin`,
-              },
-              {
-                value: 'herin_promoted',
-                label: `Herin promoted`,
-              },
-              {
-                value: 'kaskia_promoted',
-                label: `Kaskia promoted`,
-              },
-              {
-                value: 'kaskia_overwhelming',
-                label: `Overwhelming victory for Kaskia`,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item
-          label={`Mercantile issue resolution`}
-          name="gawnfallMercantile"
-        >
-          <Select
-            options={[
-              {
-                value: 'excellent',
-                label: `Excellent`,
-              },
-              {
-                value: 'good',
-                label: `Good`,
-              },
-              {
-                value: 'fair',
-                label: `Fair`,
-              },
-              {
-                value: 'poor',
-                label: `Poor`,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label={`Ardford's ban`} name="gawnfallArdford">
-          <Select
-            options={[
-              {
-                value: 'overkill',
-                label: `Lifted, with an extra bit of acceptance`,
-              },
-              {
-                value: 'resolved',
-                label: `Lifted`,
-              },
-              {
-                value: 'unresolved',
-                label: `Unsolved`,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label={`Mother's Guard`} name="gawnfallMother">
-          <Select
-            options={[
-              {
-                value: 'full_unlock',
-                label: `Crushed`,
-              },
-              {
-                value: 'partial_unlock',
-                label: `Dealt with`,
-              },
-              {
-                value: 'locked',
-                label: `Unrestrained`,
-              },
-            ]}
-          />
-        </Form.Item>
-      </Card>
-
-      <Card title={`Post Gawnfall`} type="inner">
+        </div>
         <Mandatory
           form={form}
           purchased={[
@@ -291,51 +338,6 @@ const CustomForm = ({
           list="gawnfall"
         />
       </Card>
-      <Card title={`Planning ahead`} type="inner">
-        <Form.Item
-          label={`Keep enough cash in reserve, if need be, to:`}
-          name="reserves"
-        >
-          <Select
-            options={[
-              {
-                label: `Open the ruins after the war`,
-                value: 0,
-              },
-              {
-                label: `Open the ruins before the war (${nF(5000000)} ProN)`,
-                value: 5000000,
-              },
-              {
-                label: `Open the ruins and buy everything but the Smithing in Kyangan (${nF(
-                  5000000 + 125000
-                )} ProN)`,
-                value: 5000000 + 125000,
-              },
-              {
-                label: `Open the ruins and buy everything in Kyangan (${nF(
-                  5000000 + 125000 + 250000
-                )} ProN)`,
-                value: 5000000 + 125000 + 250000,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item
-          label={`Also make sure to have the additional amount available`}
-          name="extra_reserves"
-          tooltip={
-            <>
-              {`For extra expanses not covered in the previous option.`}
-              <br />
-              {`For example, if you also plan to buy Armory Upgrade and Entity's Shield Upgrade before the war, enter their total cost i.e. 260000.`}
-            </>
-          }
-        >
-          <InputNumber />
-        </Form.Item>
-      </Card>
-
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>
           {`Submit`}

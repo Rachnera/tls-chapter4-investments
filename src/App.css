@@ -106,7 +106,8 @@ table.addition td:nth-child(3) {
 }
 
 .round-one,
-.round-two {
+.round-two,
+.round-three {
   padding: 24px;
 }
 
@@ -124,4 +125,35 @@ table.addition td:nth-child(3) {
 .second-round-form .two-columns > * {
   margin: 0 12px;
   flex: 1;
+}
+
+.third-round-form .gawnfall.ant-card-type-inner .ant-card-body {
+  padding: 24px 12px 0px 12px;
+}
+
+.third-round-form .gawnfall .two-columns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.third-round-form .gawnfall .two-columns > * {
+  flex: 1;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.third-round-form .reserves {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+@media (min-width: 768px) {
+  .third-round-form .reserves > *:first-child {
+    min-width: 720px;
+  }
+}
+
+.third-round-form .gawnfall .ant-alert {
+  margin-bottom: 18px;
 }

@@ -47,10 +47,10 @@ const initialValues = {
   remainingPron: 7500,
   baseProfit: 2435000,
   chapter1Steel: false,
-  strategy: 'money',
+  strategy: 'social',
   startingSocial: 34,
   chapter3Infrastructure: true,
-  merchantSolution: 'wait',
+  merchantSolution: 'neutral',
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
@@ -74,18 +74,20 @@ const CustomForm = ({ onFinish, loading }) => {
 
   const [previous, setPrevious] = useState(initialValues.previous);
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
-  const [merchantSolution, setMerchantSolution] = useState(
-    initialValues.merchantSolution
-  );
+  const [strategy, setStrategy] = useState(initialValues.strategy);
 
   useEffect(() => {
-    if (
-      merchantSolution === 'neutral' &&
-      form.getFieldValue('strategy') === 'money'
-    ) {
-      form.setFieldsValue({ strategy: 'social' });
+    if (strategy === 'money') {
+      if (form.getFieldValue('merchantSolution') === 'neutral') {
+        form.setFieldsValue({ merchantSolution: 'wait' });
+      }
+      return;
     }
-  }, [form, merchantSolution]);
+
+    if (form.getFieldValue('merchantSolution') === 'wait') {
+      form.setFieldsValue({ merchantSolution: 'neutral' });
+    }
+  }, [form, strategy]);
 
   return (
     <Form
@@ -93,8 +95,8 @@ const CustomForm = ({ onFinish, loading }) => {
       onFinish={onFinish}
       onValuesChange={(_, allValues) => {
         setPrevious(allValues.previous);
-        setMerchantSolution(allValues.merchantSolution);
         setMandatory(allValues.mandatory);
+        setStrategy(allValues.strategy);
       }}
       className="round-form first-round-form"
       form={form}
@@ -165,7 +167,6 @@ const CustomForm = ({ onFinish, loading }) => {
               {
                 label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
                 value: 'money',
-                disabled: merchantSolution === 'neutral',
               },
               {
                 label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
@@ -178,6 +179,26 @@ const CustomForm = ({ onFinish, loading }) => {
             ]}
           />
         </Form.Item>
+        <div className="selects">
+          <Form.Item label={`Merchant dispute`} name="merchantSolution">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise (force Social ≥ 40)`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+                {
+                  value: 'wait',
+                  label: `Wait`,
+                },
+              ]}
+            />
+          </Form.Item>
+        </div>
         <div className="selects">
           <Form.Item label={`Research`} name="research">
             <Select
@@ -225,24 +246,6 @@ const CustomForm = ({ onFinish, loading }) => {
                 {
                   value: 'takkan',
                   label: `Tak'Kan`,
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item label={`Merchant dispute`} name="merchantSolution">
-            <Select
-              options={[
-                {
-                  value: 'neutral',
-                  label: `Neutral compromise (force Social ≥ 40)`,
-                },
-                {
-                  value: 'givini',
-                  label: `Favor New Givini`,
-                },
-                {
-                  value: 'wait',
-                  label: `Wait`,
                 },
               ]}
             />

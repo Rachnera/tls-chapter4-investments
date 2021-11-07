@@ -36,9 +36,13 @@ const onFinish = async ({
   } = values;
   const decisions = { merchantSolution2, headquarters, orcCouncil, research };
 
+  const [military, magic] = decisions.headquarters
+    .split('/')
+    .map((x) => parseInt(x));
   const headquartersUpgradesPrice = headquartersPrice({
     research: firstRoundResult.decisions.research,
-    extra: decisions.headquarters === 'extra',
+    military,
+    magic,
   });
 
   const nonInvestmentChanges = {

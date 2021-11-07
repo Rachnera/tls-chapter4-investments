@@ -7,7 +7,7 @@ import Mandatory from '../components/form/Mandatory';
 
 const initialValues = {
   merchantSolution2: 'neutral',
-  headquarters: 'enough',
+  headquarters: '20/10',
   orcCouncil: 0.8,
   mandatory: [],
   banned: [],
@@ -21,9 +21,8 @@ const CustomForm = ({
 }) => {
   const [form] = Form.useForm();
 
-  const [militaryExtra, setMilitaryExtra] = useState(
-    initialValues.headquarters === 'extra'
-  );
+  const [hq, setHq] = useState(initialValues.headquarters);
+  const [military, magic] = hq.split('/').map((x) => parseInt(x));
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
 
   const previousResearch = firstRoundDecisions.research;
@@ -40,7 +39,7 @@ const CustomForm = ({
       className="round-form second-round-form"
       form={form}
       onValuesChange={(_, allValues) => {
-        setMilitaryExtra(allValues.headquarters === 'extra');
+        setHq(allValues.headquarters);
         setMandatory(allValues.mandatory);
       }}
     >
@@ -86,18 +85,33 @@ const CustomForm = ({
                 options={[
                   {
                     label: `Pay ${nF(
-                      headquartersPrice({ research: previousResearch })
-                    )} for strong magical defenses.`,
-                    value: 'enough',
+                      headquartersPrice({
+                        research: previousResearch,
+                        military: 20,
+                        magic: 10,
+                      })
+                    )} ProN for Military ≥ 20, Magic ≥ 10.`,
+                    value: '20/10',
                   },
                   {
                     label: `Pay ${nF(
                       headquartersPrice({
                         research: previousResearch,
-                        extra: true,
+                        military: 5,
+                        magic: 20,
                       })
-                    )} for strong magical and military defenses.`,
-                    value: 'extra',
+                    )} ProN for Military ≥ 5, Magic ≥ 20.`,
+                    value: '5/20',
+                  },
+                  {
+                    label: `Pay ${nF(
+                      headquartersPrice({
+                        research: previousResearch,
+                        military: 20,
+                        magic: 20,
+                      })
+                    )} ProN for Military ≥ 20, Magic ≥ 20.`,
+                    value: '20/20',
                   },
                 ]}
               />
@@ -134,7 +148,11 @@ const CustomForm = ({
               form={form}
             />
           </div>
-          <Headquarters research={previousResearch} extra={militaryExtra} />
+          <Headquarters
+            research={previousResearch}
+            military={military}
+            magic={magic}
+          />
         </div>
 
         <Form.Item>

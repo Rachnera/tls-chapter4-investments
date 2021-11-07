@@ -74,12 +74,7 @@ const onFinish = async ({
       social: socialRequirement(initialStandings.social, decisions),
       orcCouncil: decisions.orcCouncil,
       mandatory,
-      banned: [
-        ...banned,
-        // FIXME Similar performance hack to the one in the first round (with the same caveats)
-        'Lustlord Temples',
-        'Stineford Succubus Tower',
-      ],
+      banned,
     },
   };
 

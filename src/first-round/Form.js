@@ -54,7 +54,9 @@ const initialValues = {
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
   research: 'orc',
-  banned: [],
+  banned: [
+    'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+  ],
 };
 
 const toSelectOptions = (list) => {
@@ -256,7 +258,17 @@ const CustomForm = ({ onFinish, loading }) => {
           form={form}
           tooltip={`Forcing a few certain investments can improve performances tremendously.`}
         />
-        <Banned purchased={[...previous, ...mandatory]} form={form} />
+        <Banned
+          purchased={[...previous, ...mandatory]}
+          form={form}
+          tooltip={
+            <>
+              {`For cases where a particular investment might be more of a curse than a blessing in the long run and you want to see what happens without it.`}
+              <br />
+              {`Banning an investment that you know to be useless at that particular point can also improve performances quite a bit, especially if said investment is cheap.`}
+            </>
+          }
+        />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

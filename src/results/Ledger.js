@@ -67,8 +67,8 @@ const Others = ({ list = [] }) => {
       dataIndex: 'name',
     },
     {
-      title: `Price`,
-      dataIndex: 'price',
+      title: `ProN`,
+      dataIndex: 'money',
       render,
       width: numberColWidth,
     },

@@ -5,7 +5,7 @@ import { roundTwoValue as giviniRoundTwoValue } from '../data/givini';
 import { price as headquartersPrice } from './Headquarters';
 import { roundTwoValue as takkanRoundTwoValue } from '../data/takkan';
 import { Typography } from 'antd';
-import { useEffect, useRef } from 'react';
+import ScrollTo from '../results/ScrollTo';
 
 const { Title } = Typography;
 
@@ -26,13 +26,23 @@ const onFinish = async ({
 }) => {
   const { finalStandings: initialStandings, misc } = firstRoundResult;
 
-  const { merchantSolution2, headquarters, orcCouncil, mandatory, banned } =
-    values;
-  const decisions = { merchantSolution2, headquarters, orcCouncil };
+  const {
+    merchantSolution2,
+    headquarters,
+    orcCouncil,
+    mandatory,
+    banned,
+    research,
+  } = values;
+  const decisions = { merchantSolution2, headquarters, orcCouncil, research };
 
+  const [military, magic] = decisions.headquarters
+    .split('/')
+    .map((x) => parseInt(x));
   const headquartersUpgradesPrice = headquartersPrice({
     research: firstRoundResult.decisions.research,
-    extra: decisions.headquarters === 'extra',
+    military,
+    magic,
   });
 
   const nonInvestmentChanges = {
@@ -40,11 +50,11 @@ const onFinish = async ({
     profits: 0,
     social: 0,
     givini: giviniRoundTwoValue(decisions),
-    takkan: takkanRoundTwoValue(),
+    takkan: takkanRoundTwoValue(decisions),
     list: [
       {
         name: `Headquarters upgrades`,
-        price: -headquartersUpgradesPrice,
+        money: -headquartersUpgradesPrice,
       },
     ],
   };
@@ -103,14 +113,6 @@ const SecondRound = ({
   setError,
   firstRoundResult,
 }) => {
-  const resultRef = useRef(null);
-  useEffect(() => {
-    if (!result || !resultRef.current) {
-      return;
-    }
-    resultRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [result, resultRef]);
-
   return (
     <div className="round-two">
       <Title level={2}>{`Chapter 4 – Round 2`}</Title>
@@ -128,11 +130,9 @@ const SecondRound = ({
         firstRoundDecisions={firstRoundResult.decisions}
         purchasedInvestments={firstRoundResult.finalStandings.investments}
       />
-      {result && (
-        <div ref={resultRef}>
-          <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
-        </div>
-      )}
+      <ScrollTo data={result}>
+        <Result roundOneDecisions={firstRoundResult.decisions} {...result} />
+      </ScrollTo>
     </div>
   );
 };

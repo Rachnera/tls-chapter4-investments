@@ -1,7 +1,7 @@
 import { Table } from 'antd';
 import { nF } from '../misc';
 
-const mandatory = [
+const base = [
   {
     key: `Tower Little Girl talk`,
     magic: 1,
@@ -58,7 +58,7 @@ const subsitute = [
   },
 ];
 
-const plus = [
+const plusTenMilitary = [
   {
     key: `Armory Upgrade`,
     military: 5,
@@ -79,6 +79,33 @@ const plus = [
   },
 ];
 
+const plusFifteenMilitary = [
+  {
+    key: `Armory Upgrade`,
+    military: 5,
+    magic: 0,
+    price: 10000,
+  },
+  {
+    key: `Orc Guard Posts`,
+    military: 3,
+    magic: 0,
+    price: 5000,
+  },
+  {
+    key: `Second Well`,
+    military: 3,
+    magic: 0,
+    price: 10000,
+  },
+  {
+    key: `Iron Cudgel`,
+    military: 4,
+    magic: 0,
+    price: 15000,
+  },
+];
+
 const renderPlus = (number) => `+${number}`;
 
 const columns = [
@@ -93,30 +120,54 @@ const columns = [
     sorter: (a, b) => a.price - b.price,
   },
   {
-    title: `Magic`,
-    dataIndex: 'magic',
-    render: renderPlus,
-    sorter: (a, b) => a.magic - b.magic,
-  },
-  {
     title: `Military`,
     dataIndex: 'military',
     render: renderPlus,
     sorter: (a, b) => a.military - b.military,
   },
+  {
+    title: `Magic`,
+    dataIndex: 'magic',
+    render: renderPlus,
+    sorter: (a, b) => a.magic - b.magic,
+  },
 ];
 
-const dataSource = ({ research, extra }) =>
-  [mandatory, research === 'defense' ? defense : subsitute, extra && plus]
-    .filter(Boolean)
-    .flat(1);
+const dataSource = ({ research, military, magic }) => {
+  if (research === 'defense') {
+    if (military <= 10 && magic === 20) {
+      return [...defense, ...base];
+    }
 
+    if (military === 20 && magic <= 10) {
+      return [...defense, ...plusFifteenMilitary];
+    }
+
+    if (military === 20 && magic === 20) {
+      return [...defense, ...base, ...plusTenMilitary];
+    }
+  }
+
+  if (military <= 10 && magic === 20) {
+    return [...base, ...subsitute];
+  }
+
+  if (military === 20 && magic <= 10) {
+    return [...base, ...plusFifteenMilitary];
+  }
+
+  if (military === 20 && magic === 20) {
+    return [...base, ...subsitute, ...plusTenMilitary];
+  }
+
+  throw new Error('Unsupported');
+};
 const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
 
 export const price = (params) => sum(dataSource(params), 'price');
 
-const Headquarters = ({ research, extra }) => {
-  const source = dataSource({ research, extra });
+const Headquarters = ({ research, military, magic }) => {
+  const source = dataSource({ research, military, magic });
 
   return (
     <div className="headquarters-upgrades">
@@ -131,8 +182,8 @@ const Headquarters = ({ research, extra }) => {
               <Table.Summary.Cell>
                 {nF(sum(source, 'price'))}
               </Table.Summary.Cell>
-              <Table.Summary.Cell>{sum(source, 'magic')}</Table.Summary.Cell>
               <Table.Summary.Cell>{sum(source, 'military')}</Table.Summary.Cell>
+              <Table.Summary.Cell>{sum(source, 'magic')}</Table.Summary.Cell>
             </Table.Summary.Row>
           );
         }}

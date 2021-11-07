@@ -43,12 +43,14 @@ export const preprocess = () => {
 };
 
 export const process = (start, end) => {
-  const { otherRequirements, context } = cleanParams;
+  const { otherRequirements, context, money } = cleanParams;
 
   for (let i = start; i < end; i++) {
     const comb = combs[i];
     const candidate = combine(comb, context);
-    if (isBetter({ current: best, candidate, otherRequirements, context })) {
+    if (
+      isBetter({ current: best, candidate, otherRequirements, context, money })
+    ) {
       best = candidate;
     }
   }

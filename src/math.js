@@ -22,10 +22,10 @@
  * d
  */
 
-import allInvestments from './data/investments';
+import { getInvestments, postGawnfallInvestments } from './data/investments';
 import { council } from './data/takkan';
 
-const specialInvestments = allInvestments.filter(
+const specialInvestments = postGawnfallInvestments.filter(
   ({ profits }) => typeof profits === 'function'
 );
 
@@ -173,8 +173,9 @@ export const isBetter = ({
   candidate,
   otherRequirements = {},
   context = {},
+  money,
 }) => {
-  const { social = 0, givini = 0, orcCouncil } = otherRequirements;
+  const { social = 0, givini = 0, orcCouncil, reserve } = otherRequirements;
 
   if (candidate.social < social) {
     return false;
@@ -195,6 +196,12 @@ export const isBetter = ({
         researches: context.completedResearch,
       }) < orcCouncil
     ) {
+      return false;
+    }
+  }
+
+  if (!!reserve) {
+    if (money - candidate.price + candidate.profits < reserve) {
       return false;
     }
   }
@@ -227,6 +234,7 @@ export const best = ({
           candidate,
           otherRequirements,
           context,
+          money,
         })
       ) {
         result = candidate;
@@ -237,14 +245,21 @@ export const best = ({
   return result;
 };
 
-export const buildParams = ({ money, otherRequirements = {}, ...context }) => {
+export const buildParams = ({
+  money,
+  otherRequirements = {},
+  list = 'default',
+  ...context
+}) => {
   const { previousInvestments = [] } = context;
   const { mandatory = [], atLeastOne = [], banned = [] } = otherRequirements;
+
+  const investmentsList = getInvestments(list);
 
   return {
     money,
     otherRequirements,
-    investments: allInvestments
+    investments: investmentsList
       .filter(({ name }) => {
         if (previousInvestments.includes(name)) {
           return false;
@@ -265,7 +280,8 @@ export const buildParams = ({ money, otherRequirements = {}, ...context }) => {
           ...investment,
           price: comp(investment.price, context),
         };
-      }),
+      })
+      .filter(({ price }) => price !== Infinity),
     context,
   };
 };

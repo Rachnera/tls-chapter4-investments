@@ -5,12 +5,11 @@ import {
   Button,
   Card,
   Checkbox,
-  Radio,
   Typography,
 } from 'antd';
 import { useEffect, useState } from 'react';
-import allInvestments from '../data/investments';
 import Banned from '../components/form/Banned';
+import Mandatory from '../components/form/Mandatory';
 
 const { Title } = Typography;
 
@@ -26,6 +25,11 @@ const possiblePrevious = [
   'Eustrin Guild',
   'Gasm Falls Trade',
   'Premium Steel Owner',
+  'Ivalan Bank',
+  'Mercenary Flotilla',
+  'Sanitation Mages Guild',
+  'Crystal Refiner',
+  'Ardford Restaurant',
 ];
 
 const initialValues = {
@@ -35,6 +39,9 @@ const initialValues = {
     'Yhilini Succubi Trade',
     'Eustrin Guild',
     'Denmiel Mushrooms',
+    'Ivalan Bank',
+    'Crystal Refiner',
+    'Ardford Restaurant',
   ],
   remainingPron: 7500,
   baseProfit: 2435000,
@@ -42,12 +49,14 @@ const initialValues = {
   strategy: 'social',
   startingSocial: 34,
   chapter3Infrastructure: true,
-  merchantSolution: 'wait',
+  merchantSolution: 'neutral',
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
-  research: 'purity',
-  banned: [],
+  research: 'orc',
+  banned: [
+    'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+  ],
 };
 
 const toSelectOptions = (list) => {
@@ -66,26 +75,20 @@ const CustomForm = ({ onFinish, loading }) => {
 
   const [previous, setPrevious] = useState(initialValues.previous);
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
-  const [merchantSolution, setMerchantSolution] = useState(
-    initialValues.merchantSolution
-  );
+  const [strategy, setStrategy] = useState(initialValues.strategy);
 
   useEffect(() => {
-    if (
-      merchantSolution === 'neutral' &&
-      form.getFieldValue('strategy') === 'money'
-    ) {
-      form.setFieldsValue({ strategy: 'social' });
+    if (strategy === 'money') {
+      if (form.getFieldValue('merchantSolution') === 'neutral') {
+        form.setFieldsValue({ merchantSolution: 'wait' });
+      }
+      return;
     }
-  }, [form, merchantSolution]);
 
-  useEffect(() => {
-    form.setFieldsValue({
-      mandatory: form
-        .getFieldValue('mandatory')
-        .filter((name) => !previous.includes(name)),
-    });
-  }, [form, previous]);
+    if (form.getFieldValue('merchantSolution') === 'wait') {
+      form.setFieldsValue({ merchantSolution: 'neutral' });
+    }
+  }, [form, strategy]);
 
   return (
     <Form
@@ -93,8 +96,8 @@ const CustomForm = ({ onFinish, loading }) => {
       onFinish={onFinish}
       onValuesChange={(_, allValues) => {
         setPrevious(allValues.previous);
-        setMerchantSolution(allValues.merchantSolution);
         setMandatory(allValues.mandatory);
+        setStrategy(allValues.strategy);
       }}
       className="round-form first-round-form"
       form={form}
@@ -160,12 +163,11 @@ const CustomForm = ({ onFinish, loading }) => {
       <Title level={2}>{`Chapter 4 – Round 1`}</Title>
       <Card title={`Strategy`}>
         <Form.Item name="strategy" label={`Succession crisis`}>
-          <Radio.Group
+          <Select
             options={[
               {
                 label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,
                 value: 'money',
-                disabled: merchantSolution === 'neutral',
               },
               {
                 label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
@@ -178,6 +180,26 @@ const CustomForm = ({ onFinish, loading }) => {
             ]}
           />
         </Form.Item>
+        <div className="selects">
+          <Form.Item label={`Merchant dispute`} name="merchantSolution">
+            <Select
+              options={[
+                {
+                  value: 'neutral',
+                  label: `Neutral compromise (force Social ≥ 40)`,
+                },
+                {
+                  value: 'givini',
+                  label: `Favor New Givini`,
+                },
+                {
+                  value: 'wait',
+                  label: `Wait`,
+                },
+              ]}
+            />
+          </Form.Item>
+        </div>
         <div className="selects">
           <Form.Item label={`Research`} name="research">
             <Select
@@ -229,41 +251,24 @@ const CustomForm = ({ onFinish, loading }) => {
               ]}
             />
           </Form.Item>
-          <Form.Item label={`Merchant dispute`} name="merchantSolution">
-            <Select
-              options={[
-                {
-                  value: 'neutral',
-                  label: `Neutral compromise (force Social ≥ 40)`,
-                },
-                {
-                  value: 'givini',
-                  label: `Favor New Givini`,
-                },
-                {
-                  value: 'wait',
-                  label: `Wait`,
-                },
-              ]}
-            />
-          </Form.Item>
         </div>
 
-        <Form.Item
-          label={`Investments you explicitly want to buy, for any reason`}
-          name="mandatory"
+        <Mandatory
+          purchased={previous}
+          form={form}
           tooltip={`Forcing a few certain investments can improve performances tremendously.`}
-        >
-          <Select
-            options={toSelectOptions(
-              allInvestments
-                .map(({ name }) => name)
-                .filter((name) => !previous.includes(name))
-            )}
-            mode="multiple"
-          />
-        </Form.Item>
-        <Banned purchased={[...previous, ...mandatory]} form={form} />
+        />
+        <Banned
+          purchased={[...previous, ...mandatory]}
+          form={form}
+          tooltip={
+            <>
+              {`For cases where a particular investment might be more of a curse than a blessing in the long run and you want to see what happens without it.`}
+              <br />
+              {`Banning an investment that you know to be useless at that particular point can also improve performances quite a bit, especially if said investment is cheap.`}
+            </>
+          }
+        />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

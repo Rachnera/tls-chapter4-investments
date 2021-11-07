@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Card, Select } from 'antd';
 import Headquarters, { price as headquartersPrice } from './Headquarters';
 import { nF } from '../misc';
-import allInvestments from '../data/investments';
 import Banned from '../components/form/Banned';
+import Mandatory from '../components/form/Mandatory';
 
 const initialValues = {
   merchantSolution2: 'neutral',
-  headquarters: 'enough',
+  headquarters: '20/10',
   orcCouncil: 0.8,
   mandatory: [],
   banned: [],
@@ -21,12 +21,16 @@ const CustomForm = ({
 }) => {
   const [form] = Form.useForm();
 
-  const [militaryExtra, setMilitaryExtra] = useState(
-    initialValues.headquarters === 'extra'
-  );
+  const [hq, setHq] = useState(initialValues.headquarters);
+  const [military, magic] = hq.split('/').map((x) => parseInt(x));
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
 
   const previousResearch = firstRoundDecisions.research;
+  useEffect(() => {
+    form.setFieldsValue({
+      research: previousResearch === 'purity' ? 'orc' : 'purity',
+    });
+  }, [form, previousResearch]);
 
   return (
     <Form
@@ -35,7 +39,7 @@ const CustomForm = ({
       className="round-form second-round-form"
       form={form}
       onValuesChange={(_, allValues) => {
-        setMilitaryExtra(allValues.headquarters === 'extra');
+        setHq(allValues.headquarters);
         setMandatory(allValues.mandatory);
       }}
     >
@@ -81,41 +85,74 @@ const CustomForm = ({
                 options={[
                   {
                     label: `Pay ${nF(
-                      headquartersPrice({ research: previousResearch })
-                    )} for strong magical defenses.`,
-                    value: 'enough',
+                      headquartersPrice({
+                        research: previousResearch,
+                        military: 20,
+                        magic: 10,
+                      })
+                    )} ProN for Military ≥ 20, Magic ≥ 10.`,
+                    value: '20/10',
                   },
                   {
                     label: `Pay ${nF(
                       headquartersPrice({
                         research: previousResearch,
-                        extra: true,
+                        military: 5,
+                        magic: 20,
                       })
-                    )} for strong magical and military defenses.`,
-                    value: 'extra',
+                    )} ProN for Military ≥ 5, Magic ≥ 20.`,
+                    value: '5/20',
+                  },
+                  {
+                    label: `Pay ${nF(
+                      headquartersPrice({
+                        research: previousResearch,
+                        military: 20,
+                        magic: 20,
+                      })
+                    )} ProN for Military ≥ 20, Magic ≥ 20.`,
+                    value: '20/20',
                   },
                 ]}
               />
             </Form.Item>
-            <Form.Item
-              label={`Investments you explicitly want to buy now (example: Airships)`}
-              name="mandatory"
-            >
+            <Form.Item label={`Research`} name="research">
               <Select
-                options={allInvestments
-                  .filter(({ name }) => !purchasedInvestments.includes(name))
-                  .map(({ name }) => {
-                    return { label: name, value: name };
-                  })}
-                mode="multiple"
+                options={[
+                  {
+                    value: 'orc',
+                    label: `Orc Diversification`,
+                  },
+                  {
+                    value: 'unpeople',
+                    label: `Unpeople Transformation`,
+                  },
+                  {
+                    value: 'purity',
+                    label: `Purity Magic`,
+                  },
+                  {
+                    value: 'defense',
+                    label: `Base Defense`,
+                  },
+                ].filter(({ value }) => value !== previousResearch)}
               />
             </Form.Item>
+            <Mandatory
+              label={`Investments you explicitly want to buy now (example: Airships)`}
+              form={form}
+              purchased={purchasedInvestments}
+            />
             <Banned
               purchased={[...purchasedInvestments, ...mandatory]}
               form={form}
             />
           </div>
-          <Headquarters research={previousResearch} extra={militaryExtra} />
+          <Headquarters
+            research={previousResearch}
+            military={military}
+            magic={magic}
+          />
         </div>
 
         <Form.Item>

@@ -39,17 +39,21 @@ export const roundOneChanges = ({ magicalItems, research }) => {
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
 
-export const roundTwoChanges = () => {
+export const roundTwoChanges = ({ research }) => {
   return [
     {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `At the end of the round`,
     },
-  ];
+    research === 'orc' && {
+      label: `Research: Orc Diversification`,
+      values: [5],
+    },
+  ].filter(Boolean);
 };
 
-export const roundTwoValue = () => 1;
+export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
 
 export const council = ({ investments = [], takkan, researches = [] }) => {
   let yes = 3 + 1 + 1; //Base, Elleani, Impaler
@@ -91,3 +95,35 @@ export const council = ({ investments = [], takkan, researches = [] }) => {
 
   return yes / (yes + no);
 };
+
+export const roundThreeChanges = ({
+  research,
+  gawnfallMercantile,
+  gawnfallTakkan,
+}) => {
+  return [
+    gawnfallTakkan === 'minor' && {
+      label: `Gawnfall: Tak'Kan vote`,
+      values: [2],
+    },
+    gawnfallTakkan === 'major' && {
+      label: `Gawnfall: Tak'Kan vote`,
+      values: [5],
+    },
+    ['excellent', 'good'].includes(gawnfallMercantile) && {
+      label: `Gawnfall: Mercantile solution`,
+      values: [1],
+    },
+    {
+      label: `Tak'Kan Trade`,
+      values: [1],
+      explanation: `At the end of the round`,
+    },
+    research === 'orc' && {
+      label: `Research: Orc Diversification`,
+      values: [5],
+    },
+  ].filter(Boolean);
+};
+
+export const roundThreeValue = (...params) => sum(roundThreeChanges(...params));

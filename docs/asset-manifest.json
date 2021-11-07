@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/tls-investment-advisor/static/css/main.45ec50f6.chunk.css",
-    "main.js": "/tls-investment-advisor/static/js/main.e9a506ab.chunk.js",
-    "main.js.map": "/tls-investment-advisor/static/js/main.e9a506ab.chunk.js.map",
-    "runtime-main.js": "/tls-investment-advisor/static/js/runtime-main.9b3ee814.js",
-    "runtime-main.js.map": "/tls-investment-advisor/static/js/runtime-main.9b3ee814.js.map",
+    "main.css": "/tls-investment-advisor/static/css/main.ada4645c.chunk.css",
+    "main.js": "/tls-investment-advisor/static/js/main.4f62cdda.chunk.js",
+    "main.js.map": "/tls-investment-advisor/static/js/main.4f62cdda.chunk.js.map",
+    "runtime-main.js": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js",
+    "runtime-main.js.map": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js.map",
     "static/css/2.3299c98b.chunk.css": "/tls-investment-advisor/static/css/2.3299c98b.chunk.css",
-    "static/js/2.1b975959.chunk.js": "/tls-investment-advisor/static/js/2.1b975959.chunk.js",
-    "static/js/2.1b975959.chunk.js.map": "/tls-investment-advisor/static/js/2.1b975959.chunk.js.map",
-    "static/js/3.2e5df215.chunk.js": "/tls-investment-advisor/static/js/3.2e5df215.chunk.js",
-    "static/js/3.2e5df215.chunk.js.map": "/tls-investment-advisor/static/js/3.2e5df215.chunk.js.map",
-    "68d0039099c8097b13fb.worker.js": "/tls-investment-advisor/68d0039099c8097b13fb.worker.js",
-    "68d0039099c8097b13fb.worker.js.map": "/tls-investment-advisor/68d0039099c8097b13fb.worker.js.map",
+    "static/js/2.ddccfb57.chunk.js": "/tls-investment-advisor/static/js/2.ddccfb57.chunk.js",
+    "static/js/2.ddccfb57.chunk.js.map": "/tls-investment-advisor/static/js/2.ddccfb57.chunk.js.map",
+    "static/js/3.695a0b2b.chunk.js": "/tls-investment-advisor/static/js/3.695a0b2b.chunk.js",
+    "static/js/3.695a0b2b.chunk.js.map": "/tls-investment-advisor/static/js/3.695a0b2b.chunk.js.map",
+    "a1b3b64a41eeeb6a26a8.worker.js": "/tls-investment-advisor/a1b3b64a41eeeb6a26a8.worker.js",
+    "a1b3b64a41eeeb6a26a8.worker.js.map": "/tls-investment-advisor/a1b3b64a41eeeb6a26a8.worker.js.map",
     "index.html": "/tls-investment-advisor/index.html",
     "static/css/2.3299c98b.chunk.css.map": "/tls-investment-advisor/static/css/2.3299c98b.chunk.css.map",
-    "static/css/main.45ec50f6.chunk.css.map": "/tls-investment-advisor/static/css/main.45ec50f6.chunk.css.map",
-    "static/js/2.1b975959.chunk.js.LICENSE.txt": "/tls-investment-advisor/static/js/2.1b975959.chunk.js.LICENSE.txt"
+    "static/css/main.ada4645c.chunk.css.map": "/tls-investment-advisor/static/css/main.ada4645c.chunk.css.map",
+    "static/js/2.ddccfb57.chunk.js.LICENSE.txt": "/tls-investment-advisor/static/js/2.ddccfb57.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.9b3ee814.js",
+    "static/js/runtime-main.29bf7480.js",
     "static/css/2.3299c98b.chunk.css",
-    "static/js/2.1b975959.chunk.js",
-    "static/css/main.45ec50f6.chunk.css",
-    "static/js/main.e9a506ab.chunk.js"
+    "static/js/2.ddccfb57.chunk.js",
+    "static/css/main.ada4645c.chunk.css",
+    "static/js/main.4f62cdda.chunk.js"
   ]
 }

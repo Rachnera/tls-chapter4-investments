@@ -8,7 +8,7 @@ const Disclaimer = () => {
       <div className="preamble">
         <Title>{`Investment Advisor`}</Title>
         <p>
-          {`A tool to help you choose the best theoretical best possible investments for (the early steps of chapter 4 of) `}
+          {`A tool to help you choose the best theoretical best possible investments for chapter 4 of `}
           <a href="https://the-last-sovereign.blogspot.com/">{`The Last Sovereign`}</a>
           {`.`}
         </p>
@@ -28,7 +28,12 @@ const Disclaimer = () => {
         message={`Assumptions`}
         description={
           <>
-            <span>{`This tool takes for granted that:`}</span>
+            <p>
+              <a href="https://www.patreon.com/posts/demographics-8851324">{`About 85% of players have only ever played TLS with Reshaped Varia.`}</a>
+            </p>
+            <p>{`That means if I was to write a walkthrough for TLS that only covered a "Reshaped Varia" strategy, it'll still be usable by 85% of players. Of course, I will have to release a "Dominated Varia" variant eventually to account for the remaining 15%. But in the meantime, that's already 85% of people that can start playing with my walkthrough without waiting any further. Meanwhile, if I had tried to cover both cases from the start, 100% of people would have had to wait.`}</p>
+            <p>{`While I'm writing a software and not a walkthrough here, it will play by the same logic: Focus first on the "general case", by making a few (many) assumptions that hopefully will be true of most "good" saves, so to be able to release it to the public early. Then slowly cover the other cases in subsequent updates.`}</p>
+            <p>{`Therefore, at the moment, this tool takes for granted that:`}</p>
             <ol>
               <li>{`The Succubus Tower was visited during chapter 1.`}</li>
               <li>{`Simon invested in the bank during chapter 1 (with Megail and Trin help).`}</li>
@@ -40,11 +45,14 @@ const Disclaimer = () => {
               <li>{`All such petitions were approved.`}</li>
               <li>{`If purchased, the Givini Orc Merchant is bought before any other investment of the round.`}</li>
             </ol>
+            <p>{`Note that the final version of the advisor will likely still have a few assumptions in it, so as to keep the complexity in check. Namely, "disaster runs" will never be covered.`}</p>
+            <p>{`tl;dr The Advisor is currently in early access.`}</p>
           </>
         }
         type="info"
-        showIcon
+        showIcon={true}
         className="assumptions"
+        closable={true}
       />
     </div>
   );

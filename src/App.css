@@ -73,23 +73,12 @@ table.addition td:nth-child(3) {
   text-align: right;
 }
 
-@media (min-width: 992px) {
-  .disclaimer {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .disclaimer > * {
-    flex: 1;
-  }
-}
-
 .disclaimer > .preamble {
   padding: 24px;
 }
 
 .disclaimer > .preamble > *:last-child,
-.disclaimer > .assumptions ol {
+.disclaimer > .assumptions .ant-alert-description > *:last-child {
   margin-bottom: 0;
 }
 

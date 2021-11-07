@@ -36,14 +36,13 @@ const Disclaimer = () => {
             <p>{`Therefore, at the moment, this tool takes for granted that:`}</p>
             <ol>
               <li>{`The Succubus Tower was visited during chapter 1.`}</li>
-              <li>{`Simon invested in the bank during chapter 1 (with Megail and Trin help).`}</li>
+              <li>{`Simon invested in the bank during chapter 1.`}</li>
               <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, the Order of Silence funded, and the Ardan Bank invested into.`}</li>
               <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>
               <li>{`The three unique Trades (New Givini, Tak'Kan and Chalice States) were bought at the end of chapter 3.`}</li>
               <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>
               <li>{`Chapter 3 in general and the war in particular were good enough for all petitions favorable to Givini to appear.`}</li>
               <li>{`All such petitions were approved.`}</li>
-              <li>{`If purchased, the Givini Orc Merchant is bought before any other investment of the round.`}</li>
             </ol>
             <p>{`Note that the final version of the advisor will likely still have a few assumptions in it, so as to keep the complexity in check. Namely, "disaster runs" will never be covered.`}</p>
             <p>{`tl;dr The Advisor is currently in early access.`}</p>

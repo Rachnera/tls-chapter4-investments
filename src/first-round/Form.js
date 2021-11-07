@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Checkbox,
-  Radio,
   Typography,
 } from 'antd';
 import { useEffect, useState } from 'react';
@@ -162,7 +161,7 @@ const CustomForm = ({ onFinish, loading }) => {
       <Title level={2}>{`Chapter 4 – Round 1`}</Title>
       <Card title={`Strategy`}>
         <Form.Item name="strategy" label={`Succession crisis`}>
-          <Radio.Group
+          <Select
             options={[
               {
                 label: `Focus on profits; do only the bare minimum for the Ardan succession crisis (New Givini ≥ 25).`,

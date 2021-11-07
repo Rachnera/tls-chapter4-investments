@@ -19,7 +19,7 @@ const initialValues = {
   mandatory: [],
   banned: [],
   gawnfallHigh: 'herin_overwhelming',
-  reserves: 5000000,
+  reserves: 5000000 + 125000 + 250000,
   extra_reserves: 0,
 };
 

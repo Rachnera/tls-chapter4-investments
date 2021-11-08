@@ -45,8 +45,10 @@ const onFinish = async ({
     magic,
   });
 
+  const pronNote = 2500;
+
   const nonInvestmentChanges = {
-    money: -headquartersUpgradesPrice,
+    money: -headquartersUpgradesPrice + pronNote,
     profits: 0,
     social: 0,
     givini: giviniRoundTwoValue(decisions),
@@ -55,6 +57,10 @@ const onFinish = async ({
       {
         name: `Headquarters upgrades`,
         money: -headquartersUpgradesPrice,
+      },
+      {
+        name: `Tower's chest ProN note`,
+        money: pronNote,
       },
     ],
   };

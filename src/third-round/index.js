@@ -109,7 +109,7 @@ const onFinish = async ({
     },
     {
       name: `One-time mercantile issue modifier`,
-      profits: mercantileMoney,
+      money: mercantileMoney,
     },
   ].filter(Boolean);
 
@@ -118,7 +118,7 @@ const onFinish = async ({
       (acc, { money }) => acc + (money || 0),
       0
     ),
-    profits: mercantileMoney,
+    profits: 0,
     social: nonInvestmentChangesList.reduce(
       (acc, { social }) => acc + (social || 0),
       0
@@ -134,7 +134,7 @@ const onFinish = async ({
     money:
       initialStandings.money +
       initialStandings.profits +
-      nonInvestmentChanges.money,
+      (nonInvestmentChanges.money - mercantileMoney),
     giviniStart: initialStandings.givini,
     giviniExtra: nonInvestmentChanges.givini,
     otherRequirements: {

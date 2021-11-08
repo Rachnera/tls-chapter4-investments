@@ -46,10 +46,10 @@ const initialValues = {
   remainingPron: 7500,
   baseProfit: 2435000,
   chapter1Steel: false,
-  strategy: 'social',
+  strategy: 'compromise',
   startingSocial: 34,
   chapter3Infrastructure: true,
-  merchantSolution: 'neutral',
+  merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
@@ -78,15 +78,15 @@ const CustomForm = ({ onFinish, loading }) => {
   const [strategy, setStrategy] = useState(initialValues.strategy);
 
   useEffect(() => {
-    if (strategy === 'money') {
-      if (form.getFieldValue('merchantSolution') === 'neutral') {
-        form.setFieldsValue({ merchantSolution: 'wait' });
+    if (['social', 'succession'].includes(strategy)) {
+      if (form.getFieldValue('merchantSolution') === 'wait') {
+        form.setFieldsValue({ merchantSolution: 'neutral' });
       }
       return;
     }
 
-    if (form.getFieldValue('merchantSolution') === 'wait') {
-      form.setFieldsValue({ merchantSolution: 'neutral' });
+    if (form.getFieldValue('merchantSolution') === 'neutral') {
+      form.setFieldsValue({ merchantSolution: 'wait' });
     }
   }, [form, strategy]);
 
@@ -170,11 +170,15 @@ const CustomForm = ({ onFinish, loading }) => {
                 value: 'money',
               },
               {
-                label: `Mix profits and social; reach most thresholds for the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
+                label: `Reach most thresholds for the Ardan succession crisis while keeping a focus on profits (New Givini ≥ 25, Social ≥ 30).`,
+                value: 'compromise',
+              },
+              {
+                label: `Mix profits and social to achieve almost everything in the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40).`,
                 value: 'social',
               },
               {
-                label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, dedicated investments).`,
+                label: `Go all in on the Ardan succession crisis (New Givini ≥ 25, Social ≥ 40, War Monument or Givini Mage Guild).`,
                 value: 'succession',
               },
             ]}

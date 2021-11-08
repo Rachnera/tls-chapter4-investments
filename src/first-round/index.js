@@ -18,10 +18,12 @@ const socialRequirement = (
   if (strategy === 'money') {
     return 0;
   }
-  if (jhenno === 'politics' && merchantSolution !== 'neutral') {
-    return 39 - startingSocial;
+  if (merchantSolution === 'neutral') {
+    return 40 - startingSocial;
   }
-  return 40 - startingSocial;
+  const base = strategy === 'compromise' ? 30 : 40;
+  const jhennoModifier = jhenno === 'politics' ? 1 : 0;
+  return base - (startingSocial + jhennoModifier);
 };
 
 const giviniRequirement = ({ giviniStart, giviniExtra }) => {

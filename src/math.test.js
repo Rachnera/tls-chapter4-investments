@@ -32,16 +32,16 @@ describe('combinations', () => {
 
   test('three elements', () => {
     expect(
-      combinations(invs('Imp Offices', 'Denmiel Archives', 'War Monument'))
+      combinations(invs('Imp Offices', 'Theltiar Flowhouse', 'War Monument'))
     ).toEqual([
       [],
       invs('War Monument'),
-      invs('Denmiel Archives'),
+      invs('Theltiar Flowhouse'),
       invs('Imp Offices'),
-      invs('War Monument', 'Denmiel Archives'),
+      invs('War Monument', 'Theltiar Flowhouse'),
       invs('War Monument', 'Imp Offices'),
-      invs('Denmiel Archives', 'Imp Offices'),
-      invs('War Monument', 'Denmiel Archives', 'Imp Offices'),
+      invs('Theltiar Flowhouse', 'Imp Offices'),
+      invs('War Monument', 'Theltiar Flowhouse', 'Imp Offices'),
     ]);
   });
 
@@ -50,7 +50,7 @@ describe('combinations', () => {
       combinations(
         invs(
           'Imp Offices',
-          'Denmiel Archives',
+          'Theltiar Flowhouse',
           'War Monument',
           'Givini Smithing'
         ),
@@ -58,10 +58,10 @@ describe('combinations', () => {
       )
     ).toEqual([
       [],
-      invs('Denmiel Archives'),
+      invs('Theltiar Flowhouse'),
       invs('Givini Smithing'),
       invs('Imp Offices'),
-      invs('Denmiel Archives', 'Imp Offices'),
+      invs('Theltiar Flowhouse', 'Imp Offices'),
       invs('Givini Smithing', 'Imp Offices'),
     ]);
   });
@@ -80,37 +80,37 @@ describe('combinations', () => {
       )
     ).toEqual([
       invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup'),
-      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'War Monument'),
-      invs(
-        'Yhilini Airship Fleet',
-        'Gasm Falls Water Cleanup',
-        'Denmiel Archives'
-      ),
       invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'Imp Offices'),
       invs(
         'Yhilini Airship Fleet',
         'Gasm Falls Water Cleanup',
-        'War Monument',
+        'Denmiel Archives'
+      ),
+      invs('Yhilini Airship Fleet', 'Gasm Falls Water Cleanup', 'War Monument'),
+      invs(
+        'Yhilini Airship Fleet',
+        'Gasm Falls Water Cleanup',
+        'Imp Offices',
         'Denmiel Archives'
       ),
       invs(
         'Yhilini Airship Fleet',
         'Gasm Falls Water Cleanup',
-        'War Monument',
-        'Imp Offices'
+        'Imp Offices',
+        'War Monument'
       ),
       invs(
         'Yhilini Airship Fleet',
         'Gasm Falls Water Cleanup',
         'Denmiel Archives',
-        'Imp Offices'
+        'War Monument'
       ),
       invs(
         'Yhilini Airship Fleet',
         'Gasm Falls Water Cleanup',
-        'War Monument',
+        'Imp Offices',
         'Denmiel Archives',
-        'Imp Offices'
+        'War Monument'
       ),
     ]);
   });

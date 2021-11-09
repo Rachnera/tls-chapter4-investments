@@ -321,7 +321,12 @@ export const postGawnfallInvestments = [
   ),
   {
     name: 'Lustlord Temples',
-    price: 750000,
+    price: ({ lustlordStatuesBought }) => {
+      if (lustlordStatuesBought) {
+        return 750000;
+      }
+      return 800000;
+    },
     profits: 50000,
   },
   {

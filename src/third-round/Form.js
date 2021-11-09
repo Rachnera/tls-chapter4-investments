@@ -14,7 +14,7 @@ const initialValues = {
   gawnfallMercantile: 'excellent',
   gawnfallArdford: 'resolved',
   gawnfallMother: 'full_unlock',
-  vera: false,
+  vera: true,
   merchantSolution3: 'neutral',
   mandatory: [],
   banned: [],
@@ -111,21 +111,30 @@ const CustomForm = ({
             </Form.Item>
             {!previousInvestments.includes('Lustlord Temples') && (
               <Form.Item label={`Yelarel-related investments`} name="yelarel">
-                <Radio.Group
+                <Select
                   options={[
                     {
+                      value: 'none',
+                      label: `Don't invest in the Lustlord cult`,
+                    },
+                    {
                       value: 'min',
-                      label: `Pay 50,000 for New Lustlord Statues`,
+                      label: `Pay ${nF(50000)} ProN for New Lustlord Statues`,
                     },
                     {
                       value: 'max',
-                      label: `Invest 800,000 (total) in the Lustlord Temples`,
+                      label: `Invest a total of ${nF(
+                        800000
+                      )} ProN in the Lustlord Temples`,
                     },
                   ]}
                 />
               </Form.Item>
             )}
-            <Form.Item label={`Buy Goddess of Magic Statue?`} name="vera">
+            <Form.Item
+              label={`Buy the Goddess of Magic Statue for ${nF(10000)} ProN?`}
+              name="vera"
+            >
               <Radio.Group
                 options={[
                   {

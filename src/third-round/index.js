@@ -71,6 +71,7 @@ const onFinish = async ({
     gawnfallTakkan,
     gawnfallMother,
     gawnfallArdford,
+    lustlordStatuesBought: yelarel === 'min',
   };
 
   const mercantileMoney = (() => {
@@ -95,7 +96,7 @@ const onFinish = async ({
     initialStandings.investments.includes('Givini Teahouse Chain');
 
   const nonInvestmentChangesList = [
-    {
+    yelarel === 'min' && {
       name: `New Lustlord Statues`,
       money: -50000,
     },

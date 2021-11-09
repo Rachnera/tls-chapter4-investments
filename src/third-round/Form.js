@@ -14,7 +14,7 @@ const initialValues = {
   gawnfallMercantile: 'excellent',
   gawnfallArdford: 'resolved',
   gawnfallMother: 'full_unlock',
-  vera: false,
+  vera: true,
   merchantSolution3: 'neutral',
   mandatory: [],
   banned: [],
@@ -131,7 +131,10 @@ const CustomForm = ({
                 />
               </Form.Item>
             )}
-            <Form.Item label={`Buy Goddess of Magic Statue?`} name="vera">
+            <Form.Item
+              label={`Buy the Goddess of Magic Statue for ${nF(10000)} ProN?`}
+              name="vera"
+            >
               <Radio.Group
                 options={[
                   {

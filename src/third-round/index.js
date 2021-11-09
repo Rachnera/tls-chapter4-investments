@@ -5,6 +5,7 @@ import Result from './Result';
 import ScrollTo from '../results/ScrollTo';
 import { roundThreeValue as giviniRoundThreeValue } from '../data/givini';
 import { roundThreeValue as takkanRoundThreeValue } from '../data/takkan';
+import investmentsList from '../data/investments';
 
 const { Title } = Typography;
 
@@ -87,14 +88,6 @@ const onFinish = async ({
     }
   })();
 
-  const ardfordOpen = ['resolved', 'overkill'].includes(
-    decisions.gawnfallArdford
-  );
-  const preInvestmentsOrii =
-    ardfordOpen &&
-    initialStandings.investments.includes('Ardford Restaurant') &&
-    initialStandings.investments.includes('Givini Teahouse Chain');
-
   const nonInvestmentChangesList = [
     yelarel === 'min' && {
       name: `New Lustlord Statues`,
@@ -165,6 +158,14 @@ const onFinish = async ({
 
   const investmentChanges = { ...result, money: -result.price };
 
+  // Chaotic fixes for Ardford Restaurant/Tradesmasher's Guild profits
+  const ardfordOpen = ['resolved', 'overkill'].includes(
+    decisions.gawnfallArdford
+  );
+  const preInvestmentsOrii =
+    ardfordOpen &&
+    initialStandings.investments.includes('Ardford Restaurant') &&
+    initialStandings.investments.includes('Givini Teahouse Chain');
   const allInvestments = [
     ...initialStandings.investments,
     ...investmentChanges.investments.map(({ name }) => name),
@@ -176,14 +177,31 @@ const onFinish = async ({
     allInvestments.includes('Givini Teahouse Chain');
 
   if (preInvestmentsOrii || postInvestmentsOrri) {
-    const orri = {
+    nonInvestmentChanges.list.push({
       name: `Orri's Quest`,
       social: 1,
-      // Need to explictly add the profits if no investment is new
-      profits: preInvestmentsOrii ? 15000 : 0,
-    };
-    nonInvestmentChanges.profits += orri.profits;
-    nonInvestmentChanges.list.push(orri);
+    });
+  }
+  if (preInvestmentsOrii) {
+    investmentChanges.profits += 15000;
+  }
+  if (
+    initialStandings.investments.includes("Tradesmasher's Guild") &&
+    decisions.gawnfallTakkan === 'major'
+  ) {
+    const tradesmasherProfits = investmentsList.find(
+      ({ name }) => name === "Tradesmasher's Guild"
+    ).profits;
+    investmentChanges.profits +=
+      tradesmasherProfits({
+        investments: investmentChanges.investments,
+        previousInvestments: initialStandings.investments,
+        gawnfallTakkan: 'major',
+      }) -
+      tradesmasherProfits({
+        investments: investmentChanges.investments,
+        previousInvestments: initialStandings.investments,
+      });
   }
 
   setResult({

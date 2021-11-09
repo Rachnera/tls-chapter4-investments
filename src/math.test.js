@@ -272,6 +272,20 @@ describe('combine', () => {
       ],
     });
   });
+  test('tradesmasher varying price', () => {
+    expect(inv("Tradesmasher's Guild").profits({})).toBe(50000);
+    expect(
+      inv("Tradesmasher's Guild").profits({
+        previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
+      })
+    ).toBe(125000);
+    expect(
+      inv("Tradesmasher's Guild").profits({
+        previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
+        gawnfallTakkan: 'major',
+      })
+    ).toBe(150000);
+  });
   test('givini orc merchant', () => {
     expect(combine([giviniOrcMerchant()])).toEqual({
       price: 100000,

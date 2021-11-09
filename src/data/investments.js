@@ -243,7 +243,11 @@ const investments = [
   {
     name: "Tradesmasher's Guild",
     price: 350000,
-    profits: ({ investments, previousInvestments = [] }) => {
+    profits: ({
+      investments = [],
+      previousInvestments = [],
+      gawnfallTakkan,
+    }) => {
       const guildScore =
         1 +
         [...previousInvestments, ...investments.map(({ name }) => name)].filter(
@@ -256,7 +260,8 @@ const investments = [
               'Orc Pools Upgrade',
             ].includes(name);
           }
-        ).length;
+        ).length +
+        (gawnfallTakkan === 'major' ? 1 : 0);
 
       if (guildScore < 2) {
         return 50000;

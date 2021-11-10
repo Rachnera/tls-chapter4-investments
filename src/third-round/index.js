@@ -28,6 +28,52 @@ const gawnfallSocial = ({ gawnfallMother, gawnfallHigh }) => {
   return social;
 };
 
+const ardfordOpen = (decisions) =>
+  ['resolved', 'overkill'].includes(decisions.gawnfallArdford);
+
+const preInvestmentsOrii = ({ decisions, initialStandings }) => {
+  return (
+    ardfordOpen(decisions) &&
+    initialStandings.investments.includes('Ardford Restaurant') &&
+    initialStandings.investments.includes('Givini Teahouse Chain')
+  );
+};
+
+const preInvestmentsTradesmasher = ({ decisions, initialStandings }) => {
+  return (
+    initialStandings.investments.includes("Tradesmasher's Guild") &&
+    decisions.gawnfallTakkan === 'major'
+  );
+};
+
+const pastInvestmentsUpdate = ({
+  decisions,
+  initialStandings,
+  investmentChanges,
+}) => {
+  let total = 0;
+  if (preInvestmentsOrii({ decisions, initialStandings })) {
+    total += 15000;
+  }
+  if (preInvestmentsTradesmasher({ decisions, initialStandings })) {
+    const tradesmasherProfits = investmentsList.find(
+      ({ name }) => name === "Tradesmasher's Guild"
+    ).profits;
+    total +=
+      tradesmasherProfits({
+        investments: investmentChanges.investments,
+        previousInvestments: initialStandings.investments,
+        gawnfallTakkan: 'major',
+      }) -
+      tradesmasherProfits({
+        investments: investmentChanges.investments,
+        previousInvestments: initialStandings.investments,
+      });
+  }
+
+  return total;
+};
+
 const onFinish = async ({
   runInWoker,
   setResult,
@@ -158,50 +204,28 @@ const onFinish = async ({
 
   const investmentChanges = { ...result, money: -result.price };
 
-  // Chaotic fixes for Ardford Restaurant/Tradesmasher's Guild profits
-  const ardfordOpen = ['resolved', 'overkill'].includes(
-    decisions.gawnfallArdford
-  );
-  const preInvestmentsOrii =
-    ardfordOpen &&
-    initialStandings.investments.includes('Ardford Restaurant') &&
-    initialStandings.investments.includes('Givini Teahouse Chain');
+  investmentChanges.profits += pastInvestmentsUpdate({
+    decisions,
+    initialStandings,
+    investmentChanges,
+  });
+
+  // Orri's Social
   const allInvestments = [
     ...initialStandings.investments,
     ...investmentChanges.investments.map(({ name }) => name),
   ];
-  const postInvestmentsOrri =
-    !preInvestmentsOrii &&
-    ardfordOpen &&
-    allInvestments.includes('Ardford Restaurant') &&
-    allInvestments.includes('Givini Teahouse Chain');
-
-  if (preInvestmentsOrii || postInvestmentsOrri) {
+  if (
+    preInvestmentsOrii({ decisions, initialStandings }) ||
+    // TODO Find a clean way to update this on each following iteration
+    (ardfordOpen(decisions) &&
+      allInvestments.includes('Ardford Restaurant') &&
+      allInvestments.includes('Givini Teahouse Chain'))
+  ) {
     nonInvestmentChanges.list.push({
       name: `Orri's Quest`,
       social: 1,
     });
-  }
-  if (preInvestmentsOrii) {
-    investmentChanges.profits += 15000;
-  }
-  if (
-    initialStandings.investments.includes("Tradesmasher's Guild") &&
-    decisions.gawnfallTakkan === 'major'
-  ) {
-    const tradesmasherProfits = investmentsList.find(
-      ({ name }) => name === "Tradesmasher's Guild"
-    ).profits;
-    investmentChanges.profits +=
-      tradesmasherProfits({
-        investments: investmentChanges.investments,
-        previousInvestments: initialStandings.investments,
-        gawnfallTakkan: 'major',
-      }) -
-      tradesmasherProfits({
-        investments: investmentChanges.investments,
-        previousInvestments: initialStandings.investments,
-      });
   }
 
   setResult({

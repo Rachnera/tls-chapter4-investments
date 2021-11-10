@@ -74,6 +74,24 @@ const pastInvestmentsUpdate = ({
   return total;
 };
 
+const projectedPastInvestmentsUpdate = ({ decisions, initialStandings }) => {
+  let total = 0;
+
+  if (preInvestmentsOrii({ decisions, initialStandings })) {
+    total += 15000;
+  }
+
+  if (preInvestmentsTradesmasher({ decisions, initialStandings })) {
+    // Could _technically_ be 50000
+    // In which case the optimization algorithm would also underestimate the importance of Tradesmasher-related investments for this iteration
+    // But that would require not having (at least) the Givini Orc Merchant and Lonely Sailor Services at this point
+    // So so unlikely I'm shrugging it off
+    total += 25000;
+  }
+
+  return total;
+};
+
 const onFinish = async ({
   runInWoker,
   setResult,
@@ -189,7 +207,8 @@ const onFinish = async ({
         extra_reserves -
         (initialStandings.profits +
           nonInvestmentChanges.money +
-          nonInvestmentChanges.profits),
+          nonInvestmentChanges.profits +
+          projectedPastInvestmentsUpdate({ decisions, initialStandings })),
     },
     list: 'gawnfall',
   };

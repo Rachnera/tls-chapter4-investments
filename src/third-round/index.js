@@ -187,7 +187,9 @@ const onFinish = async ({
       reserve:
         reserves +
         extra_reserves -
-        (initialStandings.profits + nonInvestmentChanges.profits),
+        (initialStandings.profits +
+          nonInvestmentChanges.money +
+          nonInvestmentChanges.profits),
     },
     list: 'gawnfall',
   };

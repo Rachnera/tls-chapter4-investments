@@ -116,6 +116,7 @@ const onFinish = async ({
     gawnfallHigh,
     reserves,
     extra_reserves,
+    spending,
   } = values;
   const decisions = {
     research,
@@ -168,6 +169,10 @@ const onFinish = async ({
     {
       name: `One-time mercantile issue modifier`,
       money: mercantileMoney,
+    },
+    !!spending && {
+      name: `Other spending`,
+      money: -spending,
     },
   ].filter(Boolean);
 

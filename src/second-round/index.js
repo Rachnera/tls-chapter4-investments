@@ -33,6 +33,7 @@ const onFinish = async ({
     mandatory,
     banned,
     research,
+    spending,
   } = values;
   const decisions = { merchantSolution2, headquarters, orcCouncil, research };
 
@@ -47,22 +48,31 @@ const onFinish = async ({
 
   const pronNote = 2500;
 
+  const nonInvestmentChangesList = [
+    {
+      name: `Headquarters upgrades`,
+      money: -headquartersUpgradesPrice,
+    },
+    !!spending && {
+      name: `Other spending`,
+      money: -spending,
+    },
+    {
+      name: `Tower's chest ProN note`,
+      money: pronNote,
+    },
+  ].filter(Boolean);
+
   const nonInvestmentChanges = {
-    money: -headquartersUpgradesPrice + pronNote,
+    money: nonInvestmentChangesList.reduce(
+      (acc, { money = 0 }) => acc + money,
+      0
+    ),
     profits: 0,
     social: 0,
     givini: giviniRoundTwoValue(decisions),
     takkan: takkanRoundTwoValue(decisions),
-    list: [
-      {
-        name: `Headquarters upgrades`,
-        money: -headquartersUpgradesPrice,
-      },
-      {
-        name: `Tower's chest ProN note`,
-        money: pronNote,
-      },
-    ],
+    list: nonInvestmentChangesList,
   };
 
   const params = {
@@ -70,8 +80,8 @@ const onFinish = async ({
     previousInvestments: initialStandings.investments,
     money:
       initialStandings.money +
-      initialStandings.profits -
-      headquartersUpgradesPrice,
+      initialStandings.profits +
+      (nonInvestmentChanges.money - pronNote),
     giviniStart: initialStandings.givini,
     giviniExtra: nonInvestmentChanges.givini,
     takkan: initialStandings.takkan,

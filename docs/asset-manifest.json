@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tls-investment-advisor/static/css/main.ada4645c.chunk.css",
-    "main.js": "/tls-investment-advisor/static/js/main.62b99e5a.chunk.js",
-    "main.js.map": "/tls-investment-advisor/static/js/main.62b99e5a.chunk.js.map",
+    "main.js": "/tls-investment-advisor/static/js/main.9b4c30fb.chunk.js",
+    "main.js.map": "/tls-investment-advisor/static/js/main.9b4c30fb.chunk.js.map",
     "runtime-main.js": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js",
     "runtime-main.js.map": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js.map",
     "static/css/2.3299c98b.chunk.css": "/tls-investment-advisor/static/css/2.3299c98b.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.3299c98b.chunk.css",
     "static/js/2.ddccfb57.chunk.js",
     "static/css/main.ada4645c.chunk.css",
-    "static/js/main.62b99e5a.chunk.js"
+    "static/js/main.9b4c30fb.chunk.js"
   ]
 }

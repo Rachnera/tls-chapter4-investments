@@ -33,7 +33,7 @@ const giviniRequirement = ({ giviniStart, giviniExtra }) => {
   return absoluteRequirement - giviniStart - giviniExtra + offset;
 };
 
-const buildNonInvestmentsChange = (decisions) => {
+const buildNonInvestmentsChange = ({ decisions, spending }) => {
   const { jhenno } = decisions;
 
   const nonInvestmentChangesList = [
@@ -49,12 +49,19 @@ const buildNonInvestmentsChange = (decisions) => {
       name: `The Three Trades become less profitable`,
       profits: -300000,
     },
+    !!spending && {
+      name: `Other spending`,
+      money: -spending,
+    },
   ].filter(Boolean);
 
   return {
     givini: giviniRoundOneValue(decisions),
     takkan: takkanRoundOneValue(decisions),
-    money: 0,
+    money: nonInvestmentChangesList.reduce(
+      (acc, { money = 0 }) => acc + money,
+      0
+    ),
     profits: nonInvestmentChangesList.reduce(
       (acc, { profits = 0 }) => acc + profits,
       0
@@ -82,7 +89,10 @@ const compute = async ({
   const params = {
     ...misc,
     previousInvestments: initialStandings.investments,
-    money: initialStandings.money + initialStandings.profits,
+    money:
+      initialStandings.money +
+      initialStandings.profits +
+      nonInvestmentChanges.money,
     otherRequirements: {
       social: socialRequirement(initialStandings.social, decisions),
       givini: giviniRequirement({
@@ -120,6 +130,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 
     mandatory,
     banned,
+    spending,
 
     chapter1Steel,
     chapter3Infrastructure,
@@ -147,7 +158,10 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     chapter3Infrastructure,
   };
 
-  const nonInvestmentChanges = buildNonInvestmentsChange(decisions);
+  const nonInvestmentChanges = buildNonInvestmentsChange({
+    decisions,
+    spending,
+  });
 
   const result = await compute({
     runInWoker,

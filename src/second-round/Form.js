@@ -4,6 +4,7 @@ import Headquarters, { price as headquartersPrice } from './Headquarters';
 import { nF } from '../misc';
 import Banned from '../components/form/Banned';
 import Mandatory from '../components/form/Mandatory';
+import Extra from '../components/form/Extra';
 
 const initialValues = {
   merchantSolution2: 'neutral',
@@ -11,6 +12,7 @@ const initialValues = {
   orcCouncil: 0.8,
   mandatory: [],
   banned: [],
+  spending: 0,
 };
 
 const CustomForm = ({
@@ -147,6 +149,7 @@ const CustomForm = ({
               purchased={[...purchasedInvestments, ...mandatory]}
               form={form}
             />
+            <Extra />
           </div>
           <Headquarters
             research={previousResearch}

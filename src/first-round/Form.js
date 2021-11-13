@@ -6,10 +6,12 @@ import {
   Card,
   Checkbox,
   Typography,
+  Divider,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import Banned from '../components/form/Banned';
 import Mandatory from '../components/form/Mandatory';
+import Extra from '../components/form/Extra';
 
 const { Title } = Typography;
 
@@ -57,6 +59,7 @@ const initialValues = {
   banned: [
     'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
   ],
+  spending: 0,
 };
 
 const toSelectOptions = (list) => {
@@ -257,6 +260,7 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
         </div>
 
+        <Divider />
         <Mandatory
           purchased={previous}
           form={form}
@@ -273,6 +277,7 @@ const CustomForm = ({ onFinish, loading }) => {
             </>
           }
         />
+        <Extra />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

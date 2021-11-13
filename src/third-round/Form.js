@@ -1,11 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Form, Card, Radio, Select, Button, Alert, InputNumber } from 'antd';
+import {
+  Form,
+  Card,
+  Radio,
+  Select,
+  Button,
+  Alert,
+  InputNumber,
+  Divider,
+} from 'antd';
 import preGawnfallInvestments, {
   postGawnfallInvestments,
 } from '../data/investments';
 import Mandatory from '../components/form/Mandatory';
 import Banned from '../components/form/Banned';
 import { nF } from '../misc';
+import Extra from '../components/form/Extra';
 
 const initialValues = {
   mandatory1: [],
@@ -21,6 +31,7 @@ const initialValues = {
   gawnfallHigh: 'herin_overwhelming',
   reserves: 5000000 + 125000 + 250000,
   extra_reserves: 0,
+  spending: 0,
 };
 
 const CustomForm = ({
@@ -327,6 +338,7 @@ const CustomForm = ({
             <InputNumber />
           </Form.Item>
         </div>
+        <Divider />
         <Mandatory
           form={form}
           purchased={[
@@ -346,6 +358,7 @@ const CustomForm = ({
           ]}
           list="gawnfall"
         />
+        <Extra />
       </Card>
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>

@@ -62,6 +62,7 @@ const initialValues = {
   spending: 0,
   chapter1Bank: true,
   chapter1x2Tower: true,
+  chapter3Armorer: true,
 };
 
 const toSelectOptions = (list) => {
@@ -169,6 +170,9 @@ const CustomForm = ({ onFinish, loading }) => {
                 <Checkbox>{`You funded Yhilin Infrastructure during chapter 3.`}</Checkbox>
               </Form.Item>
             )}
+            <Form.Item name="chapter3Armorer" valuePropName="checked">
+              <Checkbox>{`You visited the Succubus Armorer during chapter 3.`}</Checkbox>
+            </Form.Item>
           </div>
         </Card>
       </div>

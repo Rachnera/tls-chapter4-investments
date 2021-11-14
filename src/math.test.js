@@ -373,13 +373,14 @@ describe('best', () => {
   test('best is buying cheapest thing', () => {
     expect(
       best({
-        investments: invs('Succubus Armorer', 'Givini Smithing'),
-        money: 250000,
+        investments: invs('Givini Mage Guild', 'Denmiel Mushrooms'),
+        money: 1000000,
+        chapter3Armorer: true,
       })
     ).toMatchObject({
-      price: 100000,
-      profits: 10000,
-      investments: invs('Succubus Armorer'),
+      price: 105000,
+      profits: 40000,
+      investments: invs('Denmiel Mushrooms'),
     });
   });
 
@@ -567,11 +568,12 @@ describe('best', () => {
   test('reserve', () => {
     expect(
       best({
-        investments: invs('Bank of Givini', 'Succubus Armorer'),
-        money: 500000,
+        investments: invs('Bank of Givini', 'Givini Smithing'),
+        money: 600000,
         otherRequirements: {
           reserve: 400000,
         },
+        chapter3Armorer: true,
       })
     ).toMatchObject({
       price: 350000,
@@ -609,6 +611,7 @@ describe('finest', () => {
         giviniExtra: 6,
         chapter3Infrastructure: true,
         chapter1Bank: true,
+        chapter3Armorer: true,
       });
 
       expect(
@@ -667,6 +670,7 @@ describe('finest', () => {
           mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
         },
         chapter1Bank: true,
+        chapter3Armorer: true,
       });
 
       expect(
@@ -721,6 +725,7 @@ describe('finest', () => {
             mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
             banned: ['Succubus Armorer'],
           },
+          chapter3Armorer: true,
         });
 
         expect(
@@ -773,6 +778,7 @@ describe('finest', () => {
             mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
             banned: ['Succubus Armorer', 'Hall of Mental Strength'],
           },
+          chapter3Armorer: true,
         });
 
         expect(

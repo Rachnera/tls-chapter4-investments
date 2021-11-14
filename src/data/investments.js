@@ -104,7 +104,12 @@ const investments = [
   },
   {
     name: 'Succubus Armorer',
-    price: 100000,
+    price: ({ chapter3Armorer }) => {
+      if (chapter3Armorer) {
+        return 100000;
+      }
+      return 150000;
+    },
     profits: 10000,
   },
   {

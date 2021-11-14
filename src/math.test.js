@@ -608,6 +608,7 @@ describe('finest', () => {
         giviniStart: 18,
         giviniExtra: 6,
         chapter3Infrastructure: true,
+        chapter1Bank: true,
       });
 
       expect(
@@ -665,6 +666,7 @@ describe('finest', () => {
         otherRequirements: {
           mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
         },
+        chapter1Bank: true,
       });
 
       expect(

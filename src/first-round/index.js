@@ -134,6 +134,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
 
     chapter1Steel,
     chapter3Infrastructure,
+    chapter1Bank,
   } = values;
 
   const initialStandings = {
@@ -156,6 +157,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   const misc = {
     chapter1Steel,
     chapter3Infrastructure,
+    chapter1Bank,
   };
 
   const nonInvestmentChanges = buildNonInvestmentsChange({

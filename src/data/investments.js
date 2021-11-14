@@ -262,9 +262,10 @@ const investments = [
       investments = [],
       previousInvestments = [],
       gawnfallTakkan,
+      chapter3Tradesmasher,
     }) => {
       const guildScore =
-        1 +
+        (chapter3Tradesmasher ? 1 : 0) +
         [...previousInvestments, ...investments.map(({ name }) => name)].filter(
           (name) => {
             return [
@@ -278,7 +279,10 @@ const investments = [
         ).length +
         (gawnfallTakkan === 'major' ? 1 : 0);
 
-      if (guildScore < 2) {
+      if (guildScore < 1) {
+        return 25000;
+      }
+      if (guildScore === 1) {
         return 50000;
       }
       if (guildScore === 2) {

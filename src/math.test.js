@@ -247,6 +247,7 @@ describe('combine', () => {
         ],
         {
           previousInvestments: ['Orc Pools Upgrade'],
+          chapter3Tradesmasher: true,
         }
       )
     ).toEqual({
@@ -273,16 +274,21 @@ describe('combine', () => {
     });
   });
   test('tradesmasher varying price', () => {
-    expect(inv("Tradesmasher's Guild").profits({})).toBe(50000);
+    expect(inv("Tradesmasher's Guild").profits({})).toBe(25000);
+    expect(
+      inv("Tradesmasher's Guild").profits({ chapter3Tradesmasher: true })
+    ).toBe(50000);
     expect(
       inv("Tradesmasher's Guild").profits({
         previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
+        chapter3Tradesmasher: true,
       })
     ).toBe(125000);
     expect(
       inv("Tradesmasher's Guild").profits({
         previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
         gawnfallTakkan: 'major',
+        chapter3Tradesmasher: true,
       })
     ).toBe(150000);
   });
@@ -473,6 +479,7 @@ describe('best', () => {
             'Orc Pools Upgrade',
             'Orcish Democracy',
           ],
+          chapter3Tradesmasher: true,
         },
       })
     ).toMatchObject({
@@ -550,6 +557,7 @@ describe('best', () => {
         context: {
           takkan: 34,
           completedResearch: ['orc'],
+          chapter3Tradesmasher: true,
         },
       })
     ).toMatchObject({
@@ -612,6 +620,7 @@ describe('finest', () => {
         chapter3Infrastructure: true,
         chapter1Bank: true,
         chapter3Armorer: true,
+        chapter3Tradesmasher: true,
       });
 
       expect(
@@ -671,6 +680,7 @@ describe('finest', () => {
         },
         chapter1Bank: true,
         chapter3Armorer: true,
+        chapter3Tradesmasher: true,
       });
 
       expect(
@@ -726,6 +736,7 @@ describe('finest', () => {
             banned: ['Succubus Armorer'],
           },
           chapter3Armorer: true,
+          chapter3Tradesmasher: true,
         });
 
         expect(
@@ -779,6 +790,7 @@ describe('finest', () => {
             banned: ['Succubus Armorer', 'Hall of Mental Strength'],
           },
           chapter3Armorer: true,
+          chapter3Tradesmasher: true,
         });
 
         expect(

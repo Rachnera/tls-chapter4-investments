@@ -63,6 +63,7 @@ const initialValues = {
   chapter1Bank: true,
   chapter1x2Tower: true,
   chapter3Armorer: true,
+  chapter3Tradesmasher: true,
 };
 
 const toSelectOptions = (list) => {
@@ -172,6 +173,9 @@ const CustomForm = ({ onFinish, loading }) => {
             )}
             <Form.Item name="chapter3Armorer" valuePropName="checked">
               <Checkbox>{`You visited the Succubus Armorer during chapter 3.`}</Checkbox>
+            </Form.Item>
+            <Form.Item name="chapter3Tradesmasher" valuePropName="checked">
+              <Checkbox>{`You met Tradesmasher during chapter 3.`}</Checkbox>
             </Form.Item>
           </div>
         </Card>

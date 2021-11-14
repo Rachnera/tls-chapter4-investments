@@ -18,7 +18,12 @@ const investments = [
   },
   {
     name: 'Stineford Succubus Tower',
-    price: 800000,
+    price: ({ chapter1x2Tower }) => {
+      if (chapter1x2Tower) {
+        return 800000;
+      }
+      return 1000000;
+    },
     social: 2,
   },
   {

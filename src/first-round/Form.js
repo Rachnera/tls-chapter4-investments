@@ -61,6 +61,7 @@ const initialValues = {
   ],
   spending: 0,
   chapter1Bank: true,
+  chapter1x2Tower: true,
 };
 
 const toSelectOptions = (list) => {
@@ -147,6 +148,9 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
 
           <div className="checkboxes">
+            <Form.Item name="chapter1x2Tower" valuePropName="checked">
+              <Checkbox>{`You visited the Stineford Succubus Tower during chapter 1/2.`}</Checkbox>
+            </Form.Item>
             {!previous.includes('Premium Steel Owner') && (
               <Form.Item name="chapter1Steel" valuePropName="checked">
                 <Checkbox>{`You invested 20,000 ProN in Premium Steel during chapter 1.`}</Checkbox>

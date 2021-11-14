@@ -35,7 +35,6 @@ const Disclaimer = () => {
             <p>{`While I'm writing a software and not a walkthrough here, it will play by the same logic: Focus first on the "general case", by making a few (many) assumptions that hopefully will be true of most "good" saves, so to be able to release it to the public early. Then slowly cover the other cases in subsequent updates.`}</p>
             <p>{`Therefore, at the moment, this tool takes for granted that:`}</p>
             <ol>
-              <li>{`The Succubus Tower was visited during chapter 1.`}</li>
               <li>{`The Iron Cudgel was hired (in either chapter 1 or 2).`}</li>
               <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, and the Ardan Bank invested into.`}</li>
               <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>

@@ -35,6 +35,11 @@ table.addition td:nth-child(3) {
   justify-content: space-around;
 }
 
+.round-form .checkboxes {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
 .round-form .selects > * {
   flex: 1;
   margin-left: 24px;

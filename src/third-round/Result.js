@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import Addition from '../results/Addition';
 import { roundThreeChanges as giviniRoundThreeChanges } from '../data/givini';
 import { roundThreeChanges as takkanRoundThreeChanges } from '../data/takkan';
+import { roundThreeChanges as chaliceRoundThreeChanges } from '../data/chalice';
 
 const filterInvestmentsByCountry = (investments, country) => {
   return investments
@@ -55,6 +56,21 @@ const Result = ({
               {
                 title: `Other changes`,
                 dataSource: takkanRoundThreeChanges(decisions),
+              },
+            ]}
+          />
+        </Card>
+        <Card title={`Chalice States`} type="inner">
+          <Addition
+            startingValue={initialStandings.chalice}
+            dataSources={[
+              {
+                title: `Investments`,
+                dataSource: filterInvestmentsByCountry(investments, 'chalice'),
+              },
+              {
+                title: `Other changes`,
+                dataSource: chaliceRoundThreeChanges(decisions),
               },
             ]}
           />

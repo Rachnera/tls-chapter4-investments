@@ -185,6 +185,7 @@ describe('combine', () => {
       social: 1,
       givini: 0,
       takkan: 3,
+      chalice: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -192,6 +193,7 @@ describe('combine', () => {
           profits: 25000,
           social: 1,
           takkan: 3,
+          chalice: 0,
         },
       ],
     });
@@ -220,6 +222,7 @@ describe('combine', () => {
       social: 2,
       givini: 0,
       takkan: 5,
+      chalice: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -227,6 +230,7 @@ describe('combine', () => {
           profits: 25000,
           social: 1,
           takkan: 3,
+          chalice: 0,
         },
         {
           name: 'Booze Shack',
@@ -234,6 +238,7 @@ describe('combine', () => {
           profits: 50000,
           social: 1,
           takkan: 2,
+          chalice: 0,
         },
       ],
     });
@@ -247,6 +252,7 @@ describe('combine', () => {
         ],
         {
           previousInvestments: ['Orc Pools Upgrade'],
+          chapter3Tradesmasher: true,
         }
       )
     ).toEqual({
@@ -255,12 +261,14 @@ describe('combine', () => {
       social: 5,
       givini: 0,
       takkan: 15,
+      chalice: 0,
       investments: [
         {
           name: "Tradesmasher's Guild",
           price: 350000,
           profits: 125000,
           takkan: 5,
+          chalice: 0,
         },
         {
           name: 'Orcish Democracy',
@@ -268,21 +276,27 @@ describe('combine', () => {
           social: 5,
           profits: 0,
           takkan: 10,
+          chalice: 0,
         },
       ],
     });
   });
   test('tradesmasher varying price', () => {
-    expect(inv("Tradesmasher's Guild").profits({})).toBe(50000);
+    expect(inv("Tradesmasher's Guild").profits({})).toBe(25000);
+    expect(
+      inv("Tradesmasher's Guild").profits({ chapter3Tradesmasher: true })
+    ).toBe(50000);
     expect(
       inv("Tradesmasher's Guild").profits({
         previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
+        chapter3Tradesmasher: true,
       })
     ).toBe(125000);
     expect(
       inv("Tradesmasher's Guild").profits({
         previousInvestments: ['Givini Orc Merchant', 'Orc Pools Upgrade'],
         gawnfallTakkan: 'major',
+        chapter3Tradesmasher: true,
       })
     ).toBe(150000);
   });
@@ -293,12 +307,14 @@ describe('combine', () => {
       social: 0,
       givini: 5,
       takkan: 0,
+      chalice: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
           price: 100000,
           profits: 25000,
           givini: 5,
+          chalice: 0,
         },
       ],
     });
@@ -310,12 +326,14 @@ describe('combine', () => {
       social: 0,
       givini: 5,
       takkan: 0,
+      chalice: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
           price: 500000,
           profits: 200000,
           givini: 5,
+          chalice: 0,
         },
       ],
     });
@@ -333,12 +351,14 @@ describe('combine', () => {
       social: 3,
       givini: 20,
       takkan: 4,
+      chalice: 4,
       investments: [
         {
           name: 'Givini Orc Merchant',
           price: 100000,
           profits: 100000,
           givini: 5,
+          chalice: 0,
         },
         {
           name: 'Bank of Givini',
@@ -346,6 +366,7 @@ describe('combine', () => {
           profits: 300000,
           givini: 5,
           takkan: 2,
+          chalice: 2,
         },
         {
           name: 'War Monument',
@@ -354,8 +375,19 @@ describe('combine', () => {
           social: 3,
           profits: 0,
           takkan: 2,
+          chalice: 2,
         },
       ],
+    });
+  });
+  test('Lustlord Temples Chalice States score', () => {
+    expect(combine(invs('Lustlord Temples'), {})).toMatchObject({
+      chalice: 7,
+    });
+    expect(
+      combine(invs('Lustlord Temples'), { lustlordStatuesBought: true })
+    ).toMatchObject({
+      chalice: 5,
     });
   });
 });
@@ -373,13 +405,14 @@ describe('best', () => {
   test('best is buying cheapest thing', () => {
     expect(
       best({
-        investments: invs('Succubus Armorer', 'Givini Smithing'),
-        money: 250000,
+        investments: invs('Givini Mage Guild', 'Denmiel Mushrooms'),
+        money: 1000000,
+        chapter3Armorer: true,
       })
     ).toMatchObject({
-      price: 100000,
-      profits: 10000,
-      investments: invs('Succubus Armorer'),
+      price: 105000,
+      profits: 40000,
+      investments: invs('Denmiel Mushrooms'),
     });
   });
 
@@ -472,6 +505,7 @@ describe('best', () => {
             'Orc Pools Upgrade',
             'Orcish Democracy',
           ],
+          chapter3Tradesmasher: true,
         },
       })
     ).toMatchObject({
@@ -549,6 +583,7 @@ describe('best', () => {
         context: {
           takkan: 34,
           completedResearch: ['orc'],
+          chapter3Tradesmasher: true,
         },
       })
     ).toMatchObject({
@@ -567,11 +602,12 @@ describe('best', () => {
   test('reserve', () => {
     expect(
       best({
-        investments: invs('Bank of Givini', 'Succubus Armorer'),
-        money: 500000,
+        investments: invs('Bank of Givini', 'Givini Smithing'),
+        money: 600000,
         otherRequirements: {
           reserve: 400000,
         },
+        chapter3Armorer: true,
       })
     ).toMatchObject({
       price: 350000,
@@ -608,6 +644,9 @@ describe('finest', () => {
         giviniStart: 18,
         giviniExtra: 6,
         chapter3Infrastructure: true,
+        chapter1Bank: true,
+        chapter3Armorer: true,
+        chapter3Tradesmasher: true,
       });
 
       expect(
@@ -665,6 +704,9 @@ describe('finest', () => {
         otherRequirements: {
           mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
         },
+        chapter1Bank: true,
+        chapter3Armorer: true,
+        chapter3Tradesmasher: true,
       });
 
       expect(
@@ -719,6 +761,8 @@ describe('finest', () => {
             mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
             banned: ['Succubus Armorer'],
           },
+          chapter3Armorer: true,
+          chapter3Tradesmasher: true,
         });
 
         expect(
@@ -771,6 +815,8 @@ describe('finest', () => {
             mandatory: ['Hall of Mental Strength', 'Orc Pools Upgrade'],
             banned: ['Succubus Armorer', 'Hall of Mental Strength'],
           },
+          chapter3Armorer: true,
+          chapter3Tradesmasher: true,
         });
 
         expect(

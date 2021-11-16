@@ -18,7 +18,12 @@ const investments = [
   },
   {
     name: 'Stineford Succubus Tower',
-    price: 800000,
+    price: ({ chapter1x2Tower }) => {
+      if (chapter1x2Tower) {
+        return 800000;
+      }
+      return 1000000;
+    },
     social: 2,
   },
   {
@@ -31,12 +36,14 @@ const investments = [
     price: 400000,
     profits: 185000,
     givini: 1,
+    chalice: 1,
   },
   {
     name: 'Yhilini Succubi Trade',
     price: ({ chapter3Infrastructure }) =>
       chapter3Infrastructure ? 400000 : 550000,
     profits: 200000,
+    chalice: 2,
   },
   {
     name: 'Yhilini Brothel Reform',
@@ -50,7 +57,12 @@ const investments = [
   },
   {
     name: 'Yhilini Bank Core Lender',
-    price: 450000,
+    price: ({ chapter1Bank }) => {
+      if (chapter1Bank) {
+        return 450000;
+      }
+      return 500000;
+    },
     profits: 150000,
   },
   {
@@ -94,13 +106,20 @@ const investments = [
   },
   {
     name: 'Succubus Armorer',
-    price: 100000,
+    price: ({ chapter3Armorer }) => {
+      if (chapter3Armorer) {
+        return 100000;
+      }
+      return 150000;
+    },
     profits: 10000,
+    chalice: 2,
   },
   {
     name: 'Gasm Falls Trade',
     price: 275000,
     profits: 110000,
+    chalice: 2,
   },
   {
     name: 'Givini Tunnels',
@@ -108,6 +127,7 @@ const investments = [
     profits: 300000,
     givini: 3,
     takkan: 3,
+    chalice: 3,
   },
   {
     name: 'Lustlord Temples',
@@ -118,6 +138,12 @@ const investments = [
       return 50000 + 750000;
     },
     profits: 50000,
+    chalice: ({ lustlordStatuesBought }) => {
+      if (lustlordStatuesBought) {
+        return 5;
+      }
+      return 2 + 5;
+    },
   },
   {
     name: 'Succubus Band Tour',
@@ -131,11 +157,13 @@ const investments = [
     name: 'Gasm Falls Water Cleanup',
     price: 250000,
     social: 1,
+    chalice: 5,
   },
   {
     name: 'Orc Tunnels',
     price: 200000,
     social: 1,
+    chalice: 5,
   },
   {
     name: 'Givini Smithing',
@@ -190,6 +218,7 @@ const investments = [
     givini: 2,
     social: 1,
     takkan: 1,
+    chalice: 1,
   },
   {
     name: 'Bank of Givini',
@@ -197,6 +226,7 @@ const investments = [
     profits: 300000,
     givini: 5,
     takkan: 2,
+    chalice: 2,
   },
   {
     name: 'Givini Mage Guild',
@@ -210,6 +240,7 @@ const investments = [
     givini: 10,
     social: 3,
     takkan: 2,
+    chalice: 2,
   },
   {
     name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
@@ -247,9 +278,10 @@ const investments = [
       investments = [],
       previousInvestments = [],
       gawnfallTakkan,
+      chapter3Tradesmasher,
     }) => {
       const guildScore =
-        1 +
+        (chapter3Tradesmasher ? 1 : 0) +
         [...previousInvestments, ...investments.map(({ name }) => name)].filter(
           (name) => {
             return [
@@ -263,7 +295,10 @@ const investments = [
         ).length +
         (gawnfallTakkan === 'major' ? 1 : 0);
 
-      if (guildScore < 2) {
+      if (guildScore < 1) {
+        return 25000;
+      }
+      if (guildScore === 1) {
         return 50000;
       }
       if (guildScore === 2) {

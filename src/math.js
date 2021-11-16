@@ -134,19 +134,23 @@ export const combine = (investments, context = {}) => {
   let social = 0;
   let givini = 0;
   let takkan = 0;
+  let chalice = 0;
   let computedInvestments = [];
 
   investments.forEach((investment) => {
     const invProfits = comp(investment.profits, updatedContext);
+    const chaliceScore = comp(investment.chalice, updatedContext);
 
     price += investment.price;
     profits += invProfits;
     social += investment.social || 0;
     givini += investment.givini || 0;
     takkan += investment.takkan || 0;
+    chalice += chaliceScore;
     computedInvestments.push({
       ...investment,
       profits: invProfits,
+      chalice: chaliceScore,
     });
   });
 
@@ -164,6 +168,7 @@ export const combine = (investments, context = {}) => {
     social,
     givini,
     takkan,
+    chalice,
     investments: computedInvestments,
   };
 };

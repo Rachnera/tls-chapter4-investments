@@ -6,6 +6,7 @@ import ScrollTo from '../results/ScrollTo';
 import { roundThreeValue as giviniRoundThreeValue } from '../data/givini';
 import { roundThreeValue as takkanRoundThreeValue } from '../data/takkan';
 import investmentsList from '../data/investments';
+import { roundThreeValue as chaliceRoundThreeValue } from '../data/chalice';
 
 const { Title } = Typography;
 
@@ -126,6 +127,7 @@ const onFinish = async ({
     gawnfallMother,
     merchantSolution3,
     gawnfallHigh,
+    lustlordStatuesBought: yelarel === 'min',
   };
   let mandatory = [...mandatory1, ...mandatory2];
   if (yelarel === 'max') {
@@ -137,7 +139,7 @@ const onFinish = async ({
     gawnfallTakkan,
     gawnfallMother,
     gawnfallArdford,
-    lustlordStatuesBought: yelarel === 'min',
+    lustlordStatuesBought: decisions.lustlordStatuesBought,
   };
 
   const mercantileMoney = (() => {
@@ -188,6 +190,7 @@ const onFinish = async ({
     ),
     givini: giviniRoundThreeValue(decisions),
     takkan: takkanRoundThreeValue(decisions),
+    chalice: chaliceRoundThreeValue(decisions),
     list: nonInvestmentChangesList,
   };
 

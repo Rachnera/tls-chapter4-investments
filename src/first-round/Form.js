@@ -60,6 +60,10 @@ const initialValues = {
     'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
   ],
   spending: 0,
+  chapter1Bank: true,
+  chapter1x2Tower: true,
+  chapter3Armorer: true,
+  chapter3Tradesmasher: true,
 };
 
 const toSelectOptions = (list) => {
@@ -146,9 +150,17 @@ const CustomForm = ({ onFinish, loading }) => {
           </Form.Item>
 
           <div className="checkboxes">
+            <Form.Item name="chapter1x2Tower" valuePropName="checked">
+              <Checkbox>{`You visited the Stineford Succubus Tower during chapter 1/2.`}</Checkbox>
+            </Form.Item>
             {!previous.includes('Premium Steel Owner') && (
               <Form.Item name="chapter1Steel" valuePropName="checked">
                 <Checkbox>{`You invested 20,000 ProN in Premium Steel during chapter 1.`}</Checkbox>
+              </Form.Item>
+            )}
+            {!previous.includes('Yhilini Bank Core Lender') && (
+              <Form.Item name="chapter1Bank" valuePropName="checked">
+                <Checkbox>{`You invested in the Yhilin Bank during chapter 1.`}</Checkbox>
               </Form.Item>
             )}
             {!(
@@ -159,6 +171,12 @@ const CustomForm = ({ onFinish, loading }) => {
                 <Checkbox>{`You funded Yhilin Infrastructure during chapter 3.`}</Checkbox>
               </Form.Item>
             )}
+            <Form.Item name="chapter3Armorer" valuePropName="checked">
+              <Checkbox>{`You visited the Succubus Armorer during chapter 3.`}</Checkbox>
+            </Form.Item>
+            <Form.Item name="chapter3Tradesmasher" valuePropName="checked">
+              <Checkbox>{`You met Tradesmasher during chapter 3.`}</Checkbox>
+            </Form.Item>
           </div>
         </Card>
       </div>
@@ -247,6 +265,10 @@ const CustomForm = ({ onFinish, loading }) => {
           <Form.Item label={`Rose's house magical items`} name="magicalItems">
             <Select
               options={[
+                {
+                  value: 'chalice',
+                  label: `Chalice States`,
+                },
                 {
                   value: 'givini',
                   label: `Givini`,

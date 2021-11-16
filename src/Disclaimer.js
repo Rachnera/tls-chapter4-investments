@@ -35,11 +35,8 @@ const Disclaimer = () => {
             <p>{`While I'm writing a software and not a walkthrough here, it will play by the same logic: Focus first on the "general case", by making a few (many) assumptions that hopefully will be true of most "good" saves, so to be able to release it to the public early. Then slowly cover the other cases in subsequent updates.`}</p>
             <p>{`Therefore, at the moment, this tool takes for granted that:`}</p>
             <ol>
-              <li>{`The Succubus Tower was visited during chapter 1.`}</li>
-              <li>{`Simon invested in the bank during chapter 1.`}</li>
               <li>{`The Iron Cudgel was hired (in either chapter 1 or 2).`}</li>
-              <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, the Order of Silence funded, and the Ardan Bank invested into.`}</li>
-              <li>{`Tradesmasher and the Succubus Armorer were met during chapter 3.`}</li>
+              <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, and the Ardan Bank invested into.`}</li>
               <li>{`The three unique Trades (New Givini, Tak'Kan and Chalice States) were bought at the end of chapter 3.`}</li>
               <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>
               <li>{`Chapter 3 in general and the war in particular were good enough for all petitions favorable to Givini to appear.`}</li>

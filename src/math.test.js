@@ -185,6 +185,7 @@ describe('combine', () => {
       social: 1,
       givini: 0,
       takkan: 3,
+      chalice: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -220,6 +221,7 @@ describe('combine', () => {
       social: 2,
       givini: 0,
       takkan: 5,
+      chalice: 0,
       investments: [
         {
           name: 'Hall of Mental Strength',
@@ -256,6 +258,7 @@ describe('combine', () => {
       social: 5,
       givini: 0,
       takkan: 15,
+      chalice: 0,
       investments: [
         {
           name: "Tradesmasher's Guild",
@@ -299,6 +302,7 @@ describe('combine', () => {
       social: 0,
       givini: 5,
       takkan: 0,
+      chalice: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -316,6 +320,7 @@ describe('combine', () => {
       social: 0,
       givini: 5,
       takkan: 0,
+      chalice: 0,
       investments: [
         {
           name: 'Givini Orc Merchant',
@@ -339,6 +344,7 @@ describe('combine', () => {
       social: 3,
       givini: 20,
       takkan: 4,
+      chalice: 4,
       investments: [
         {
           name: 'Givini Orc Merchant',

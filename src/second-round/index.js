@@ -6,6 +6,7 @@ import { price as headquartersPrice } from './Headquarters';
 import { roundTwoValue as takkanRoundTwoValue } from '../data/takkan';
 import { Typography } from 'antd';
 import ScrollTo from '../results/ScrollTo';
+import { roundTwoValue as chaliceRoundTwoValue } from '../data/chalice';
 
 const { Title } = Typography;
 
@@ -72,6 +73,7 @@ const onFinish = async ({
     social: 0,
     givini: giviniRoundTwoValue(decisions),
     takkan: takkanRoundTwoValue(decisions),
+    chalice: chaliceRoundTwoValue(decisions),
     list: nonInvestmentChangesList,
   };
 

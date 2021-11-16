@@ -10,6 +10,10 @@ import {
   roundOneValue as takkanRoundOneValue,
 } from '../data/takkan';
 import ScrollTo from '../results/ScrollTo';
+import {
+  baseValue as chaliceBaseValue,
+  roundOneValue as chaliceRoundOneValue,
+} from '../data/chalice';
 
 const socialRequirement = (
   startingSocial,
@@ -58,6 +62,7 @@ const buildNonInvestmentsChange = ({ decisions, spending }) => {
   return {
     givini: giviniRoundOneValue(decisions),
     takkan: takkanRoundOneValue(decisions),
+    chalice: chaliceRoundOneValue(decisions),
     money: nonInvestmentChangesList.reduce(
       (acc, { money = 0 }) => acc + money,
       0
@@ -147,6 +152,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     social: startingSocial,
     givini: giviniBaseValue({ chapter3Investments: previous }),
     takkan: takkanBaseValue(),
+    chalice: chaliceBaseValue({ initialInvestments: previous }),
   };
 
   const decisions = {

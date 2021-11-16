@@ -1,3 +1,9 @@
+const sum = (list) =>
+  list.reduce(
+    (acc, { values }) => acc + values.reduce((acc, value) => acc + value, 0),
+    0
+  );
+
 export const startingValue = 10;
 
 export const preliminaryChanges = ({ initialInvestments }) => {
@@ -23,6 +29,9 @@ export const preliminaryChanges = ({ initialInvestments }) => {
   ].filter(Boolean);
 };
 
+export const baseValue = ({ initialInvestments }) =>
+  startingValue + sum(preliminaryChanges({ initialInvestments }));
+
 export const roundOneChanges = ({ magicalItems }) => {
   return [
     magicalItems === 'chalice' && {
@@ -36,3 +45,17 @@ export const roundOneChanges = ({ magicalItems }) => {
     },
   ].filter(Boolean);
 };
+
+export const roundOneValue = (...params) => sum(roundOneChanges(...params));
+
+export const roundTwoChanges = () => {
+  return [
+    {
+      label: `Chalice States Trade`,
+      values: [1],
+      explanation: `At the end of the round`,
+    },
+  ];
+};
+
+export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));

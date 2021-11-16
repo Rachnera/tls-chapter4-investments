@@ -2,6 +2,7 @@ import Ledger from '../../results/Ledger';
 import { Card } from 'antd';
 import Givini from './Givini';
 import Takkan from './Takkan';
+import Chalice from './Chalice';
 
 const Result = ({
   initialStandings,
@@ -33,6 +34,13 @@ const Result = ({
             takkanScore={initialStandings.takkan + investmentChanges.takkan}
             roundOneResearch={roundOneDecisions.research}
             previousInvestments={initialStandings.investments}
+          />
+        </Card>
+        <Card title={`Chalice States`} type="inner">
+          <Chalice
+            startingValue={initialStandings.chalice}
+            roundTwoInvestments={investmentChanges.investments}
+            decisions={decisions}
           />
         </Card>
       </div>

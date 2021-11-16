@@ -193,6 +193,7 @@ describe('combine', () => {
           profits: 25000,
           social: 1,
           takkan: 3,
+          chalice: 0,
         },
       ],
     });
@@ -229,6 +230,7 @@ describe('combine', () => {
           profits: 25000,
           social: 1,
           takkan: 3,
+          chalice: 0,
         },
         {
           name: 'Booze Shack',
@@ -236,6 +238,7 @@ describe('combine', () => {
           profits: 50000,
           social: 1,
           takkan: 2,
+          chalice: 0,
         },
       ],
     });
@@ -265,6 +268,7 @@ describe('combine', () => {
           price: 350000,
           profits: 125000,
           takkan: 5,
+          chalice: 0,
         },
         {
           name: 'Orcish Democracy',
@@ -272,6 +276,7 @@ describe('combine', () => {
           social: 5,
           profits: 0,
           takkan: 10,
+          chalice: 0,
         },
       ],
     });
@@ -309,6 +314,7 @@ describe('combine', () => {
           price: 100000,
           profits: 25000,
           givini: 5,
+          chalice: 0,
         },
       ],
     });
@@ -327,6 +333,7 @@ describe('combine', () => {
           price: 500000,
           profits: 200000,
           givini: 5,
+          chalice: 0,
         },
       ],
     });
@@ -351,6 +358,7 @@ describe('combine', () => {
           price: 100000,
           profits: 100000,
           givini: 5,
+          chalice: 0,
         },
         {
           name: 'Bank of Givini',
@@ -370,6 +378,16 @@ describe('combine', () => {
           chalice: 2,
         },
       ],
+    });
+  });
+  test('Lustlord Temples Chalice States score', () => {
+    expect(combine(invs('Lustlord Temples'), {})).toMatchObject({
+      chalice: 7,
+    });
+    expect(
+      combine(invs('Lustlord Temples'), { lustlordStatuesBought: true })
+    ).toMatchObject({
+      chalice: 5,
     });
   });
 });

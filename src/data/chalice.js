@@ -59,3 +59,31 @@ export const roundTwoChanges = () => {
 };
 
 export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
+
+export const roundThreeChanges = ({
+  gawnfallMercantile,
+  gawnfallTakkan,
+  lustlordStatuesBought,
+}) => {
+  return [
+    lustlordStatuesBought && {
+      label: `New Lustlord Statues`,
+      values: [2],
+    },
+    gawnfallTakkan === 'major' && {
+      label: `Gawnfall: Tak'Kan vote`,
+      values: [2],
+    },
+    ['excellent', 'good'].includes(gawnfallMercantile) && {
+      label: `Gawnfall: Mercantile solution`,
+      values: [1],
+    },
+    {
+      label: `Chalice States Trade`,
+      values: [1],
+      explanation: `At the end of the round`,
+    },
+  ].filter(Boolean);
+};
+
+export const roundThreeValue = (...params) => sum(roundThreeChanges(...params));

@@ -138,8 +138,12 @@ const investments = [
       return 50000 + 750000;
     },
     profits: 50000,
-    //FIXME Should be dependent on "lustlordStatuesBought" too
-    chalice: 2 + 5,
+    chalice: ({ lustlordStatuesBought }) => {
+      if (lustlordStatuesBought) {
+        return 5;
+      }
+      return 2 + 5;
+    },
   },
   {
     name: 'Succubus Band Tour',

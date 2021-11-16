@@ -266,6 +266,10 @@ const CustomForm = ({ onFinish, loading }) => {
             <Select
               options={[
                 {
+                  value: 'chalice',
+                  label: `Chalice States`,
+                },
+                {
                   value: 'givini',
                   label: `Givini`,
                 },

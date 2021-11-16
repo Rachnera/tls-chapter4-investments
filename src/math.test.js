@@ -352,6 +352,7 @@ describe('combine', () => {
           profits: 300000,
           givini: 5,
           takkan: 2,
+          chalice: 2,
         },
         {
           name: 'War Monument',
@@ -360,6 +361,7 @@ describe('combine', () => {
           social: 3,
           profits: 0,
           takkan: 2,
+          chalice: 2,
         },
       ],
     });

@@ -36,12 +36,14 @@ const investments = [
     price: 400000,
     profits: 185000,
     givini: 1,
+    chalice: 1,
   },
   {
     name: 'Yhilini Succubi Trade',
     price: ({ chapter3Infrastructure }) =>
       chapter3Infrastructure ? 400000 : 550000,
     profits: 200000,
+    chalice: 2,
   },
   {
     name: 'Yhilini Brothel Reform',
@@ -111,11 +113,13 @@ const investments = [
       return 150000;
     },
     profits: 10000,
+    chalice: 2,
   },
   {
     name: 'Gasm Falls Trade',
     price: 275000,
     profits: 110000,
+    chalice: 2,
   },
   {
     name: 'Givini Tunnels',
@@ -123,6 +127,7 @@ const investments = [
     profits: 300000,
     givini: 3,
     takkan: 3,
+    chalice: 3,
   },
   {
     name: 'Lustlord Temples',
@@ -133,6 +138,8 @@ const investments = [
       return 50000 + 750000;
     },
     profits: 50000,
+    //FIXME Should be dependent on "lustlordStatuesBought" too
+    chalice: 2 + 5,
   },
   {
     name: 'Succubus Band Tour',
@@ -146,11 +153,13 @@ const investments = [
     name: 'Gasm Falls Water Cleanup',
     price: 250000,
     social: 1,
+    chalice: 5,
   },
   {
     name: 'Orc Tunnels',
     price: 200000,
     social: 1,
+    chalice: 5,
   },
   {
     name: 'Givini Smithing',
@@ -205,6 +214,7 @@ const investments = [
     givini: 2,
     social: 1,
     takkan: 1,
+    chalice: 1,
   },
   {
     name: 'Bank of Givini',
@@ -212,6 +222,7 @@ const investments = [
     profits: 300000,
     givini: 5,
     takkan: 2,
+    chalice: 2,
   },
   {
     name: 'Givini Mage Guild',
@@ -225,6 +236,7 @@ const investments = [
     givini: 10,
     social: 3,
     takkan: 2,
+    chalice: 2,
   },
   {
     name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",

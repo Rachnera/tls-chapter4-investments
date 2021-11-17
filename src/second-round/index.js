@@ -71,9 +71,9 @@ const onFinish = async ({
     ),
     profits: 0,
     social: 0,
-    givini: giviniRoundTwoValue(decisions),
-    takkan: takkanRoundTwoValue(decisions),
-    chalice: chaliceRoundTwoValue(decisions),
+    givini: giviniRoundTwoValue(decisions, initialStandings.investments),
+    takkan: takkanRoundTwoValue(decisions, initialStandings.investments),
+    chalice: chaliceRoundTwoValue(decisions, initialStandings.investments),
     list: nonInvestmentChangesList,
   };
 

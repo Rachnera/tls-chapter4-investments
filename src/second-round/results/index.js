@@ -21,24 +21,23 @@ const Result = ({
       <div>
         <Card title={`New Givini`} type="inner">
           <Givini
-            startingValue={initialStandings.givini}
+            initialStandings={initialStandings}
             roundTwoInvestments={investmentChanges.investments}
             decisions={decisions}
           />
         </Card>
         <Card title={`Tak'Kan`} type="inner">
           <Takkan
-            startingValue={initialStandings.takkan}
+            initialStandings={initialStandings}
             roundTwoInvestments={investmentChanges.investments}
             decisions={decisions}
             takkanScore={initialStandings.takkan + investmentChanges.takkan}
             roundOneResearch={roundOneDecisions.research}
-            previousInvestments={initialStandings.investments}
           />
         </Card>
         <Card title={`Chalice States`} type="inner">
           <Chalice
-            startingValue={initialStandings.chalice}
+            initialStandings={initialStandings}
             roundTwoInvestments={investmentChanges.investments}
             decisions={decisions}
           />

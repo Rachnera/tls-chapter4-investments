@@ -37,7 +37,15 @@ const giviniRequirement = ({ giviniStart, giviniExtra }) => {
   return absoluteRequirement - giviniStart - giviniExtra + offset;
 };
 
-const buildNonInvestmentsChange = ({ decisions, spending }) => {
+const buildNonInvestmentsChange = ({
+  decisions,
+  spending,
+  initialStandings,
+}) => {
+  const trades = initialStandings.investments.filter((name) =>
+    ['New Givini Trade', "Tak'Kan Trade", 'Chalice States Trade'].includes(name)
+  );
+
   const { jhenno } = decisions;
 
   const nonInvestmentChangesList = [
@@ -49,9 +57,9 @@ const buildNonInvestmentsChange = ({ decisions, spending }) => {
       name: `Succession crisis' reward (best result)`,
       social: 3,
     },
-    {
-      name: `The Three Trades become less profitable`,
-      profits: -300000,
+    trades.length > 0 && {
+      name: `The Trades become less profitable`,
+      profits: -100000 * trades.length,
     },
     !!spending && {
       name: `Other spending`,
@@ -60,9 +68,9 @@ const buildNonInvestmentsChange = ({ decisions, spending }) => {
   ].filter(Boolean);
 
   return {
-    givini: giviniRoundOneValue(decisions),
-    takkan: takkanRoundOneValue(decisions),
-    chalice: chaliceRoundOneValue(decisions),
+    givini: giviniRoundOneValue(decisions, initialStandings.investments),
+    takkan: takkanRoundOneValue(decisions, initialStandings.investments),
+    chalice: chaliceRoundOneValue(decisions, initialStandings.investments),
     money: nonInvestmentChangesList.reduce(
       (acc, { money = 0 }) => acc + money,
       0
@@ -151,7 +159,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
     investments: previous,
     social: startingSocial,
     givini: giviniBaseValue({ chapter3Investments: previous }),
-    takkan: takkanBaseValue(),
+    takkan: takkanBaseValue(previous),
     chalice: chaliceBaseValue({ initialInvestments: previous }),
   };
 
@@ -175,6 +183,7 @@ const onFinish = async ({ values, setResult, runInWoker, setError }) => {
   const nonInvestmentChanges = buildNonInvestmentsChange({
     decisions,
     spending,
+    initialStandings,
   });
 
   const result = await compute({

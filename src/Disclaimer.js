@@ -37,7 +37,6 @@ const Disclaimer = () => {
             <ol>
               <li>{`The Iron Cudgel was hired (in either chapter 1 or 2).`}</li>
               <li>{`Through chapter 2, the AriGarda was bribed, the Merchant's Guild joined, and the Ardan Bank invested into.`}</li>
-              <li>{`The three unique Trades (New Givini, Tak'Kan and Chalice States) were bought at the end of chapter 3.`}</li>
               <li>{`Chapter 3 in general was good enough for Yhilin to reach its final state during the first investment phase of Chapter 4.`}</li>
               <li>{`Chapter 3 in general and the war in particular were good enough for all petitions favorable to Givini to appear.`}</li>
               <li>{`All such petitions were approved.`}</li>

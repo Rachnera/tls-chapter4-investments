@@ -29,7 +29,7 @@ const Givini = ({
         },
         {
           title: `Other changes`,
-          dataSource: roundOneChanges(decisions),
+          dataSource: roundOneChanges(decisions, chapter3Investments),
         },
       ]}
     />

@@ -153,3 +153,8 @@ table.addition td:nth-child(3) {
 .third-round-form .gawnfall .ant-alert {
   margin-bottom: 18px;
 }
+
+.first-round-form .trades .ant-checkbox-group > * {
+  margin-left: 12px;
+  margin-right: 12px;
+}

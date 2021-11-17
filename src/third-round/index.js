@@ -188,9 +188,9 @@ const onFinish = async ({
       (acc, { social }) => acc + (social || 0),
       0
     ),
-    givini: giviniRoundThreeValue(decisions),
-    takkan: takkanRoundThreeValue(decisions),
-    chalice: chaliceRoundThreeValue(decisions),
+    givini: giviniRoundThreeValue(decisions, initialStandings.investments),
+    takkan: takkanRoundThreeValue(decisions, initialStandings.investments),
+    chalice: chaliceRoundThreeValue(decisions, initialStandings.investments),
     list: nonInvestmentChangesList,
   };
 

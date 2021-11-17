@@ -306,7 +306,9 @@ const CustomForm = ({ onFinish, loading }) => {
             </>
           }
         />
-        <Extra />
+        <Extra
+          tooltip={`Money to be spent on investments not listed elsewhere, like headquarters upgrades.`}
+        />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

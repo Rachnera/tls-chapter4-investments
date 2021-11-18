@@ -168,13 +168,7 @@ const CustomForm = ({
                   .filter(
                     ({ name }) =>
                       !previousInvestments.includes(name) &&
-                      'Lustlord Temples' !== name &&
-                      // FIXME: Removing investments whose price can change from the list for now
-                      // Should be handled for real later
-                      ![
-                        'Denmiel Archives',
-                        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
-                      ].includes(name)
+                      'Lustlord Temples' !== name
                   )
                   .map(({ name }) => {
                     return { label: name, value: name };

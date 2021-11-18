@@ -129,7 +129,21 @@ const onFinish = async ({
     gawnfallHigh,
     lustlordStatuesBought: yelarel === 'min',
   };
-  let mandatory = [...mandatory1, ...mandatory2];
+
+  const earlyArchives = mandatory1.includes('Denmiel Archives');
+  const earlyHousing = mandatory1.includes(
+    "Tarran'Kan Housing + Tarran'Kan Trade Upgrade"
+  );
+  let mandatory = [
+    ...mandatory1.filter(
+      (name) =>
+        ![
+          'Denmiel Archives',
+          "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+        ].includes(name)
+    ),
+    ...mandatory2,
+  ];
   if (yelarel === 'max') {
     mandatory.push('Lustlord Temples');
   }
@@ -200,12 +214,18 @@ const onFinish = async ({
     money:
       initialStandings.money +
       initialStandings.profits +
-      (nonInvestmentChanges.money - mercantileMoney),
+      (nonInvestmentChanges.money - mercantileMoney) -
+      (earlyArchives ? 250000 : 0) -
+      (earlyHousing ? 1000000 + 100000 : 0),
     giviniStart: initialStandings.givini,
     giviniExtra: nonInvestmentChanges.givini,
     otherRequirements: {
       mandatory,
-      banned,
+      banned: [
+        ...banned,
+        earlyArchives && 'Denmiel Archives',
+        earlyHousing && "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+      ].filter(Boolean),
       social:
         decisions.merchantSolution3 === 'neutral'
           ? Math.max(40 - initialStandings.social, 0)
@@ -216,7 +236,9 @@ const onFinish = async ({
         (initialStandings.profits +
           nonInvestmentChanges.money +
           nonInvestmentChanges.profits +
-          projectedPastInvestmentsUpdate({ decisions, initialStandings })),
+          projectedPastInvestmentsUpdate({ decisions, initialStandings }) +
+          (earlyArchives ? 20000 : 0) +
+          (earlyHousing ? 50000 + 50000 : 0)),
     },
     list: 'gawnfall',
   };
@@ -238,6 +260,32 @@ const onFinish = async ({
     initialStandings,
     investmentChanges,
   });
+
+  if (earlyArchives) {
+    investmentChanges.price += 250000;
+    investmentChanges.money -= 250000;
+    investmentChanges.profits += 20000;
+    investmentChanges.social += 1;
+    investmentChanges.investments.push({
+      name: 'Denmiel Archives',
+      price: 250000,
+      profits: 20000,
+      social: 1,
+    });
+  }
+  if (earlyHousing) {
+    investmentChanges.price += 1000000 + 100000;
+    investmentChanges.money -= 1000000 + 100000;
+    investmentChanges.profits += 50000 + 50000;
+    investmentChanges.social += 1;
+    investmentChanges.investments.push({
+      name: "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+      price: 1000000 + 100000,
+      profits: 50000 + 50000,
+      social: 1,
+      takkan: 5 + 2,
+    });
+  }
 
   // Orri's Social
   const allInvestments = [

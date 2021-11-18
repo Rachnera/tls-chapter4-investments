@@ -5,14 +5,18 @@ import {
   roundOneChanges,
 } from '../../data/takkan';
 
-const Takkan = ({ roundOneInvestments = [], decisions = {} }) => {
+const Takkan = ({
+  roundOneInvestments = [],
+  decisions = {},
+  chapter3Investments = [],
+}) => {
   return (
     <Addition
       startingValue={startingValue}
       dataSources={[
         {
           title: `Chapter start`,
-          dataSource: preliminaryChanges(),
+          dataSource: preliminaryChanges(chapter3Investments),
         },
         {
           title: `Investments`,
@@ -25,7 +29,7 @@ const Takkan = ({ roundOneInvestments = [], decisions = {} }) => {
         },
         {
           title: `Other changes`,
-          dataSource: roundOneChanges(decisions),
+          dataSource: roundOneChanges(decisions, chapter3Investments),
         },
       ]}
     />

@@ -2,13 +2,13 @@ import Addition from '../../results/Addition';
 import { roundTwoChanges } from '../../data/chalice';
 
 const Chalice = ({
-  startingValue,
+  initialStandings,
   roundTwoInvestments = [],
   decisions = {},
 }) => {
   return (
     <Addition
-      startingValue={startingValue}
+      startingValue={initialStandings.chalice}
       dataSources={[
         {
           title: `Investments`,
@@ -21,7 +21,7 @@ const Chalice = ({
         },
         {
           title: `Other changes`,
-          dataSource: roundTwoChanges(decisions),
+          dataSource: roundTwoChanges(decisions, initialStandings.investments),
         },
       ]}
     />

@@ -9,7 +9,7 @@ export const startingValue = -5;
 export const preliminaryChanges = ({ investments }) => {
   return [
     { label: `Petitions`, values: [5, 5, 2, 2, 2] },
-    {
+    investments.includes('New Givini Trade') && {
       label: `New Givini Trade`,
       values: [5],
       explanation: `On purchase`,
@@ -24,7 +24,10 @@ export const preliminaryChanges = ({ investments }) => {
 export const baseValue = ({ chapter3Investments }) =>
   startingValue + sum(preliminaryChanges({ investments: chapter3Investments }));
 
-export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
+export const roundOneChanges = (
+  { merchantSolution, magicalItems },
+  previousInvestments
+) => {
   return [
     magicalItems === 'givini' && {
       label: `House Rose's magical items: Givini`,
@@ -40,7 +43,7 @@ export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
     },
     { label: `Givino Vinai equipment shop girl`, values: [1] },
     { label: `Givini king`, values: [1] },
-    {
+    previousInvestments.includes('New Givini Trade') && {
       label: `New Givini Trade`,
       values: [1],
       explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,
@@ -50,7 +53,7 @@ export const roundOneChanges = ({ merchantSolution, magicalItems }) => {
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
 
-export const roundTwoChanges = ({ merchantSolution2 }) => {
+export const roundTwoChanges = ({ merchantSolution2 }, previousInvestments) => {
   return [
     merchantSolution2 === 'neutral' && {
       label: `Merchant dispute: Neutral compromise`,
@@ -60,7 +63,7 @@ export const roundTwoChanges = ({ merchantSolution2 }) => {
       label: `Merchant dispute: Favor New Givini`,
       values: [2],
     },
-    {
+    previousInvestments.includes('New Givini Trade') && {
       label: `New Givini Trade`,
       values: [1],
       explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,
@@ -70,11 +73,10 @@ export const roundTwoChanges = ({ merchantSolution2 }) => {
 
 export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
 
-export const roundThreeChanges = ({
-  merchantSolution3,
-  gawnfallTakkan,
-  gawnfallMercantile,
-}) => {
+export const roundThreeChanges = (
+  { merchantSolution3, gawnfallTakkan, gawnfallMercantile },
+  previousInvestments
+) => {
   return [
     merchantSolution3 === 'neutral' && {
       label: `Merchant dispute: Neutral compromise`,
@@ -92,7 +94,7 @@ export const roundThreeChanges = ({
       label: `Gawnfall: Mercantile solution`,
       values: [1],
     },
-    {
+    previousInvestments.includes('New Givini Trade') && {
       label: `New Givini Trade`,
       values: [1],
       explanation: `At the end of the round (before profits from the Givini Orc Merchant are computed)`,

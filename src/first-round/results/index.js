@@ -27,6 +27,7 @@ const Result = ({
         </Card>
         <Card title={`Tak'Kan`} type="inner">
           <Takkan
+            chapter3Investments={initialStandings.investments}
             roundOneInvestments={investmentChanges.investments}
             decisions={decisions}
           />

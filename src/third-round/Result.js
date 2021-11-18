@@ -40,7 +40,10 @@ const Result = ({
               },
               {
                 title: `Other changes`,
-                dataSource: giviniRoundThreeChanges(decisions),
+                dataSource: giviniRoundThreeChanges(
+                  decisions,
+                  initialStandings.investments
+                ),
               },
             ]}
           />
@@ -55,7 +58,10 @@ const Result = ({
               },
               {
                 title: `Other changes`,
-                dataSource: takkanRoundThreeChanges(decisions),
+                dataSource: takkanRoundThreeChanges(
+                  decisions,
+                  initialStandings.investments
+                ),
               },
             ]}
           />
@@ -70,7 +76,10 @@ const Result = ({
               },
               {
                 title: `Other changes`,
-                dataSource: chaliceRoundThreeChanges(decisions),
+                dataSource: chaliceRoundThreeChanges(
+                  decisions,
+                  initialStandings.investments
+                ),
               },
             ]}
           />

@@ -6,26 +6,30 @@ const sum = (list) =>
 
 export const startingValue = -5;
 
-export const preliminaryChanges = () => {
+export const preliminaryChanges = (previousInvestments) => {
   return [
     { label: `Petitions`, values: [5, 2, 2, 5] },
-    {
+    previousInvestments.includes("Tak'Kan Trade") && {
       label: `Tak'Kan Trade`,
       values: [5],
       explanation: `On purchase`,
     },
-  ];
+  ].filter(Boolean);
 };
 
-export const baseValue = () => startingValue + sum(preliminaryChanges());
+export const baseValue = (...params) =>
+  startingValue + sum(preliminaryChanges(...params));
 
-export const roundOneChanges = ({ magicalItems, research }) => {
+export const roundOneChanges = (
+  { magicalItems, research },
+  previousInvestments
+) => {
   return [
     magicalItems === 'takkan' && {
       label: `House Rose's magical items: Tak'Kan`,
       values: [2],
     },
-    {
+    previousInvestments.includes("Tak'Kan Trade") && {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `At the end of the round`,
@@ -39,9 +43,9 @@ export const roundOneChanges = ({ magicalItems, research }) => {
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
 
-export const roundTwoChanges = ({ research }) => {
+export const roundTwoChanges = ({ research }, previousInvestments) => {
   return [
-    {
+    previousInvestments.includes("Tak'Kan Trade") && {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `At the end of the round`,
@@ -96,11 +100,10 @@ export const council = ({ investments = [], takkan, researches = [] }) => {
   return yes / (yes + no);
 };
 
-export const roundThreeChanges = ({
-  research,
-  gawnfallMercantile,
-  gawnfallTakkan,
-}) => {
+export const roundThreeChanges = (
+  { research, gawnfallMercantile, gawnfallTakkan },
+  previousInvestments
+) => {
   return [
     gawnfallTakkan === 'minor' && {
       label: `Gawnfall: Tak'Kan vote`,
@@ -114,7 +117,7 @@ export const roundThreeChanges = ({
       label: `Gawnfall: Mercantile solution`,
       values: [1],
     },
-    {
+    previousInvestments.includes("Tak'Kan Trade") && {
       label: `Tak'Kan Trade`,
       values: [1],
       explanation: `At the end of the round`,

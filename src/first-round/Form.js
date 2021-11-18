@@ -16,6 +16,9 @@ import Extra from '../components/form/Extra';
 const { Title } = Typography;
 
 const possiblePrevious = [
+  'New Givini Trade',
+  "Tak'Kan Trade",
+  'Chalice States Trade',
   "Min's Trade Route",
   'Yhilini Succubi Trade',
   'Yhilini Bank Core Lender',
@@ -37,6 +40,9 @@ const possiblePrevious = [
 const initialValues = {
   previous: [
     'Premium Steel Owner',
+    'New Givini Trade',
+    "Tak'Kan Trade",
+    'Chalice States Trade',
     "Min's Trade Route",
     'Yhilini Succubi Trade',
     'Eustrin Guild',
@@ -64,6 +70,7 @@ const initialValues = {
   chapter1x2Tower: true,
   chapter3Armorer: true,
   chapter3Tradesmasher: true,
+  trades: ['givini', 'takkan', 'chalice'],
 };
 
 const toSelectOptions = (list) => {
@@ -299,7 +306,9 @@ const CustomForm = ({ onFinish, loading }) => {
             </>
           }
         />
-        <Extra />
+        <Extra
+          tooltip={`Money to be spent on investments not listed elsewhere, like headquarters upgrades.`}
+        />
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

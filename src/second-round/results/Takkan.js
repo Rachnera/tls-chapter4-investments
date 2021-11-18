@@ -5,13 +5,15 @@ import { Typography } from 'antd';
 const { Text } = Typography;
 
 const Takkan = ({
-  startingValue,
+  initialStandings,
   roundTwoInvestments = [],
   decisions = {},
   roundOneResearch,
-  previousInvestments = [],
   takkanScore,
 }) => {
+  const startingValue = initialStandings.takkan;
+  const previousInvestments = initialStandings.investments;
+
   const councilResult = council({
     researches: [roundOneResearch],
     investments: [
@@ -37,7 +39,7 @@ const Takkan = ({
           },
           {
             title: `Other changes`,
-            dataSource: roundTwoChanges(decisions),
+            dataSource: roundTwoChanges(decisions, previousInvestments),
           },
         ]}
       />

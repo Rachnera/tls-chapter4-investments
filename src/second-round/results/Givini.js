@@ -2,13 +2,13 @@ import Addition from '../../results/Addition';
 import { roundTwoChanges } from '../../data/givini';
 
 const Givini = ({
-  startingValue,
+  initialStandings,
   roundTwoInvestments = [],
   decisions = {},
 }) => {
   return (
     <Addition
-      startingValue={startingValue}
+      startingValue={initialStandings.givini}
       dataSources={[
         {
           title: `Investments`,
@@ -21,7 +21,7 @@ const Givini = ({
         },
         {
           title: `Other changes`,
-          dataSource: roundTwoChanges(decisions),
+          dataSource: roundTwoChanges(decisions, initialStandings.investments),
         },
       ]}
     />

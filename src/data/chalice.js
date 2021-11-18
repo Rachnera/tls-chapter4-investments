@@ -9,7 +9,7 @@ export const startingValue = 10;
 export const preliminaryChanges = ({ initialInvestments }) => {
   return [
     { label: `Petitions`, values: [5, 5, 1, 5, 2, 2] },
-    {
+    initialInvestments.includes('Chalice States Trade') && {
       label: `Chalice States Trade`,
       values: [5],
       explanation: `On purchase`,
@@ -32,13 +32,13 @@ export const preliminaryChanges = ({ initialInvestments }) => {
 export const baseValue = ({ initialInvestments }) =>
   startingValue + sum(preliminaryChanges({ initialInvestments }));
 
-export const roundOneChanges = ({ magicalItems }) => {
+export const roundOneChanges = ({ magicalItems }, previousInvestments) => {
   return [
     magicalItems === 'chalice' && {
       label: `House Rose's magical items: Chalice States`,
       values: [2],
     },
-    {
+    previousInvestments.includes('Chalice States Trade') && {
       label: `Chalice States Trade`,
       values: [1],
       explanation: `At the end of the round`,
@@ -48,23 +48,22 @@ export const roundOneChanges = ({ magicalItems }) => {
 
 export const roundOneValue = (...params) => sum(roundOneChanges(...params));
 
-export const roundTwoChanges = () => {
+export const roundTwoChanges = (_, previousInvestments) => {
   return [
-    {
+    previousInvestments.includes('Chalice States Trade') && {
       label: `Chalice States Trade`,
       values: [1],
       explanation: `At the end of the round`,
     },
-  ];
+  ].filter(Boolean);
 };
 
 export const roundTwoValue = (...params) => sum(roundTwoChanges(...params));
 
-export const roundThreeChanges = ({
-  gawnfallMercantile,
-  gawnfallTakkan,
-  lustlordStatuesBought,
-}) => {
+export const roundThreeChanges = (
+  { gawnfallMercantile, gawnfallTakkan, lustlordStatuesBought },
+  previousInvestments
+) => {
   return [
     lustlordStatuesBought && {
       label: `New Lustlord Statues`,
@@ -78,7 +77,7 @@ export const roundThreeChanges = ({
       label: `Gawnfall: Mercantile solution`,
       values: [1],
     },
-    {
+    previousInvestments.includes('Chalice States Trade') && {
       label: `Chalice States Trade`,
       values: [1],
       explanation: `At the end of the round`,

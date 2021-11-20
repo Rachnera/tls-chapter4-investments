@@ -208,6 +208,16 @@ const onFinish = async ({
     list: nonInvestmentChangesList,
   };
 
+  let reserve = reserves + extra_reserves - initialStandings.profits;
+  reserve -= mercantileMoney;
+  reserve -= projectedPastInvestmentsUpdate({ decisions, initialStandings });
+  if (earlyArchives) {
+    reserve -= 20000;
+  }
+  if (earlyHousing) {
+    reserve -= 100000;
+  }
+
   const params = {
     ...misc,
     previousInvestments: initialStandings.investments,
@@ -230,15 +240,7 @@ const onFinish = async ({
         decisions.merchantSolution3 === 'neutral'
           ? Math.max(40 - initialStandings.social, 0)
           : 0,
-      reserve:
-        reserves +
-        extra_reserves -
-        (initialStandings.profits +
-          nonInvestmentChanges.money +
-          nonInvestmentChanges.profits +
-          projectedPastInvestmentsUpdate({ decisions, initialStandings }) +
-          (earlyArchives ? 20000 : 0) +
-          (earlyHousing ? 50000 + 50000 : 0)),
+      reserve,
     },
     list: 'gawnfall',
   };

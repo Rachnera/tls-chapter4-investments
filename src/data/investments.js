@@ -160,7 +160,7 @@ const investments = [
     chalice: 5,
   },
   {
-    name: 'Orc Tunnels',
+    name: 'Gasm Falls Orc Tunnels',
     price: 200000,
     social: 1,
     chalice: 5,
@@ -357,6 +357,12 @@ const investments = [
     name: 'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
     price: 1000 + 2000 + 5000,
     takkan: 1,
+  },
+  {
+    name: 'Aram Eustrin Embassy',
+    price: ({ eustrinEmbassy }) => {
+      return eustrinEmbassy || Infinity;
+    },
   },
 ];
 

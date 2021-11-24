@@ -10,7 +10,7 @@ const initialValues = {
   merchantSolution2: 'neutral',
   headquarters: '20/10',
   orcCouncil: 0.8,
-  mandatory: [],
+  mandatory: ['Yhilini Airship Fleet'],
   banned: [],
   spending: 0,
 };
@@ -140,11 +140,7 @@ const CustomForm = ({
                 ].filter(({ value }) => value !== previousResearch)}
               />
             </Form.Item>
-            <Mandatory
-              label={`Investments you explicitly want to buy now (example: Airships)`}
-              form={form}
-              purchased={purchasedInvestments}
-            />
+            <Mandatory form={form} purchased={purchasedInvestments} />
             <Banned
               purchased={[...purchasedInvestments, ...mandatory]}
               form={form}

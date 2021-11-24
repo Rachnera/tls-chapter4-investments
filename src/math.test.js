@@ -640,6 +640,10 @@ describe('finest', () => {
             'Bank of Givini',
             'Bank of Stineford',
           ],
+          banned: [
+            'Aram Eustrin Embassy',
+            'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+          ],
         },
         giviniStart: 18,
         giviniExtra: 6,

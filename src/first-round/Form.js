@@ -138,7 +138,7 @@ const CustomForm = ({ onFinish, loading }) => {
               <InputNumber />
             </Form.Item>
             <Form.Item
-              label={`Your social standing at the start of chapter 4`}
+              label={`Social standing at the start of chapter 4`}
               name="startingSocial"
               tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
               rules={[requiredRule]}

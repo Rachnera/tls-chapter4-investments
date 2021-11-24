@@ -60,7 +60,7 @@ const initialValues = {
   merchantSolution: 'wait',
   jhenno: 'religion',
   magicalItems: 'givini',
-  mandatory: ['Givini Orc Merchant', 'Bank of Givini'],
+  mandatory: ['Givini Orc Merchant', 'Bank of Givini', 'Bank of Stineford'],
   research: 'orc',
   banned: [
     'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',

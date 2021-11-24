@@ -160,7 +160,7 @@ const investments = [
     chalice: 5,
   },
   {
-    name: 'Orc Tunnels',
+    name: 'Gasm Falls Orc Tunnels',
     price: 200000,
     social: 1,
     chalice: 5,

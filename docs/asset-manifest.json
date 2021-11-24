@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tls-investment-advisor/static/css/main.61f895cb.chunk.css",
-    "main.js": "/tls-investment-advisor/static/js/main.634694bb.chunk.js",
-    "main.js.map": "/tls-investment-advisor/static/js/main.634694bb.chunk.js.map",
+    "main.js": "/tls-investment-advisor/static/js/main.47fe67b1.chunk.js",
+    "main.js.map": "/tls-investment-advisor/static/js/main.47fe67b1.chunk.js.map",
     "runtime-main.js": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js",
     "runtime-main.js.map": "/tls-investment-advisor/static/js/runtime-main.29bf7480.js.map",
     "static/css/2.3299c98b.chunk.css": "/tls-investment-advisor/static/css/2.3299c98b.chunk.css",
@@ -10,8 +10,8 @@
     "static/js/2.ddccfb57.chunk.js.map": "/tls-investment-advisor/static/js/2.ddccfb57.chunk.js.map",
     "static/js/3.695a0b2b.chunk.js": "/tls-investment-advisor/static/js/3.695a0b2b.chunk.js",
     "static/js/3.695a0b2b.chunk.js.map": "/tls-investment-advisor/static/js/3.695a0b2b.chunk.js.map",
-    "0e59e244d3720c51471d.worker.js": "/tls-investment-advisor/0e59e244d3720c51471d.worker.js",
-    "0e59e244d3720c51471d.worker.js.map": "/tls-investment-advisor/0e59e244d3720c51471d.worker.js.map",
+    "0289f8e37f8b057cf80f.worker.js": "/tls-investment-advisor/0289f8e37f8b057cf80f.worker.js",
+    "0289f8e37f8b057cf80f.worker.js.map": "/tls-investment-advisor/0289f8e37f8b057cf80f.worker.js.map",
     "index.html": "/tls-investment-advisor/index.html",
     "static/css/2.3299c98b.chunk.css.map": "/tls-investment-advisor/static/css/2.3299c98b.chunk.css.map",
     "static/css/main.61f895cb.chunk.css.map": "/tls-investment-advisor/static/css/main.61f895cb.chunk.css.map",
@@ -22,6 +22,6 @@
     "static/css/2.3299c98b.chunk.css",
     "static/js/2.ddccfb57.chunk.js",
     "static/css/main.61f895cb.chunk.css",
-    "static/js/main.634694bb.chunk.js"
+    "static/js/main.47fe67b1.chunk.js"
   ]
 }

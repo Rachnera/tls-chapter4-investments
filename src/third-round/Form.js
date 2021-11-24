@@ -18,7 +18,7 @@ import { nF } from '../misc';
 import Extra from '../components/form/Extra';
 
 const initialValues = {
-  mandatory1: [],
+  mandatory1: ['Givini Tunnels'],
   yelarel: 'min',
   gawnfallTakkan: 'major',
   gawnfallMercantile: 'excellent',
@@ -160,7 +160,7 @@ const CustomForm = ({
               />
             </Form.Item>
             <Form.Item
-              label={`Other investments you wish to do before the Council (example: Givini Tunnels)`}
+              label={`Other investments you wish to do before the Council`}
               name="mandatory1"
             >
               <Select

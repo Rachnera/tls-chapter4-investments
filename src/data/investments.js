@@ -358,6 +358,12 @@ const investments = [
     price: 1000 + 2000 + 5000,
     takkan: 1,
   },
+  {
+    name: 'Aram Eustrin Embassy',
+    price: ({ eustrinEmbassy }) => {
+      return eustrinEmbassy || Infinity;
+    },
+  },
 ];
 
 const ardfordOpen = ({ gawnfallArdford }) => {

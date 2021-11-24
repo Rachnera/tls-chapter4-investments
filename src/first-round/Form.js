@@ -71,6 +71,7 @@ const initialValues = {
   chapter3Armorer: true,
   chapter3Tradesmasher: true,
   trades: ['givini', 'takkan', 'chalice'],
+  eustrinEmbassy: 300000,
 };
 
 const toSelectOptions = (list) => {
@@ -140,6 +141,14 @@ const CustomForm = ({ onFinish, loading }) => {
               label={`Your social standing at the start of chapter 4`}
               name="startingSocial"
               tooltip={`In the Calculator, go to "War Investment Phase" and copy the value next to "Social Score".`}
+              rules={[requiredRule]}
+            >
+              <InputNumber />
+            </Form.Item>
+            <Form.Item
+              label={`Price of the Aram Eustrin Embassy`}
+              name="eustrinEmbassy"
+              tooltip={`In the Calculator, search for "Aram's Eustrin Embassy" and copy-paste the given prince here.`}
               rules={[requiredRule]}
             >
               <InputNumber />

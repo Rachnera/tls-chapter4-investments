@@ -62,9 +62,7 @@ const initialValues = {
   magicalItems: 'givini',
   mandatory: ['Givini Orc Merchant', 'Bank of Givini', 'Bank of Stineford'],
   research: 'orc',
-  banned: [
-    'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
-  ],
+  banned: [],
   spending: 0,
   chapter1Bank: true,
   chapter1x2Tower: true,

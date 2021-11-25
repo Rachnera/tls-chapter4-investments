@@ -10,6 +10,11 @@ import { roundThreeValue as chaliceRoundThreeValue } from '../data/chalice';
 
 const { Title } = Typography;
 
+const shadowBans = [
+  'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+  'Aram Eustrin Embassy',
+];
+
 const gawnfallSocial = ({ gawnfallMother, gawnfallHigh }) => {
   let social = 0;
 
@@ -232,6 +237,7 @@ const onFinish = async ({
     otherRequirements: {
       mandatory,
       banned: [
+        ...shadowBans,
         ...banned,
         earlyArchives && 'Denmiel Archives',
         earlyHousing && "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",

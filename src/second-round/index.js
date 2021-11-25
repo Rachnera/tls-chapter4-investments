@@ -10,6 +10,8 @@ import { roundTwoValue as chaliceRoundTwoValue } from '../data/chalice';
 
 const { Title } = Typography;
 
+const shadowBans = ['Aram Eustrin Embassy'];
+
 const socialRequirement = (initialSocial, decisions) => {
   if (decisions.merchantSolution2 === 'neutral' && initialSocial < 40) {
     return 40 - initialSocial;
@@ -92,7 +94,7 @@ const onFinish = async ({
       social: socialRequirement(initialStandings.social, decisions),
       orcCouncil: decisions.orcCouncil,
       mandatory,
-      banned,
+      banned: [...shadowBans, ...banned],
     },
   };
 

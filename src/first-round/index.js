@@ -15,6 +15,13 @@ import {
   roundOneValue as chaliceRoundOneValue,
 } from '../data/chalice';
 
+// Removing investments that serve no purpose for the algorithm here
+// They can still be forced with the "mandatory option"
+const shadowBans = [
+  'Orcish Drake Statue + Orcish Gargoyle Statue + Orcish Golden Drake Statue',
+  'Aram Eustrin Embassy',
+];
+
 const socialRequirement = (
   startingSocial,
   { strategy, jhenno, merchantSolution }
@@ -117,7 +124,7 @@ const compute = async ({
         decisions.strategy === 'succession'
           ? ['War Monument', 'Givini Mage Guild']
           : undefined,
-      banned,
+      banned: [...shadowBans, ...banned],
     },
     giviniStart,
     giviniExtra,

@@ -150,6 +150,10 @@ table.addition td:nth-child(3) {
   }
 }
 
+.third-round-form .reserves + .ant-divider {
+  margin-top: 0;
+}
+
 .third-round-form .gawnfall .ant-alert {
   margin-bottom: 18px;
 }

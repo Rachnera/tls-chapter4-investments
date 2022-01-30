@@ -34,17 +34,8 @@ const initialValues = {
   spending: 0,
 };
 
-const ghenaleseWarRelevant = [
-  'Givini Mage Guild',
-  'Mercenary Offices',
-  'Stineford Succubus Tower',
-  'War Monument',
-];
-
-const GhenaleseWarInvestments = ({ purchased }) => {
-  const missing = ghenaleseWarRelevant.filter(
-    (inv) => !purchased.includes(inv)
-  );
+const WarInvestments = ({ purchased, frontName, investments }) => {
+  const missing = investments.filter((inv) => !purchased.includes(inv));
 
   if (missing.length === 0) {
     return null;
@@ -56,13 +47,45 @@ const GhenaleseWarInvestments = ({ purchased }) => {
         <>
           {`You have yet to purchase the following investment${
             missing.length > 1 ? `s` : ''
-          }, possibly relevant on the Ghenalese front of the upcoming Erosian War: `}
+          }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
           <strong>{missing.join(', ')}</strong>
         </>
       }
       type="info"
       showIcon
       className="war-related-investments"
+    />
+  );
+};
+
+const GhenaleseWarInvestments = ({ purchased }) => {
+  return (
+    <WarInvestments
+      purchased={purchased}
+      frontName={`Ghenalese`}
+      investments={[
+        'Givini Mage Guild',
+        'Mercenary Offices',
+        'Stineford Succubus Tower',
+        'War Monument',
+      ]}
+    />
+  );
+};
+
+const ErosianWarInvestments = ({ purchased }) => {
+  return (
+    <WarInvestments
+      purchased={purchased}
+      frontName={`Erosian`}
+      investments={[
+        'Gasm Falls Orc Tunnels',
+        'Gasm Falls Water Cleanup',
+        'Lustlord Temples',
+        'Orc Pools Upgrade',
+        'Orcish Democracy',
+        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+      ]}
     />
   );
 };
@@ -376,6 +399,14 @@ const CustomForm = ({
           list="gawnfall"
         />
         <GhenaleseWarInvestments
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...mandatory,
+            ...lockedInvestments,
+          ]}
+        />
+        <ErosianWarInvestments
           purchased={[
             ...previousInvestments,
             ...mandatory1,

@@ -173,7 +173,23 @@ const investments = [
   },
   {
     name: 'Givini Orc Merchant',
-    price: ({ giviniStart: newGiviniScore = 0 }) => {
+    price: ({ giviniStart: newGiviniScore = 0, previousInvestments = [] }) => {
+      if (!previousInvestments.includes('New Givini Trade')) {
+        if (newGiviniScore < 10) {
+          return 100000;
+        }
+        if (newGiviniScore < 15) {
+          return 200000;
+        }
+        if (newGiviniScore < 25) {
+          return 300000;
+        }
+        if (newGiviniScore < 35) {
+          return 400000;
+        }
+        return 500000;
+      }
+
       if (newGiviniScore < 20) {
         return 100000;
       }

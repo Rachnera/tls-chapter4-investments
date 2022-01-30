@@ -34,6 +34,62 @@ const initialValues = {
   spending: 0,
 };
 
+const WarInvestments = ({ purchased, frontName, investments }) => {
+  const missing = investments.filter((inv) => !purchased.includes(inv));
+
+  if (missing.length === 0) {
+    return null;
+  }
+
+  return (
+    <Alert
+      message={
+        <>
+          {`You have yet to purchase the following investment${
+            missing.length > 1 ? `s` : ''
+          }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
+          <strong>{missing.join(', ')}</strong>
+        </>
+      }
+      type="info"
+      showIcon
+      className="war-related-investments"
+    />
+  );
+};
+
+const GhenaleseWarInvestments = ({ purchased }) => {
+  return (
+    <WarInvestments
+      purchased={purchased}
+      frontName={`Ghenalese`}
+      investments={[
+        'Givini Mage Guild',
+        'Mercenary Offices',
+        'Stineford Succubus Tower',
+        'War Monument',
+      ]}
+    />
+  );
+};
+
+const ErosianWarInvestments = ({ purchased }) => {
+  return (
+    <WarInvestments
+      purchased={purchased}
+      frontName={`Erosian`}
+      investments={[
+        'Gasm Falls Orc Tunnels',
+        'Gasm Falls Water Cleanup',
+        'Lustlord Temples',
+        'Orc Pools Upgrade',
+        'Orcish Democracy',
+        "Tarran'Kan Housing + Tarran'Kan Trade Upgrade",
+      ]}
+    />
+  );
+};
+
 const CustomForm = ({
   previousInvestments,
   previousResearch,
@@ -45,6 +101,14 @@ const CustomForm = ({
   const [mandatory1, setMandatory1] = useState(initialValues.mandatory1);
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
+
+  useEffect(() => {
+    form.setFieldsValue({
+      mandatory1: form
+        .getFieldValue('mandatory1')
+        .filter((inv) => !previousInvestments.includes(inv)),
+    });
+  }, [form, previousInvestments]);
 
   const availableResearch = [
     {
@@ -77,7 +141,12 @@ const CustomForm = ({
       form={form}
       onFinish={onFinish}
       onValuesChange={(_, allValues) => {
-        setMandatory1(allValues.mandatory1);
+        setMandatory1(
+          [
+            ...allValues.mandatory1,
+            allValues.yelarel === 'max' && 'Lustlord Temples',
+          ].filter(Boolean)
+        );
         setMandatory(allValues.mandatory);
         setLockedInvestments(
           postGawnfallInvestments
@@ -180,7 +249,7 @@ const CustomForm = ({
           <Card title={`Investments-related results`} type="inner">
             <Alert
               message={`Only the Succubi Accepted path is supported as of now.`}
-              type="info"
+              type="warning"
               showIcon
             />
             <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
@@ -341,6 +410,22 @@ const CustomForm = ({
             ...lockedInvestments,
           ]}
           list="gawnfall"
+        />
+        <GhenaleseWarInvestments
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...mandatory,
+            ...lockedInvestments,
+          ]}
+        />
+        <ErosianWarInvestments
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...mandatory,
+            ...lockedInvestments,
+          ]}
         />
         <Banned
           form={form}

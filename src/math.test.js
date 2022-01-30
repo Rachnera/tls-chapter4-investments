@@ -6,7 +6,13 @@ const invs = (...list) => list.map(inv);
 
 const giviniOrcMerchant = (context = {}) => {
   const investment = inv('Givini Orc Merchant');
-  return { ...investment, price: investment.price(context) };
+  return {
+    ...investment,
+    price: investment.price({
+      previousInvestments: ['New Givini Trade'],
+      ...context,
+    }),
+  };
 };
 
 describe('combinations', () => {
@@ -380,6 +386,27 @@ describe('combine', () => {
       ],
     });
   });
+  test('givini orc merchant without givini trade', () => {
+    const context = { giviniStart: 17, previousInvestments: [] };
+
+    expect(combine([giviniOrcMerchant(context)], context)).toEqual({
+      price: 300000,
+      profits: 50000,
+      social: 0,
+      givini: 5,
+      takkan: 0,
+      chalice: 0,
+      investments: [
+        {
+          name: 'Givini Orc Merchant',
+          price: 300000,
+          profits: 50000,
+          givini: 5,
+          chalice: 0,
+        },
+      ],
+    });
+  });
   test('Lustlord Temples Chalice States score', () => {
     expect(combine(invs('Lustlord Temples'), {})).toMatchObject({
       chalice: 7,
@@ -627,6 +654,8 @@ describe('finest', () => {
         'Eustrin Guild',
         "Min's Trade Route",
         'Yhilini Succubi Trade',
+
+        'New Givini Trade',
       ];
 
       const result = finest({

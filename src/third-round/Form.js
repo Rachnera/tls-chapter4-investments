@@ -102,6 +102,14 @@ const CustomForm = ({
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
 
+  useEffect(() => {
+    form.setFieldsValue({
+      mandatory1: form
+        .getFieldValue('mandatory1')
+        .filter((inv) => !previousInvestments.includes(inv)),
+    });
+  }, [form, previousInvestments]);
+
   const availableResearch = [
     {
       value: 'orc',

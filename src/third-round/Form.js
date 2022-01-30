@@ -34,6 +34,39 @@ const initialValues = {
   spending: 0,
 };
 
+const ghenaleseWarRelevant = [
+  'Givini Mage Guild',
+  'Mercenary Offices',
+  'Stineford Succubus Tower',
+  'War Monument',
+];
+
+const GhenaleseWarInvestments = ({ purchased }) => {
+  const missing = ghenaleseWarRelevant.filter(
+    (inv) => !purchased.includes(inv)
+  );
+
+  if (missing.length === 0) {
+    return null;
+  }
+
+  return (
+    <Alert
+      message={
+        <>
+          {`You have yet to purchase the following investment${
+            missing.length > 1 ? `s` : ''
+          }, possibly relevant on the Ghenalese front of the upcoming Erosian War: `}
+          <strong>{missing.join(', ')}</strong>
+        </>
+      }
+      type="info"
+      showIcon
+      className="war-related-investments"
+    />
+  );
+};
+
 const CustomForm = ({
   previousInvestments,
   previousResearch,
@@ -180,7 +213,7 @@ const CustomForm = ({
           <Card title={`Investments-related results`} type="inner">
             <Alert
               message={`Only the Succubi Accepted path is supported as of now.`}
-              type="info"
+              type="warning"
               showIcon
             />
             <Form.Item label={`Support for Tak'Kan`} name="gawnfallTakkan">
@@ -341,6 +374,14 @@ const CustomForm = ({
             ...lockedInvestments,
           ]}
           list="gawnfall"
+        />
+        <GhenaleseWarInvestments
+          purchased={[
+            ...previousInvestments,
+            ...mandatory1,
+            ...mandatory,
+            ...lockedInvestments,
+          ]}
         />
         <Banned
           form={form}

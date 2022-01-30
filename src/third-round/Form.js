@@ -133,7 +133,12 @@ const CustomForm = ({
       form={form}
       onFinish={onFinish}
       onValuesChange={(_, allValues) => {
-        setMandatory1(allValues.mandatory1);
+        setMandatory1(
+          [
+            ...allValues.mandatory1,
+            allValues.yelarel === 'max' && 'Lustlord Temples',
+          ].filter(Boolean)
+        );
         setMandatory(allValues.mandatory);
         setLockedInvestments(
           postGawnfallInvestments

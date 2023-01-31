@@ -31,10 +31,11 @@ const initialValues = {
   mandatory: [],
   banned: [],
   gawnfallHigh: 'herin_overwhelming',
-  reserves: 5000000 + 125000 + 250000,
   extra_reserves: 0,
   spending: 0,
   headquarters: '20/20',
+  ruins: true,
+  kyangan: 125000,
 };
 
 const WarInvestments = ({ purchased, frontName, investments }) => {
@@ -110,14 +111,14 @@ const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form }) 
 
   return (<>
     <Form.Item
-      label={`Keep an additionnal`}
+      label={`At headquarters`}
       name="headquarters"
     >
       <Select
         options={headquartersTargets.map(([military, magic]) => {
           const key = [military, magic].join('/');
           return {
-            label: `${nF(sum(headquartersUpgradesList[key], 'price'))} ProN, to attain Military ≥ ${military}, Magic ≥ ${magic}.`,
+            label: `Attain Military ≥ ${military}, Magic ≥ ${magic} (${nF(sum(headquartersUpgradesList[key], 'price'))} ProN)`,
             value: key,
           }
         })}
@@ -441,33 +442,50 @@ const CustomForm = ({
         />
         <Extra />
       </Card>
-      <Card title={`Saving for the next iteration`} type="inner">
+      <Card title={`Preparing for the future`} type="inner">
+        <p>{`Keep, if need be, enough cash in reserve to be able to:`}</p>
         <Form.Item
-          label={`Keep enough cash in reserve, if need be, to:`}
-          name="reserves"
+          label={`Open the ruins before the war (${nF(5000000)} ProN)`}
+          name="ruins"
+        >
+          <Radio.Group
+            options={[
+              {
+                value: true,
+                label: `Yes`,
+              },
+              {
+                value: false,
+                label: `No`,
+              },
+            ]}
+          />
+
+        </Form.Item>
+
+        <Form.Item
+          label={`In Kyangan`}
+          name="kyangan"
         >
           <Select
             options={[
               {
-                label: `Open the ruins after the war`,
+                label: `Focus on trade and agriculture (0 ProN)`,
                 value: 0,
               },
               {
-                label: `Open the ruins before the war (${nF(5000000)} ProN)`,
-                value: 5000000,
+                label: `Buy everything but the Smithing (${nF(
+                  125000
+                )} ProN)`,
+                value: 125000,
               },
               {
-                label: `Open the ruins and buy everything but the Smithing in Kyangan (${nF(
-                  5000000 + 125000
+                label: `Buy everything (${nF(
+                  125000 + 250000
                 )} ProN)`,
-                value: 5000000 + 125000,
+                value: 125000 + 250000,
               },
-              {
-                label: `Open the ruins and buy everything in Kyangan (${nF(
-                  5000000 + 125000 + 250000
-                )} ProN)`,
-                value: 5000000 + 125000 + 250000,
-              },
+
             ]}
           />
         </Form.Item>

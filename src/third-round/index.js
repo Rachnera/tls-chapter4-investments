@@ -121,10 +121,11 @@ const onFinish = async ({
     mandatory: mandatory2,
     banned,
     gawnfallHigh,
-    reserves,
     extra_reserves,
     spending,
     headquarters_price,
+    ruins,
+    kyangan,
   } = values;
   const decisions = {
     research,
@@ -215,7 +216,15 @@ const onFinish = async ({
     list: nonInvestmentChangesList,
   };
 
-  let reserve = reserves + headquarters_price + extra_reserves - initialStandings.profits;
+  let reserve = 0;
+  if (ruins) {
+    reserve += 5000000;
+  }
+  reserve += kyangan;
+  reserve += headquarters_price;
+  reserve += extra_reserves;
+
+  reserve -= initialStandings.profits;
   reserve -= mercantileMoney;
   reserve -= projectedPastInvestmentsUpdate({ decisions, initialStandings });
   if (earlyArchives) {

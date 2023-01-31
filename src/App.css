@@ -138,12 +138,6 @@ table.addition td:nth-child(3) {
   margin-right: 12px;
 }
 
-.third-round-form .reserves {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
 @media (min-width: 768px) {
   .third-round-form .reserves > *:first-child {
     min-width: 720px;

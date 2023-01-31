@@ -1,5 +1,4 @@
-import { Table } from 'antd';
-import { nF } from '../misc';
+import BaseHeadquarters from '../components/Headquarters'
 
 const base = [
   {
@@ -106,34 +105,7 @@ const plusFifteenMilitary = [
   },
 ];
 
-const renderPlus = (number) => `+${number}`;
-
-const columns = [
-  {
-    title: `Upgrade`,
-    dataIndex: 'key',
-  },
-  {
-    title: `Price`,
-    dataIndex: 'price',
-    render: (number) => nF(number),
-    sorter: (a, b) => a.price - b.price,
-  },
-  {
-    title: `Military`,
-    dataIndex: 'military',
-    render: renderPlus,
-    sorter: (a, b) => a.military - b.military,
-  },
-  {
-    title: `Magic`,
-    dataIndex: 'magic',
-    render: renderPlus,
-    sorter: (a, b) => a.magic - b.magic,
-  },
-];
-
-const dataSource = ({ research, military, magic }) => {
+export const dataSource = ({ research, military, magic }) => {
   if (research === 'defense') {
     if (military <= 10 && magic === 20) {
       return [...defense, ...base];
@@ -167,28 +139,8 @@ const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
 export const price = (params) => sum(dataSource(params), 'price');
 
 const Headquarters = ({ research, military, magic }) => {
-  const source = dataSource({ research, military, magic });
-
   return (
-    <div className="headquarters-upgrades">
-      <Table
-        dataSource={source}
-        columns={columns}
-        pagination={false}
-        summary={() => {
-          return (
-            <Table.Summary.Row>
-              <Table.Summary.Cell>{`Total`}</Table.Summary.Cell>
-              <Table.Summary.Cell>
-                {nF(sum(source, 'price'))}
-              </Table.Summary.Cell>
-              <Table.Summary.Cell>{sum(source, 'military')}</Table.Summary.Cell>
-              <Table.Summary.Cell>{sum(source, 'magic')}</Table.Summary.Cell>
-            </Table.Summary.Row>
-          );
-        }}
-      />
-    </div>
+    <BaseHeadquarters dataSource={dataSource({ research, military, magic })}/>
   );
 };
 

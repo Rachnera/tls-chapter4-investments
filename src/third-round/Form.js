@@ -16,6 +16,8 @@ import Mandatory from '../components/form/Mandatory';
 import Banned from '../components/form/Banned';
 import { nF } from '../misc';
 import Extra from '../components/form/Extra';
+import BaseHeadquarters from '../components/Headquarters';
+import { headquartersUpgradesForTargets } from './headquarters';
 
 const initialValues = {
   mandatory1: ['Givini Tunnels'],
@@ -32,6 +34,7 @@ const initialValues = {
   reserves: 5000000 + 125000 + 250000,
   extra_reserves: 0,
   spending: 0,
+  headquarters: '20/20',
 };
 
 const WarInvestments = ({ purchased, frontName, investments }) => {
@@ -45,9 +48,8 @@ const WarInvestments = ({ purchased, frontName, investments }) => {
     <Alert
       message={
         <>
-          {`You have yet to purchase the following investment${
-            missing.length > 1 ? `s` : ''
-          }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
+          {`You have yet to purchase the following investment${missing.length > 1 ? `s` : ''
+            }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
           <strong>{missing.join(', ')}</strong>
         </>
       }
@@ -90,17 +92,60 @@ const ErosianWarInvestments = ({ purchased }) => {
   );
 };
 
+const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form }) => {
+
+  const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
+
+  const headquartersTargets = [[15, 15], [20, 20], [25, 15], [15, 30], [30, 30]];
+  const headquartersUpgradesList = headquartersUpgradesForTargets({
+    alreadyBought: previousHeadquartersUpgrades,
+    targets: headquartersTargets,
+  })
+
+  useEffect(() => {
+    form.setFieldsValue({
+      headquarters_price: sum(headquartersUpgradesList[currentTargetKey], 'price'),
+    });
+  }, [form, currentTargetKey, headquartersUpgradesList])
+
+  return (<>
+    <Form.Item
+      label={`Keep an additionnal`}
+      name="headquarters"
+    >
+      <Select
+        options={headquartersTargets.map(([military, magic]) => {
+          const key = [military, magic].join('/');
+          return {
+            label: `${nF(sum(headquartersUpgradesList[key], 'price'))} ProN, to attain Military ≥ ${military}, Magic ≥ ${magic}.`,
+            value: key,
+          }
+        })}
+      />
+    </Form.Item>
+    <Form.Item
+      name="headquarters_price"
+      hidden={true}
+    >
+      <InputNumber />
+    </Form.Item>
+    <BaseHeadquarters dataSource={headquartersUpgradesList[currentTargetKey]} initialMagic={sum(previousHeadquartersUpgrades, 'magic')} initialMilitary={sum(previousHeadquartersUpgrades, 'military')} />
+  </>)
+}
+
 const CustomForm = ({
   previousInvestments,
   previousResearch,
   onFinish,
   loading,
   merchantSolution,
+  previousHeadquartersUpgrades,
 }) => {
   const [form] = Form.useForm();
   const [mandatory1, setMandatory1] = useState(initialValues.mandatory1);
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
+  const [hq, setHq] = useState(initialValues.headquarters);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -161,6 +206,7 @@ const CustomForm = ({
             })
             .map(({ name }) => name)
         );
+        setHq(allValues.headquarters);
       }}
     >
       <Card title={`Gawnfall`} type="inner" className="gawnfall">
@@ -425,16 +471,11 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
+        <Headquarters previousHeadquartersUpgrades={previousHeadquartersUpgrades} currentTargetKey={hq} form={form} />
         <Form.Item
-          label={`Also make sure to have the additional amount available`}
+          label={`Finally, also set aside the following amount`}
           name="extra_reserves"
-          tooltip={
-            <>
-              {`For extra expanses not covered in the previous option.`}
-              <br />
-              {`For example, if you also plan to buy Armory Upgrade and Entity's Shield Upgrade before the war, enter their total cost i.e. 260000.`}
-            </>
-          }
+          tooltip={`For any pre-war expanse not covered in the previous options.`}
         >
           <InputNumber />
         </Form.Item>

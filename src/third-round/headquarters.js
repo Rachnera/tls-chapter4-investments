@@ -120,9 +120,9 @@ const keyify = (array) => array.join('/')
 export const headquartersUpgradesForTargets = ({
   targets,
   alreadyBought,
+  openingRuins,
 }) => {
   // TODO
-  const openingRuins = true;
   const researchedDefense = false;
 
   const currentMilitary = sum(alreadyBought, 'military')

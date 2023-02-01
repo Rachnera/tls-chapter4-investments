@@ -93,7 +93,7 @@ const ErosianWarInvestments = ({ purchased }) => {
   );
 };
 
-const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form }) => {
+const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form, openingRuins }) => {
 
   const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
 
@@ -101,6 +101,7 @@ const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form }) 
   const headquartersUpgradesList = headquartersUpgradesForTargets({
     alreadyBought: previousHeadquartersUpgrades,
     targets: headquartersTargets,
+    openingRuins
   })
 
   useEffect(() => {
@@ -147,6 +148,7 @@ const CustomForm = ({
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
   const [hq, setHq] = useState(initialValues.headquarters);
+  const [ruins, setRuins] = useState(initialValues.ruins)
 
   useEffect(() => {
     form.setFieldsValue({
@@ -208,6 +210,7 @@ const CustomForm = ({
             .map(({ name }) => name)
         );
         setHq(allValues.headquarters);
+        setRuins(allValues.ruins)
       }}
     >
       <Card title={`Gawnfall`} type="inner" className="gawnfall">
@@ -489,7 +492,7 @@ const CustomForm = ({
             ]}
           />
         </Form.Item>
-        <Headquarters previousHeadquartersUpgrades={previousHeadquartersUpgrades} currentTargetKey={hq} form={form} />
+        <Headquarters previousHeadquartersUpgrades={previousHeadquartersUpgrades} currentTargetKey={hq} form={form} openingRuins={ruins} />
         <Form.Item
           label={`Finally, also set aside the following amount`}
           name="extra_reserves"

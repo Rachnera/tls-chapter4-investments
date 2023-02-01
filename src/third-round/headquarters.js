@@ -92,7 +92,11 @@ const buyable = [
   },
 ];
 
-const availableUpgrades = ({ alreadyBought, openingRuins, researchedDefense }) => {
+const availableUpgrades = ({
+  alreadyBought,
+  openingRuins,
+  researchedDefense,
+}) => {
   const alreadyBoughtShortlist = alreadyBought.map(({ key }) => key);
 
   return [
@@ -115,7 +119,7 @@ const availableUpgrades = ({ alreadyBought, openingRuins, researchedDefense }) =
     .filter(({ key }) => !alreadyBoughtShortlist.includes(key));
 };
 
-const keyify = (array) => array.join('/')
+const keyify = (array) => array.join('/');
 
 export const headquartersUpgradesForTargets = ({
   targets,
@@ -125,10 +129,14 @@ export const headquartersUpgradesForTargets = ({
   // TODO
   const researchedDefense = false;
 
-  const currentMilitary = sum(alreadyBought, 'military')
-  const currentMagic = sum(alreadyBought, 'magic')
+  const currentMilitary = sum(alreadyBought, 'military');
+  const currentMagic = sum(alreadyBought, 'magic');
 
-  const available = availableUpgrades({ alreadyBought, openingRuins, researchedDefense });
+  const available = availableUpgrades({
+    alreadyBought,
+    openingRuins,
+    researchedDefense,
+  });
 
   const free = available.filter(({ price }) => price === 0);
   const remain = available.filter(({ price }) => price > 0);
@@ -136,31 +144,29 @@ export const headquartersUpgradesForTargets = ({
   const updatedMilitary = currentMilitary + sum(free, 'military');
   const updatedMagic = currentMagic + sum(free, 'magic');
 
-
   const candidates = {};
   combinations(remain).forEach((comb) => {
     targets.forEach((target) => {
       const [targetMilitary, targetMagic] = target;
       if (
-        sum(comb, 'magic') >= (targetMagic - updatedMagic) &&
-        sum(comb, 'military') >= (targetMilitary - updatedMilitary)
+        sum(comb, 'magic') >= targetMagic - updatedMagic &&
+        sum(comb, 'military') >= targetMilitary - updatedMilitary
       ) {
         const key = keyify(target);
-        if (!candidates[key] || sum(candidates[key], 'price') > sum(comb, 'price')) {
+        if (
+          !candidates[key] ||
+          sum(candidates[key], 'price') > sum(comb, 'price')
+        ) {
           candidates[key] = comb;
         }
       }
-    })
-
-
+    });
   });
 
   targets.forEach((target) => {
     const key = keyify(target);
-    candidates[key] = [...free, ...candidates[key]]
-  })
+    candidates[key] = [...free, ...candidates[key]];
+  });
 
   return candidates;
 };
-
-

@@ -49,8 +49,9 @@ const WarInvestments = ({ purchased, frontName, investments }) => {
     <Alert
       message={
         <>
-          {`You have yet to purchase the following investment${missing.length > 1 ? `s` : ''
-            }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
+          {`You have yet to purchase the following investment${
+            missing.length > 1 ? `s` : ''
+          }, possibly relevant on the ${frontName} front of the upcoming Erosian War: `}
           <strong>{missing.join(', ')}</strong>
         </>
       }
@@ -93,47 +94,62 @@ const ErosianWarInvestments = ({ purchased }) => {
   );
 };
 
-const Headquarters = ({ previousHeadquartersUpgrades, currentTargetKey, form, openingRuins }) => {
-
+const Headquarters = ({
+  previousHeadquartersUpgrades,
+  currentTargetKey,
+  form,
+  openingRuins,
+}) => {
   const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
 
-  const headquartersTargets = [[15, 15], [20, 20], [25, 15], [15, 30], [30, 30]];
+  const headquartersTargets = [
+    [15, 15],
+    [20, 20],
+    [25, 15],
+    [15, 30],
+    [30, 30],
+  ];
   const headquartersUpgradesList = headquartersUpgradesForTargets({
     alreadyBought: previousHeadquartersUpgrades,
     targets: headquartersTargets,
-    openingRuins
-  })
+    openingRuins,
+  });
 
   useEffect(() => {
     form.setFieldsValue({
-      headquarters_price: sum(headquartersUpgradesList[currentTargetKey], 'price'),
+      headquarters_price: sum(
+        headquartersUpgradesList[currentTargetKey],
+        'price'
+      ),
     });
-  }, [form, currentTargetKey, headquartersUpgradesList])
+  }, [form, currentTargetKey, headquartersUpgradesList]);
 
-  return (<>
-    <Form.Item
-      label={`At headquarters`}
-      name="headquarters"
-    >
-      <Select
-        options={headquartersTargets.map(([military, magic]) => {
-          const key = [military, magic].join('/');
-          return {
-            label: `Attain Military ≥ ${military}, Magic ≥ ${magic} (${nF(sum(headquartersUpgradesList[key], 'price'))} ProN)`,
-            value: key,
-          }
-        })}
+  return (
+    <>
+      <Form.Item label={`At headquarters`} name="headquarters">
+        <Select
+          options={headquartersTargets.map(([military, magic]) => {
+            const key = [military, magic].join('/');
+            return {
+              label: `Attain Military ≥ ${military}, Magic ≥ ${magic} (${nF(
+                sum(headquartersUpgradesList[key], 'price')
+              )} ProN)`,
+              value: key,
+            };
+          })}
+        />
+      </Form.Item>
+      <Form.Item name="headquarters_price" hidden={true}>
+        <InputNumber />
+      </Form.Item>
+      <BaseHeadquarters
+        dataSource={headquartersUpgradesList[currentTargetKey]}
+        initialMagic={sum(previousHeadquartersUpgrades, 'magic')}
+        initialMilitary={sum(previousHeadquartersUpgrades, 'military')}
       />
-    </Form.Item>
-    <Form.Item
-      name="headquarters_price"
-      hidden={true}
-    >
-      <InputNumber />
-    </Form.Item>
-    <BaseHeadquarters dataSource={headquartersUpgradesList[currentTargetKey]} initialMagic={sum(previousHeadquartersUpgrades, 'magic')} initialMilitary={sum(previousHeadquartersUpgrades, 'military')} />
-  </>)
-}
+    </>
+  );
+};
 
 const CustomForm = ({
   previousInvestments,
@@ -148,7 +164,7 @@ const CustomForm = ({
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
   const [hq, setHq] = useState(initialValues.headquarters);
-  const [ruins, setRuins] = useState(initialValues.ruins)
+  const [ruins, setRuins] = useState(initialValues.ruins);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -210,7 +226,7 @@ const CustomForm = ({
             .map(({ name }) => name)
         );
         setHq(allValues.headquarters);
-        setRuins(allValues.ruins)
+        setRuins(allValues.ruins);
       }}
     >
       <Card title={`Gawnfall`} type="inner" className="gawnfall">
@@ -463,13 +479,9 @@ const CustomForm = ({
               },
             ]}
           />
-
         </Form.Item>
 
-        <Form.Item
-          label={`In Kyangan`}
-          name="kyangan"
-        >
+        <Form.Item label={`In Kyangan`} name="kyangan">
           <Select
             options={[
               {
@@ -477,22 +489,22 @@ const CustomForm = ({
                 value: 0,
               },
               {
-                label: `Buy everything but the Smithing (${nF(
-                  125000
-                )} ProN)`,
+                label: `Buy everything but the Smithing (${nF(125000)} ProN)`,
                 value: 125000,
               },
               {
-                label: `Buy everything (${nF(
-                  125000 + 250000
-                )} ProN)`,
+                label: `Buy everything (${nF(125000 + 250000)} ProN)`,
                 value: 125000 + 250000,
               },
-
             ]}
           />
         </Form.Item>
-        <Headquarters previousHeadquartersUpgrades={previousHeadquartersUpgrades} currentTargetKey={hq} form={form} openingRuins={ruins} />
+        <Headquarters
+          previousHeadquartersUpgrades={previousHeadquartersUpgrades}
+          currentTargetKey={hq}
+          form={form}
+          openingRuins={ruins}
+        />
         <Form.Item
           label={`Finally, also set aside the following amount`}
           name="extra_reserves"

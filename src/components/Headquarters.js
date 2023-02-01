@@ -29,7 +29,11 @@ const columns = [
   },
 ];
 
-const Headquarters = ({ dataSource, initialMilitary = 0, initialMagic = 0 }) => {
+const Headquarters = ({
+  dataSource,
+  initialMilitary = 0,
+  initialMagic = 0,
+}) => {
   return (
     <div className="headquarters-upgrades">
       <Table
@@ -43,8 +47,12 @@ const Headquarters = ({ dataSource, initialMilitary = 0, initialMagic = 0 }) => 
               <Table.Summary.Cell>
                 {nF(sum(dataSource, 'price'))}
               </Table.Summary.Cell>
-              <Table.Summary.Cell>{initialMilitary + sum(dataSource, 'military')}</Table.Summary.Cell>
-              <Table.Summary.Cell>{initialMagic + sum(dataSource, 'magic')}</Table.Summary.Cell>
+              <Table.Summary.Cell>
+                {initialMilitary + sum(dataSource, 'military')}
+              </Table.Summary.Cell>
+              <Table.Summary.Cell>
+                {initialMagic + sum(dataSource, 'magic')}
+              </Table.Summary.Cell>
             </Table.Summary.Row>
           );
         }}

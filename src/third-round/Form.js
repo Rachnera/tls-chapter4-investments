@@ -128,7 +128,7 @@ const Headquarters = ({
 
   return (
     <>
-      <Form.Item label={`At headquarters`} name="headquarters">
+      <Form.Item label={`In time for the war`} name="headquarters">
         <Select
           options={headquartersTargets.map(([military, magic]) => {
             const key = [military, magic].join('/');
@@ -472,53 +472,60 @@ const CustomForm = ({
         />
         <Extra />
       </Card>
-      <Card title={`Preparing for the future`} type="inner">
+      <Card title={`Preparing for the future`} type="inner" className="future">
         <p>{`Keep, if need be, enough cash in reserve to be able to:`}</p>
-        <Form.Item
-          label={`Open the ruins before the war (${nF(5000000)} ProN)`}
-          name="ruins"
-        >
-          <Radio.Group
-            options={[
-              {
-                value: true,
-                label: `Yes`,
-              },
-              {
-                value: false,
-                label: `No`,
-              },
-            ]}
-          />
-        </Form.Item>
-
-        <Form.Item label={`In Kyangan`} name="kyangan">
-          <Select
-            options={[
-              {
-                label: `Focus on trade and agriculture (0 ProN)`,
-                value: 0,
-              },
-              {
-                label: `Buy everything but the Smithing (${nF(125000)} ProN)`,
-                value: 125000,
-              },
-              {
-                label: `Buy everything (${nF(125000 + 250000)} ProN)`,
-                value: 125000 + 250000,
-              },
-            ]}
-          />
-        </Form.Item>
-        <Headquarters
-          previousHeadquartersUpgrades={previousHeadquartersUpgrades}
-          currentTargetKey={hq}
-          form={form}
-          openingRuins={ruins}
-          researchedDefense={[...previousResearch, research].includes(
-            'defense'
-          )}
-        />
+        <div className="two-columns">
+          <div>
+            <Form.Item
+              label={`Open the ruins before the war (${nF(5000000)} ProN)`}
+              name="ruins"
+            >
+              <Radio.Group
+                options={[
+                  {
+                    value: true,
+                    label: `Yes`,
+                  },
+                  {
+                    value: false,
+                    label: `No`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`In Kyangan`} name="kyangan">
+              <Select
+                options={[
+                  {
+                    label: `Focus on trade and agriculture (0 ProN)`,
+                    value: 0,
+                  },
+                  {
+                    label: `Buy everything but the Smithing (${nF(
+                      125000
+                    )} ProN)`,
+                    value: 125000,
+                  },
+                  {
+                    label: `Buy everything (${nF(125000 + 250000)} ProN)`,
+                    value: 125000 + 250000,
+                  },
+                ]}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Headquarters
+              previousHeadquartersUpgrades={previousHeadquartersUpgrades}
+              currentTargetKey={hq}
+              form={form}
+              openingRuins={ruins}
+              researchedDefense={[...previousResearch, research].includes(
+                'defense'
+              )}
+            />
+          </div>
+        </div>
         <Form.Item
           label={`Finally, also set aside the following amount`}
           name="extra_reserves"

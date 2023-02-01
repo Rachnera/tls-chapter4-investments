@@ -90,6 +90,12 @@ const buyable = [
     magic: 10,
     price: 250000,
   },
+  {
+    key: `Yhilin Mages Shield Upgrade`,
+    military: 0,
+    magic: 4,
+    price: 80000,
+  },
 ];
 
 const availableUpgrades = ({

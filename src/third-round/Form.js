@@ -108,7 +108,7 @@ const Headquarters = ({
     [20, 20],
     [25, 15],
     [15, 30],
-    [30, 30],
+    [25, 30],
   ];
   const headquartersUpgradesList = headquartersUpgradesForTargets({
     alreadyBought: previousHeadquartersUpgrades,

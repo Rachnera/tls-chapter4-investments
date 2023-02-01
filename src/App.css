@@ -138,12 +138,6 @@ table.addition td:nth-child(3) {
   margin-right: 12px;
 }
 
-.third-round-form .reserves {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
 @media (min-width: 768px) {
   .third-round-form .reserves > *:first-child {
     min-width: 720px;
@@ -165,4 +159,15 @@ table.addition td:nth-child(3) {
 
 .third-round-form .war-related-investments {
   margin-bottom: 24px;
+}
+
+.third-round-form .future .two-columns {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.third-round-form .future .two-columns > * {
+  flex-grow: 1;
+  padding-right: 24px;
 }

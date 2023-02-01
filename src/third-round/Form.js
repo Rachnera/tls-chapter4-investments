@@ -16,6 +16,8 @@ import Mandatory from '../components/form/Mandatory';
 import Banned from '../components/form/Banned';
 import { nF } from '../misc';
 import Extra from '../components/form/Extra';
+import BaseHeadquarters from '../components/Headquarters';
+import { headquartersUpgradesForTargets } from './headquarters';
 
 const initialValues = {
   mandatory1: ['Givini Tunnels'],
@@ -29,9 +31,11 @@ const initialValues = {
   mandatory: [],
   banned: [],
   gawnfallHigh: 'herin_overwhelming',
-  reserves: 5000000 + 125000 + 250000,
   extra_reserves: 0,
   spending: 0,
+  headquarters: '20/20',
+  ruins: true,
+  kyangan: 125000,
 };
 
 const WarInvestments = ({ purchased, frontName, investments }) => {
@@ -90,17 +94,80 @@ const ErosianWarInvestments = ({ purchased }) => {
   );
 };
 
+const Headquarters = ({
+  previousHeadquartersUpgrades,
+  currentTargetKey,
+  form,
+  openingRuins,
+  researchedDefense,
+}) => {
+  const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
+
+  const headquartersTargets = [
+    [15, 15],
+    [20, 20],
+    [25, 15],
+    [15, 30],
+    [25, 30],
+  ];
+  const headquartersUpgradesList = headquartersUpgradesForTargets({
+    alreadyBought: previousHeadquartersUpgrades,
+    targets: headquartersTargets,
+    openingRuins,
+    researchedDefense,
+  });
+
+  useEffect(() => {
+    form.setFieldsValue({
+      headquarters_price: sum(
+        headquartersUpgradesList[currentTargetKey],
+        'price'
+      ),
+    });
+  }, [form, currentTargetKey, headquartersUpgradesList]);
+
+  return (
+    <>
+      <Form.Item label={`In time for the war`} name="headquarters">
+        <Select
+          options={headquartersTargets.map(([military, magic]) => {
+            const key = [military, magic].join('/');
+            return {
+              label: `Attain Military ≥ ${military}, Magic ≥ ${magic} (${nF(
+                sum(headquartersUpgradesList[key], 'price')
+              )} ProN)`,
+              value: key,
+            };
+          })}
+        />
+      </Form.Item>
+      <Form.Item name="headquarters_price" hidden={true}>
+        <InputNumber />
+      </Form.Item>
+      <BaseHeadquarters
+        dataSource={headquartersUpgradesList[currentTargetKey]}
+        initialMagic={sum(previousHeadquartersUpgrades, 'magic')}
+        initialMilitary={sum(previousHeadquartersUpgrades, 'military')}
+      />
+    </>
+  );
+};
+
 const CustomForm = ({
   previousInvestments,
   previousResearch,
   onFinish,
   loading,
   merchantSolution,
+  previousHeadquartersUpgrades,
 }) => {
   const [form] = Form.useForm();
   const [mandatory1, setMandatory1] = useState(initialValues.mandatory1);
   const [mandatory, setMandatory] = useState(initialValues.mandatory);
   const [lockedInvestments, setLockedInvestments] = useState([]);
+  const [hq, setHq] = useState(initialValues.headquarters);
+  const [ruins, setRuins] = useState(initialValues.ruins);
+  const [research, setResearch] = useState(initialValues.research);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -129,9 +196,16 @@ const CustomForm = ({
     },
   ].filter(({ value }) => !previousResearch.includes(value));
   useEffect(() => {
-    form.setFieldsValue({
-      research: availableResearch[0]['value'],
-    });
+    if (
+      !form.getFieldValue('research') ||
+      !availableResearch
+        .map(({ value }) => value)
+        .includes(form.getFieldValue('research'))
+    ) {
+      form.setFieldsValue({
+        research: availableResearch[0]['value'],
+      });
+    }
   }, [form, availableResearch]);
 
   return (
@@ -161,6 +235,9 @@ const CustomForm = ({
             })
             .map(({ name }) => name)
         );
+        setHq(allValues.headquarters);
+        setRuins(allValues.ruins);
+        setResearch(allValues.research);
       }}
     >
       <Card title={`Gawnfall`} type="inner" className="gawnfall">
@@ -357,50 +434,6 @@ const CustomForm = ({
         </div>
       </Card>
       <Card title={`Post Gawnfall`} type="inner">
-        <div className="reserves">
-          <Form.Item
-            label={`Keep enough cash in reserve, if need be, to:`}
-            name="reserves"
-          >
-            <Select
-              options={[
-                {
-                  label: `Open the ruins after the war`,
-                  value: 0,
-                },
-                {
-                  label: `Open the ruins before the war (${nF(5000000)} ProN)`,
-                  value: 5000000,
-                },
-                {
-                  label: `Open the ruins and buy everything but the Smithing in Kyangan (${nF(
-                    5000000 + 125000
-                  )} ProN)`,
-                  value: 5000000 + 125000,
-                },
-                {
-                  label: `Open the ruins and buy everything in Kyangan (${nF(
-                    5000000 + 125000 + 250000
-                  )} ProN)`,
-                  value: 5000000 + 125000 + 250000,
-                },
-              ]}
-            />
-          </Form.Item>
-          <Form.Item
-            label={`Also make sure to have the additional amount available`}
-            name="extra_reserves"
-            tooltip={
-              <>
-                {`For extra expanses not covered in the previous option.`}
-                <br />
-                {`For example, if you also plan to buy Armory Upgrade and Entity's Shield Upgrade before the war, enter their total cost i.e. 260000.`}
-              </>
-            }
-          >
-            <InputNumber />
-          </Form.Item>
-        </div>
         <Divider />
         <Mandatory
           form={form}
@@ -439,6 +472,69 @@ const CustomForm = ({
         />
         <Extra />
       </Card>
+      <Card title={`Preparing for the future`} type="inner" className="future">
+        <p>{`Keep, if need be, enough cash in reserve to be able to:`}</p>
+        <div className="two-columns">
+          <div>
+            <Form.Item
+              label={`Open the ruins before the war (${nF(5000000)} ProN)`}
+              name="ruins"
+            >
+              <Radio.Group
+                options={[
+                  {
+                    value: true,
+                    label: `Yes`,
+                  },
+                  {
+                    value: false,
+                    label: `No`,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item label={`In Kyangan`} name="kyangan">
+              <Select
+                options={[
+                  {
+                    label: `Focus on trade and agriculture (0 ProN)`,
+                    value: 0,
+                  },
+                  {
+                    label: `Buy everything but the Smithing (${nF(
+                      125000
+                    )} ProN)`,
+                    value: 125000,
+                  },
+                  {
+                    label: `Buy everything (${nF(125000 + 250000)} ProN)`,
+                    value: 125000 + 250000,
+                  },
+                ]}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Headquarters
+              previousHeadquartersUpgrades={previousHeadquartersUpgrades}
+              currentTargetKey={hq}
+              form={form}
+              openingRuins={ruins}
+              researchedDefense={[...previousResearch, research].includes(
+                'defense'
+              )}
+            />
+          </div>
+        </div>
+        <Form.Item
+          label={`Finally, also set aside the following amount`}
+          name="extra_reserves"
+          tooltip={`For any pre-war expanse not covered in the previous options.`}
+        >
+          <InputNumber />
+        </Form.Item>
+      </Card>
+
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading}>
           {`Submit`}

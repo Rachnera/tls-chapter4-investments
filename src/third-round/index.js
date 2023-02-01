@@ -7,6 +7,7 @@ import { roundThreeValue as giviniRoundThreeValue } from '../data/givini';
 import { roundThreeValue as takkanRoundThreeValue } from '../data/takkan';
 import investmentsList from '../data/investments';
 import { roundThreeValue as chaliceRoundThreeValue } from '../data/chalice';
+import { dataSource as headquartersPurchases } from '../second-round/Headquarters';
 
 const { Title } = Typography;
 
@@ -120,9 +121,11 @@ const onFinish = async ({
     mandatory: mandatory2,
     banned,
     gawnfallHigh,
-    reserves,
     extra_reserves,
     spending,
+    headquarters_price,
+    ruins,
+    kyangan,
   } = values;
   const decisions = {
     research,
@@ -213,7 +216,15 @@ const onFinish = async ({
     list: nonInvestmentChangesList,
   };
 
-  let reserve = reserves + extra_reserves - initialStandings.profits;
+  let reserve = 0;
+  if (ruins) {
+    reserve += 5000000;
+  }
+  reserve += kyangan;
+  reserve += headquarters_price;
+  reserve += extra_reserves;
+
+  reserve -= initialStandings.profits;
   reserve -= mercantileMoney;
   reserve -= projectedPastInvestmentsUpdate({ decisions, initialStandings });
   if (earlyArchives) {
@@ -354,6 +365,15 @@ const ThirdRound = ({
     return undefined;
   })();
 
+  const [military, magic] = secondRoundResult.decisions.headquarters
+    .split('/')
+    .map((x) => parseInt(x));
+  const previousHeadquartersUpgrades = headquartersPurchases({
+    research: firstRoundResult.decisions.research,
+    military,
+    magic,
+  });
+
   return (
     <div className="round-three">
       <Title level={2}>{`Chapter 4 – Round 3`}</Title>
@@ -371,6 +391,7 @@ const ThirdRound = ({
         }}
         loading={loading}
         merchantSolution={merchantSolution}
+        previousHeadquartersUpgrades={previousHeadquartersUpgrades}
       />
       <ScrollTo data={result}>
         <Result {...result} />

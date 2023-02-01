@@ -193,9 +193,16 @@ const CustomForm = ({
     },
   ].filter(({ value }) => !previousResearch.includes(value));
   useEffect(() => {
-    form.setFieldsValue({
-      research: availableResearch[0]['value'],
-    });
+    if (
+      !form.getFieldValue('research') ||
+      !availableResearch
+        .map(({ value }) => value)
+        .includes(form.getFieldValue('research'))
+    ) {
+      form.setFieldsValue({
+        research: availableResearch[0]['value'],
+      });
+    }
   }, [form, availableResearch]);
 
   return (

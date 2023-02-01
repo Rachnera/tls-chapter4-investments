@@ -125,10 +125,8 @@ export const headquartersUpgradesForTargets = ({
   targets,
   alreadyBought,
   openingRuins,
+  researchedDefense,
 }) => {
-  // TODO
-  const researchedDefense = false;
-
   const currentMilitary = sum(alreadyBought, 'military');
   const currentMagic = sum(alreadyBought, 'magic');
 

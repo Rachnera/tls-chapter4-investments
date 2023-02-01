@@ -99,6 +99,7 @@ const Headquarters = ({
   currentTargetKey,
   form,
   openingRuins,
+  researchedDefense,
 }) => {
   const sum = (list, key) => list.reduce((acc, data) => acc + data[key], 0);
 
@@ -113,6 +114,7 @@ const Headquarters = ({
     alreadyBought: previousHeadquartersUpgrades,
     targets: headquartersTargets,
     openingRuins,
+    researchedDefense,
   });
 
   useEffect(() => {
@@ -165,6 +167,7 @@ const CustomForm = ({
   const [lockedInvestments, setLockedInvestments] = useState([]);
   const [hq, setHq] = useState(initialValues.headquarters);
   const [ruins, setRuins] = useState(initialValues.ruins);
+  const [research, setResearch] = useState(initialValues.research);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -234,6 +237,7 @@ const CustomForm = ({
         );
         setHq(allValues.headquarters);
         setRuins(allValues.ruins);
+        setResearch(allValues.research);
       }}
     >
       <Card title={`Gawnfall`} type="inner" className="gawnfall">
@@ -511,6 +515,9 @@ const CustomForm = ({
           currentTargetKey={hq}
           form={form}
           openingRuins={ruins}
+          researchedDefense={[...previousResearch, research].includes(
+            'defense'
+          )}
         />
         <Form.Item
           label={`Finally, also set aside the following amount`}
